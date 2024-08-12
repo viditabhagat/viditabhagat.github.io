@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&display=swap'); /* Example for Google Fonts */
-
 .header {
     position: relative;
     height: 100vh;
@@ -25,47 +23,6 @@
         margin-top: 20px;
         flex-grow: 1;
         max-width: 550px;
-        
-        .header-title {
-            
-            .up {
-                font-size: calc(30px + (60 - 30) * ((100vw - 300px) / (1300 - 300)));
-                font-weight: 500;
-                color: #444;
-                margin-bottom: 5px;
-                position: relative;
-                display: block;
-            }
-
-            .down {
-                font-size: calc(30px + (75 - 30) * ((100vw - 300px) / (1300 - 300)));
-                margin-bottom: 0;
-                position: relative;
-                display: block;
-            }
-        }
-
-        .header-subtitle {
-            font-size: calc(10px + (22 - 10) * ((100vw - 300px) / (1300 - 300)));           
-            letter-spacing: calc(1px + (7 - 1) * ((100vw - 300px) / (1300 - 300)));
-            opacity: .8;
-            margin-top: -10px;
-            margin-bottom: 20px;            
-        }
-
-        .btn {
-            position: relative;
-            margin-top: 20px;
-            border-radius: 20px;
-            padding: 8px 15px;
-        }
-    }
-
-    .header-content1 {
-        margin-top: 20px;
-        flex-grow: 1;
-        max-width: 850px;
-        font-family: 'Manro', sans-serif; /* Apply the font here */
         
         .header-title {
             
