@@ -99,6 +99,21 @@ body {
   padding: 0;
 }
 
+.bullet-list {
+  margin-left: 20px; 
+}
+.bullet-item {
+  display: inline-flex;
+  align-items: flex-start;
+  margin-bottom: 8px; 
+}
+.bullet-item::before {
+  content: "\2022"; 
+  margin-right: 10px; 
+  color: #000; 
+  line-height: 1; 
+}
+
 [tabindex="-1"]:focus {
   outline: 0 !important;
 }
