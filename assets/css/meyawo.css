@@ -89,7 +89,7 @@ body {
   font-size: calc(13px +(15 - 13)*((100vw - 300px) /(1300 - 300)));
   font-weight: 100;
   line-height: 1.5;
-  color: #111;
+  color: red;
 }
 
 .custom-list li {
