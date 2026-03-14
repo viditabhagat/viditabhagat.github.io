@@ -1,0 +1,966 @@
+<!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║           CASE STUDY TEMPLATE — Vidita Bhagat Portfolio         ║
+  ║                                                                  ║
+  ║  HOW TO USE                                                      ║
+  ║  1. Duplicate this file and rename it (e.g. mobility-case-study) ║
+  ║  2. Find every <!-- FILL: --> comment and replace the content    ║
+  ║  3. To add a real photo: uncomment the <img> tag inside          ║
+  ║     .photo-slot or .journey-map-slot and set the src             ║
+  ║  4. To link it from index.html: wrap the project card in         ║
+  ║     <a href="your-new-file.html"> and add the card-overlay div   ║
+  ║                                                                  ║
+  ║  SECTIONS (in order)                                             ║
+  ║  01 · Problem        04 · Outcome                                ║
+  ║  02 · Approach       05 · Role                                   ║
+  ║  03 · Findings       06 · Reflection                             ║
+  ║       + Artifacts: Field Photos · Personas · Journey Map         ║
+  ╚══════════════════════════════════════════════════════════════════╝
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- FILL: update the <title> -->
+<title>Case Study — Vidita Bhagat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════════════════════════════════════════════════════════
+     DESIGN SYSTEM — DO NOT EDIT
+     Mirrors index.html: DM Sans + Space Mono, same color palette,
+     same nav, same card/hover/spacing patterns.
+     ═══════════════════════════════════════════════════════════════ */
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    background: #eeece6;
+    color: #111;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  .mono { font-family: 'Space Mono', monospace; }
+
+  /* NAV */
+  nav {
+    background: #eeece6;
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .nav-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em; color: #1a1a1a;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 24px; align-items: center; list-style: none; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 0.12em;
+    color: #333; text-decoration: none;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: #111; }
+  .nav-back {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 0.1em;
+    color: #eeece6; background: #1a1a1a;
+    padding: 7px 14px; text-decoration: none;
+    border-radius: 2px; transition: background 0.15s;
+  }
+  .nav-back:hover { background: #e5431b; }
+
+  /* HERO */
+  .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 52px); }
+  .hero-left {
+    background: #f5f4f0;
+    padding: 80px 64px 80px 48px;
+    display: flex; flex-direction: column; justify-content: center;
+    border-right: 1px solid rgba(0,0,0,0.06);
+  }
+  .case-label {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.16em; color: #e5431b;
+    margin-bottom: 28px;
+  }
+  .case-label::before { content: ''; width: 24px; height: 1px; background: #e5431b; flex-shrink: 0; }
+  .hero-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(32px, 3.8vw, 52px);
+    font-weight: 300; line-height: 1.15;
+    letter-spacing: -0.5px; color: #111;
+    margin-bottom: 24px;
+  }
+  .hero-title em { font-style: italic; color: #e5431b; }
+  .hero-sub {
+    font-size: 14px; font-weight: 300;
+    color: #666; line-height: 1.75;
+    max-width: 480px; margin-bottom: 40px;
+  }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #666;
+    background: #e8e6e0; border-radius: 3px;
+    padding: 5px 12px;
+  }
+  .hero-right { background: #1c211c; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+  .stat-card {
+    padding: 48px 40px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .stat-card.visible { opacity: 1; transform: translateY(0); }
+  .stat-card:nth-child(1) { transition-delay: 0.1s; }
+  .stat-card:nth-child(2) { transition-delay: 0.2s; border-right: none; }
+  .stat-card:nth-child(3) { transition-delay: 0.3s; border-bottom: none; }
+  .stat-card:nth-child(4) { transition-delay: 0.4s; border-right: none; border-bottom: none; }
+  .stat-num {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 64px; font-weight: 300;
+    color: #fff; line-height: 1;
+    letter-spacing: -2px; margin-bottom: 8px;
+  }
+  .stat-num span { color: #e5431b; }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; color: rgba(255,255,255,0.35);
+    text-transform: uppercase; letter-spacing: 0.1em; line-height: 1.5;
+  }
+
+  /* SECTIONS */
+  .section {
+    max-width: 1200px; margin: 0 auto; padding: 72px 64px;
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .section.visible { opacity: 1; transform: translateY(0); }
+  .artifact-section {
+    max-width: 1200px; margin: 0 auto; padding: 0 64px 64px;
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .artifact-section.visible { opacity: 1; transform: translateY(0); }
+
+  /* SECTION HEADER */
+  .section-header { display: flex; flex-direction: column; gap: 10px; margin-bottom: 48px; }
+  .section-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; font-weight: 400;
+    letter-spacing: 0.16em; color: #888; text-transform: uppercase;
+  }
+  .section-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 36px; font-weight: 300;
+    color: #111; line-height: 1.2; letter-spacing: -0.5px;
+  }
+
+  /* DIVIDER */
+  .full-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.08); }
+
+  /* ARTIFACT LABEL */
+  .artifact-label {
+    display: flex; align-items: center; gap: 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.16em; color: #888; margin-bottom: 20px;
+  }
+  .artifact-label::before { content: ''; width: 24px; height: 1px; background: rgba(0,0,0,0.2); flex-shrink: 0; }
+
+  /* PROBLEM */
+  .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .problem-text { font-size: 15px; font-weight: 300; line-height: 1.8; color: #333; }
+  .problem-text p + p { margin-top: 20px; }
+  .problem-text strong { font-weight: 500; color: #111; }
+  .insight-box { background: #1c211c; padding: 40px; position: relative; overflow: hidden; }
+  .insight-box::before {
+    content: '"'; font-family: 'DM Sans', sans-serif;
+    font-size: 160px; font-weight: 300;
+    color: rgba(255,255,255,0.05);
+    position: absolute; top: -20px; left: 20px;
+    line-height: 1; pointer-events: none;
+  }
+  .insight-box p {
+    font-style: italic; font-size: 16px; font-weight: 300;
+    color: rgba(255,255,255,0.88); line-height: 1.75; position: relative;
+  }
+  .insight-box cite {
+    display: block; margin-top: 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; font-style: normal;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
+  /* TWIST BANNER */
+  .twist-banner {
+    background: #e5431b;
+    padding: 48px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 32px;
+    align-items: center;
+  }
+  .twist-icon { font-size: 48px; flex-shrink: 0; }
+  .twist-text h3 { font-family: 'DM Sans', sans-serif; font-size: 22px; font-weight: 500; color: #fff; margin-bottom: 8px; }
+  .twist-text p { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.65; font-weight: 300; }
+
+  /* USER VOICES */
+  .voices-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; background: rgba(0,0,0,0.08); }
+  .voice-card { background: #f5f4f0; padding: 32px 36px; }
+  .voice-quote { font-style: italic; font-size: 14px; color: #333; line-height: 1.75; margin-bottom: 16px; font-weight: 300; }
+  .voice-quote::before { content: '"'; color: #e5431b; font-size: 22px; }
+  .voice-who { font-family: 'Space Mono', monospace; font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* DILO STRIP */
+  .dilo-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
+  .dilo-card { background: #f5f4f0; border: 1px dashed rgba(0,0,0,0.12); padding: 24px 20px; display: flex; flex-direction: column; gap: 8px; min-height: 200px; transition: border-color 0.22s ease; }
+  .dilo-card:hover { border-color: #e5431b; border-style: solid; }
+  .dilo-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; height: 140px; background: rgba(0,0,0,0.04); font-family: 'Space Mono', monospace; font-size: 9px; color: #888; text-align: center; text-transform: uppercase; letter-spacing: 0.06em; }
+  .dilo-user { font-size: 13px; font-weight: 500; color: #111; }
+  .dilo-desc { font-size: 12px; font-weight: 300; color: #666; line-height: 1.55; }
+
+  /* APPROACH */
+  .approach-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; background: rgba(0,0,0,0.08); }
+  .approach-card {
+    background: #f5f4f0; padding: 40px;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+  .approach-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.1); position: relative; z-index: 2; }
+  .approach-num {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 40px; font-weight: 300;
+    color: rgba(0,0,0,0.1); line-height: 1;
+    letter-spacing: -1px; margin-bottom: 16px;
+  }
+  .approach-title { font-size: 15px; font-weight: 500; color: #111; margin-bottom: 10px; line-height: 1.4; }
+  .approach-body { font-size: 13px; font-weight: 300; color: #666; line-height: 1.7; }
+  .approach-why {
+    margin-top: 16px; padding-top: 14px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; color: #e5431b; line-height: 1.65;
+  }
+
+  /* FIELD PHOTOS */
+  .photos-strip { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3px; height: 380px; }
+  .photo-slot {
+    background: #f5f4f0;
+    border: 1px dashed rgba(0,0,0,0.15);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
+    transition: background 0.22s ease, border-color 0.22s ease;
+  }
+  .photo-slot:hover { background: #eceae4; border-color: rgba(0,0,0,0.25); }
+  .photo-slot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-slot-inner { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 20px; text-align: center; }
+  .photo-slot-icon { font-size: 28px; opacity: 0.3; }
+  .photo-slot-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; color: #888;
+    text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.55;
+  }
+  .swap-badge {
+    position: absolute; top: 12px; right: 12px;
+    background: #1a1a1a; color: #eeece6;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px; text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 4px 10px;
+    border-radius: 2px; opacity: 0.35;
+  }
+  .photo-caption { font-size: 12px; font-weight: 300; color: #888; margin-top: 12px; font-style: italic; text-align: center; }
+
+  /* FINDINGS */
+  .findings-list { display: flex; flex-direction: column; }
+  .finding-row {
+    display: grid; grid-template-columns: 80px 1fr 1fr;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    padding: 32px 0; align-items: start;
+    transition: background 0.2s, padding 0.2s; cursor: default;
+  }
+  .finding-row:first-child { border-top: 1px solid rgba(0,0,0,0.08); }
+  .finding-row:hover { background: #f5f4f0; padding: 32px 64px; margin: 0 -64px; }
+  .finding-idx { font-family: 'DM Sans', sans-serif; font-size: 28px; font-weight: 300; color: rgba(0,0,0,0.12); letter-spacing: -0.5px; padding-top: 2px; }
+  .finding-title { font-size: 15px; font-weight: 500; color: #111; padding-right: 32px; line-height: 1.45; }
+  .finding-so-what { font-size: 13px; font-weight: 300; color: #666; line-height: 1.65; border-left: 2px solid #f5bfa5; padding-left: 20px; }
+  .finding-so-what strong {
+    display: block; font-family: 'Space Mono', monospace;
+    font-size: 9px; font-weight: 400; color: #e5431b;
+    text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 6px;
+  }
+
+  /* PERSONAS */
+  .persona-group-label {
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    text-transform: uppercase; letter-spacing: 0.12em; color: #888;
+    margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .personas-row { display: grid; gap: 3px; margin-bottom: 20px; }
+  .personas-row.patients { grid-template-columns: repeat(5, 1fr); }
+  .personas-row.four    { grid-template-columns: repeat(4, 1fr); }
+  .personas-row.hcps    { grid-template-columns: repeat(2, 1fr) 3fr; }
+  .persona-card {
+    background: #f5f4f0; border: 1px dashed rgba(0,0,0,0.12);
+    padding: 22px 18px; display: flex; flex-direction: column; gap: 10px;
+    transition: background 0.22s ease, border-color 0.22s ease;
+  }
+  .persona-card:hover { background: #fce4de; border-color: #e5431b; border-style: solid; }
+  .persona-card.hcp:hover { background: #eceaf8; border-color: #8880c0; }
+  .persona-avatar {
+    width: 44px; height: 44px; border-radius: 3px;
+    background: #e8e6e0; display: flex; align-items: center;
+    justify-content: center; font-size: 20px; flex-shrink: 0; overflow: hidden;
+  }
+  .persona-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .persona-name { font-size: 13px; font-weight: 500; color: #111; line-height: 1.3; }
+  .persona-tag {
+    display: inline-block; font-family: 'Space Mono', monospace;
+    font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: #e5431b; background: #fce4de; border-radius: 3px;
+    padding: 3px 8px; align-self: flex-start;
+  }
+  .persona-card.hcp .persona-tag { color: #5544aa; background: #eceaf8; }
+  .persona-desc { font-size: 12px; font-weight: 300; color: #666; line-height: 1.55; }
+  .persona-swap-hint { font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(0,0,0,0.2); font-style: italic; line-height: 1.4; }
+
+  /* JOURNEY MAP */
+  .journey-map-slot {
+    background: #f5f4f0; border: 1px dashed rgba(0,0,0,0.12);
+    height: 440px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 16px;
+    position: relative; overflow: hidden;
+    transition: background 0.22s ease, border-color 0.22s ease;
+  }
+  .journey-map-slot:hover { background: #eceae4; border-color: rgba(0,0,0,0.25); }
+  .journey-map-slot img { width: 100%; height: 100%; object-fit: contain; padding: 20px; }
+  .journey-slot-inner { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .journey-slot-icon { font-size: 36px; opacity: 0.2; }
+  .journey-slot-label { font-size: 13px; font-weight: 300; color: #888; text-align: center; line-height: 1.65; max-width: 360px; }
+  .journey-slot-label strong { display: block; font-size: 15px; font-weight: 500; color: #333; margin-bottom: 6px; }
+
+  /* OUTCOME */
+  .outcome-hero {
+    background: #1c211c; padding: 72px 64px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 72px; align-items: center; margin: 0 -64px;
+  }
+  .outcome-statement {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(20px, 2.5vw, 32px);
+    font-weight: 300; font-style: italic;
+    color: rgba(255,255,255,0.9); line-height: 1.4; letter-spacing: -0.3px;
+  }
+  .outcome-statement em { font-style: normal; color: #e5431b; }
+  .outcome-shifts { display: flex; flex-direction: column; gap: 22px; }
+  .shift-item { display: flex; gap: 16px; align-items: flex-start; }
+  .shift-arrow { color: #e5431b; font-size: 16px; flex-shrink: 0; margin-top: 4px; }
+  .shift-text { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.65); line-height: 1.65; }
+  .shift-text strong { display: block; font-weight: 500; color: #fff; font-size: 14px; margin-bottom: 3px; }
+
+  /* ROLE */
+  .role-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: rgba(0,0,0,0.08); }
+  .role-card { background: #f5f4f0; padding: 32px; }
+  .role-icon {
+    width: 40px; height: 40px; background: #fce4de;
+    border-radius: 3px; display: flex; align-items: center;
+    justify-content: center; margin-bottom: 16px; font-size: 18px;
+  }
+  .role-title { font-size: 14px; font-weight: 500; color: #111; margin-bottom: 8px; }
+  .role-body { font-size: 13px; font-weight: 300; color: #666; line-height: 1.65; }
+
+  /* REFLECTION */
+  .reflection-cols { display: grid; grid-template-columns: 260px 1fr; gap: 72px; align-items: start; }
+  .reflection-aside { position: sticky; top: 80px; }
+  .reflection-aside h3 { font-family: 'DM Sans', sans-serif; font-size: 26px; font-weight: 300; line-height: 1.35; letter-spacing: -0.3px; margin-bottom: 14px; }
+  .reflection-aside p { font-size: 13px; font-weight: 300; color: #666; line-height: 1.75; }
+  .reflection-items { display: flex; flex-direction: column; gap: 20px; }
+  .reflection-item { padding: 28px 32px; background: #f5f4f0; border-left: 3px solid #cce044; }
+  .reflection-item p { font-size: 14px; font-weight: 300; color: #333; line-height: 1.75; }
+  .reflection-item strong { font-weight: 500; color: #111; }
+
+  /* FOOTER NAV */
+  .case-footer {
+    border-top: 1px solid rgba(0,0,0,0.08);
+    padding: 56px 64px; display: flex;
+    align-items: center; justify-content: space-between;
+    max-width: 1200px; margin: 0 auto;
+    flex-wrap: wrap; gap: 24px;
+  }
+  .footer-left p { font-family: 'Space Mono', monospace; font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .footer-left h3 { font-family: 'DM Sans', sans-serif; font-size: 22px; font-weight: 400; letter-spacing: -0.2px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 24px; background: #1a1a1a; color: #eeece6;
+    text-decoration: none; font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    border-radius: 2px; transition: background 0.2s;
+  }
+  .btn:hover { background: #e5431b; }
+  .btn-outline { background: transparent; color: #1a1a1a; border: 1px solid rgba(0,0,0,0.2); }
+  .btn-outline:hover { background: #1a1a1a; color: #eeece6; }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 48px 24px; border-right: none; border-bottom: 1px solid rgba(0,0,0,0.08); }
+    .hero-right { grid-template-columns: 1fr 1fr; }
+    .stat-num { font-size: 44px; }
+    .stat-card { padding: 28px 20px; }
+    .section { padding: 56px 24px; }
+    .artifact-section { padding: 0 24px 48px; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .approach-grid { grid-template-columns: 1fr; }
+    .finding-row { grid-template-columns: 56px 1fr; }
+    .finding-so-what { display: none; }
+    .finding-row:hover { margin: 0; padding: 32px 0; }
+    .outcome-hero { grid-template-columns: 1fr; padding: 48px 24px; margin: 0 -24px; }
+    .role-grid { grid-template-columns: 1fr; }
+    .reflection-cols { grid-template-columns: 1fr; }
+    .reflection-aside { position: static; }
+    .photos-strip { grid-template-columns: 1fr 1fr; height: auto; }
+    .photos-strip .photo-slot:first-child { grid-column: span 2; height: 200px; }
+    .photos-strip .photo-slot { height: 160px; }
+    .personas-row.patients { grid-template-columns: repeat(2, 1fr); }
+    .personas-row.four { grid-template-columns: repeat(2, 1fr); }
+    .personas-row.hcps { grid-template-columns: 1fr 1fr; }
+    .voices-grid { grid-template-columns: 1fr; }
+    .dilo-strip { grid-template-columns: repeat(2, 1fr); }
+    .twist-banner { grid-template-columns: 1fr; gap: 16px; padding: 32px 24px; }
+    .journey-map-slot { height: 280px; }
+    .case-footer { padding: 40px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══════════════════════════════════════════════════════ -->
+<nav>
+  <a href="index.html" class="nav-name">VIDITA BHAGAT</a>
+  <ul class="nav-links">
+    <li><a href="index.html#portfolio">Work</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <a href="index.html#portfolio" class="nav-back">← All Work</a>
+</nav>
+
+<!-- ══ HERO ══════════════════════════════════════════════════════
+  FILL: case-label  → "Case Study · [Domain]"
+  FILL: hero-title  → project title (use <em> for the key phrase)
+  FILL: hero-sub    → 1–2 sentence summary of the study
+  FILL: .tag items  → your role, methods, client type, duration
+  FILL: 4 stat-cards → key numbers + short labels
+═══════════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="case-label">Case Study · <!-- FILL: domain --></div>
+    <h1 class="hero-title"><!-- FILL: title with <em>key phrase</em> --></h1>
+    <p class="hero-sub"><!-- FILL: 1–2 sentence project summary --></p>
+    <div class="hero-tags">
+      <span class="tag"><!-- FILL: Your Role --></span>
+      <span class="tag"><!-- FILL: Primary Method --></span>
+      <span class="tag"><!-- FILL: Industry / Client Type --></span>
+      <span class="tag"><!-- FILL: Duration --></span>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="stat-card">
+      <div class="stat-num"><!-- FILL: number --><span><!-- FILL: + or % --></span></div>
+      <div class="stat-label"><!-- FILL: what this measures --></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num"><!-- FILL: number --></div>
+      <div class="stat-label"><!-- FILL: what this measures --></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num"><!-- FILL: number --><span><!-- FILL: + or % --></span></div>
+      <div class="stat-label"><!-- FILL: what this measures --></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num"><!-- FILL: number --></div>
+      <div class="stat-label"><!-- FILL: what this measures --></div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- ══ 01 PROBLEM ════════════════════════════════════════════════
+  FILL: 2–3 paragraphs describing the brief and underlying question
+  FILL: insight-box → the single most important finding, as a quote
+═══════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">01 · Problem</span>
+    <h2 class="section-title">The Problem Worth Solving</h2>
+  </div>
+
+  <div class="problem-grid">
+    <div class="problem-text">
+      <p><!-- FILL: paragraph 1 — context and client situation --></p>
+      <p><!-- FILL: paragraph 2 — the real underlying question --></p>
+      <p><!-- FILL: paragraph 3 — scope and complexity of the study --></p>
+    </div>
+
+    <div class="insight-box">
+      <p><!-- FILL: key insight as a pull quote —  1–3 sentences --></p>
+      <cite><!-- FILL: — attribution, e.g. "Core finding, [study name]" --></cite>
+    </div>
+  </div>
+</section>
+
+<!-- ══ OPTIONAL: TWIST BANNER ═══════════════════════════════════
+  Use when a mid-project pivot or surprising finding reframed the study.
+  FILL: icon (emoji), heading, and explanation paragraph
+  Remove this block if not applicable to the case study.
+═══════════════════════════════════════════════════════════════ -->
+<!--
+<div class="twist-banner">
+  <div class="twist-icon"><!-- FILL: emoji icon e.g. ⚡ 🔄 💡 --></div>
+  <div class="twist-text">
+    <h3><!-- FILL: banner heading, e.g. "The Twist That Made This Project Matter" --></h3>
+    <p><!-- FILL: 2–3 sentences explaining the unexpected finding or pivot --></p>
+  </div>
+</div>
+-->
+
+<div class="full-divider"></div>
+
+<!-- ══ 02 APPROACH ═══════════════════════════════════════════════
+  FILL: 4 approach cards — title, explanation, and "why" rationale
+  Add or remove cards as needed (keep grid-template-columns:repeat(2,1fr))
+═══════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">02 · Approach</span>
+    <h2 class="section-title">My Approach — and Why</h2>
+  </div>
+
+  <div class="approach-grid">
+
+    <div class="approach-card">
+      <div class="approach-num">1</div>
+      <div class="approach-title"><!-- FILL: approach title --></div>
+      <div class="approach-body"><!-- FILL: what you did and how --></div>
+      <div class="approach-why">→ <!-- FILL: the specific insight this unlocked --></div>
+    </div>
+
+    <div class="approach-card">
+      <div class="approach-num">2</div>
+      <div class="approach-title"><!-- FILL: approach title --></div>
+      <div class="approach-body"><!-- FILL: what you did and how --></div>
+      <div class="approach-why">→ <!-- FILL: the specific insight this unlocked --></div>
+    </div>
+
+    <div class="approach-card">
+      <div class="approach-num">3</div>
+      <div class="approach-title"><!-- FILL: approach title --></div>
+      <div class="approach-body"><!-- FILL: what you did and how --></div>
+      <div class="approach-why">→ <!-- FILL: the specific insight this unlocked --></div>
+    </div>
+
+    <div class="approach-card">
+      <div class="approach-num">4</div>
+      <div class="approach-title"><!-- FILL: approach title --></div>
+      <div class="approach-body"><!-- FILL: what you did and how --></div>
+      <div class="approach-why">→ <!-- FILL: the specific insight this unlocked --></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ OPTIONAL: USER VOICES ════════════════════════════════════
+  Use when participant quotes deserve a dedicated visual treatment.
+  FILL: each voice-card with a quote and a brief attribution.
+  Remove this block if not applicable. Duplicate voice-card for more quotes.
+═══════════════════════════════════════════════════════════════ -->
+<!--
+<div class="artifact-section">
+  <div class="artifact-label">Research Artifacts — <!-- FILL: e.g. "Voices from the Field" --></div>
+  <div class="voices-grid">
+
+    <div class="voice-card">
+      <div class="voice-quote"><!-- FILL: participant quote —  no opening quotation mark needed --></div>
+      <div class="voice-who"><!-- FILL: name, age, brief descriptor --></div>
+    </div>
+
+    <div class="voice-card">
+      <div class="voice-quote"><!-- FILL: participant quote --></div>
+      <div class="voice-who"><!-- FILL: attribution --></div>
+    </div>
+
+    <div class="voice-card">
+      <div class="voice-quote"><!-- FILL: participant quote --></div>
+      <div class="voice-who"><!-- FILL: attribution --></div>
+    </div>
+
+    <div class="voice-card">
+      <div class="voice-quote"><!-- FILL: participant quote --></div>
+      <div class="voice-who"><!-- FILL: attribution --></div>
+    </div>
+
+  </div>
+</div>
+-->
+
+<!-- ══ ARTIFACT: FIELD PHOTOS ════════════════════════════════════
+  FILL: each slot's icon (emoji), label, and caption text
+  To add a real photo: uncomment the <img> tag and set src=
+  The first slot spans 2fr so it's visually dominant
+═══════════════════════════════════════════════════════════════ -->
+<div class="artifact-section">
+  <div class="artifact-label"><!-- FILL: section label, e.g. "Research in the Field" --></div>
+  <div class="photos-strip">
+
+    <div class="photo-slot">
+      <!-- FILL: uncomment and update: <img src="assets/imgs/your-photo.jpg" alt="..."> -->
+      <div class="photo-slot-inner">
+        <div class="photo-slot-icon"><!-- FILL: emoji representing the context --></div>
+        <div class="photo-slot-label"><!-- FILL: location / activity --><br><span style="opacity:0.55;font-style:italic">Replace with your photo</span></div>
+      </div>
+      <div class="swap-badge">Add photo</div>
+    </div>
+
+    <div class="photo-slot">
+      <!-- FILL: <img src="assets/imgs/your-photo.jpg" alt="..."> -->
+      <div class="photo-slot-inner">
+        <div class="photo-slot-icon"><!-- FILL: emoji --></div>
+        <div class="photo-slot-label"><!-- FILL: label --><br><span style="opacity:0.55;font-style:italic">Replace with your photo</span></div>
+      </div>
+      <div class="swap-badge">Add photo</div>
+    </div>
+
+    <div class="photo-slot">
+      <!-- FILL: <img src="assets/imgs/your-photo.jpg" alt="..."> -->
+      <div class="photo-slot-inner">
+        <div class="photo-slot-icon"><!-- FILL: emoji --></div>
+        <div class="photo-slot-label"><!-- FILL: label --><br><span style="opacity:0.55;font-style:italic">Replace with your photo</span></div>
+      </div>
+      <div class="swap-badge">Add photo</div>
+    </div>
+
+  </div>
+  <p class="photo-caption"><!-- FILL: 1-sentence caption describing what's shown --></p>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- ══ 03 FINDINGS ═══════════════════════════════════════════════
+  FILL: each finding-row — title (left col) + "so what" (right col)
+  Add or remove .finding-row blocks as needed
+═══════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">03 · Findings</span>
+    <h2 class="section-title"><!-- FILL: e.g. "Strategic Opportunities Found" --></h2>
+  </div>
+
+  <div class="findings-list">
+
+    <div class="finding-row">
+      <div class="finding-idx">01</div>
+      <div class="finding-title"><!-- FILL: finding headline --></div>
+      <div class="finding-so-what"><strong>So what</strong><!-- FILL: implication + opportunity --></div>
+    </div>
+
+    <div class="finding-row">
+      <div class="finding-idx">02</div>
+      <div class="finding-title"><!-- FILL: finding headline --></div>
+      <div class="finding-so-what"><strong>So what</strong><!-- FILL: implication + opportunity --></div>
+    </div>
+
+    <div class="finding-row">
+      <div class="finding-idx">03</div>
+      <div class="finding-title"><!-- FILL: finding headline --></div>
+      <div class="finding-so-what"><strong>So what</strong><!-- FILL: implication + opportunity --></div>
+    </div>
+
+    <div class="finding-row">
+      <div class="finding-idx">04</div>
+      <div class="finding-title"><!-- FILL: finding headline --></div>
+      <div class="finding-so-what"><strong>So what</strong><!-- FILL: implication + opportunity --></div>
+    </div>
+
+    <div class="finding-row">
+      <div class="finding-idx">05</div>
+      <div class="finding-title"><!-- FILL: finding headline --></div>
+      <div class="finding-so-what"><strong>So what</strong><!-- FILL: implication + opportunity --></div>
+    </div>
+
+    <!-- Duplicate .finding-row blocks to add more findings -->
+
+  </div>
+</section>
+
+<!-- ══ ARTIFACT: PERSONAS ════════════════════════════════════════
+  FILL: persona names, tags, descriptions for each card
+  To swap an emoji for a real illustration:
+    add <img src="assets/imgs/persona-name.jpg"> inside .persona-avatar
+  Adjust grid-template-columns on .personas-row as needed
+═══════════════════════════════════════════════════════════════ -->
+<div class="artifact-section">
+  <div class="artifact-label">Research Artifacts — Personas</div>
+
+  <div>
+    <div class="persona-group-label"><!-- FILL: e.g. "User Personas — 4 Profiles" --></div>
+    <div class="personas-row patients"><!-- FILL: adjust grid-template-columns if not 5 -->
+
+      <div class="persona-card">
+        <div class="persona-avatar"><!-- FILL: emoji or <img> --></div>
+        <div class="persona-name"><!-- FILL: persona name --></div>
+        <span class="persona-tag"><!-- FILL: tag --></span>
+        <div class="persona-desc"><!-- FILL: 1–2 sentence description --></div>
+        <div class="persona-swap-hint">Replace icon with persona illustration</div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-avatar"><!-- FILL --></div>
+        <div class="persona-name"><!-- FILL --></div>
+        <span class="persona-tag"><!-- FILL --></span>
+        <div class="persona-desc"><!-- FILL --></div>
+        <div class="persona-swap-hint">Replace icon with persona illustration</div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-avatar"><!-- FILL --></div>
+        <div class="persona-name"><!-- FILL --></div>
+        <span class="persona-tag"><!-- FILL --></span>
+        <div class="persona-desc"><!-- FILL --></div>
+        <div class="persona-swap-hint">Replace icon with persona illustration</div>
+      </div>
+
+      <!-- Duplicate .persona-card blocks to add more personas -->
+
+    </div>
+
+    <!-- Optional: add a second persona group (e.g. HCPs, Admins) using .hcp class -->
+    <!--
+    <div class="persona-group-label">FILL: second group label</div>
+    <div class="personas-row hcps">
+      <div class="persona-card hcp">...</div>
+      <div class="persona-card hcp">...</div>
+      <div class="persona-card" style="border-style:solid;background:#eeece6;display:flex;align-items:center;justify-content:center;">
+        placeholder note
+      </div>
+    </div>
+    -->
+
+  </div>
+</div>
+
+<!-- ══ OPTIONAL: DILO STRIP ══════════════════════════════════════
+  Use for Day-In-The-Life artifacts showing 4 user archetypes.
+  FILL: dilo-user name/archetype, dilo-desc summary, dilo-placeholder label.
+  Remove this block if not applicable.
+═══════════════════════════════════════════════════════════════ -->
+<!--
+<div class="artifact-section">
+  <div class="artifact-label">Research Artifacts — <!-- FILL: e.g. "Day in the Life (DILO)" --></div>
+  <div class="dilo-strip">
+
+    <div class="dilo-card">
+      <div class="dilo-user"><!-- FILL: archetype label e.g. "University Student" --></div>
+      <div class="dilo-desc"><!-- FILL: 2–3 sentences describing their day --></div>
+      <div class="dilo-placeholder">📸 Add DILO map<br>or journey diagram</div>
+    </div>
+
+    <div class="dilo-card">
+      <div class="dilo-user"><!-- FILL --></div>
+      <div class="dilo-desc"><!-- FILL --></div>
+      <div class="dilo-placeholder">📸 Add DILO map<br>or journey diagram</div>
+    </div>
+
+    <div class="dilo-card">
+      <div class="dilo-user"><!-- FILL --></div>
+      <div class="dilo-desc"><!-- FILL --></div>
+      <div class="dilo-placeholder">📸 Add DILO map<br>or journey diagram</div>
+    </div>
+
+    <div class="dilo-card">
+      <div class="dilo-user"><!-- FILL --></div>
+      <div class="dilo-desc"><!-- FILL --></div>
+      <div class="dilo-placeholder">📸 Add DILO map<br>or journey diagram</div>
+    </div>
+
+  </div>
+</div>
+-->
+
+<!-- ══ ARTIFACT: JOURNEY MAP ═════════════════════════════════════
+  To add a real image: uncomment the <img> tag and set src=
+═══════════════════════════════════════════════════════════════ -->
+<div class="artifact-section">
+  <div class="artifact-label">Research Artifacts — <!-- FILL: e.g. "User Journey Map" --></div>
+
+  <div class="journey-map-slot">
+    <!-- FILL: <img src="assets/imgs/journey-map.jpg" alt="User journey map"> -->
+    <div class="journey-slot-inner">
+      <div class="journey-slot-icon">🗺️</div>
+      <div class="journey-slot-label">
+        <strong><!-- FILL: artifact title --></strong>
+        <!-- FILL: 2–3 sentences describing what's shown and its value -->
+        <br><br>
+        <span style="font-family:'Space Mono',monospace;font-size:9px;color:rgba(0,0,0,0.2);font-style:normal;letter-spacing:0.06em;text-transform:uppercase;">Replace: add src="assets/imgs/your-map.jpg" to the img tag above</span>
+      </div>
+    </div>
+    <div class="swap-badge">Add screenshot</div>
+  </div>
+  <p class="photo-caption"><!-- FILL: 1-sentence caption --></p>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- ══ 04 WHAT CHANGED ═══════════════════════════════════════════
+  FILL: outcome-statement → the core strategic shift, 1–2 sentences
+  FILL: 3 shift-items → before → after framing with context
+═══════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">04 · Outcome</span>
+    <h2 class="section-title">What Changed</h2>
+  </div>
+
+  <div class="outcome-hero">
+    <div class="outcome-statement">
+      <!-- FILL: e.g. "Our findings shifted the client from a <em>X</em> to a <em>Y</em> strategy." -->
+    </div>
+
+    <div class="outcome-shifts">
+      <div class="shift-item">
+        <div class="shift-arrow">→</div>
+        <div class="shift-text">
+          <strong><!-- FILL: Before → After label --></strong>
+          <!-- FILL: 1–2 sentence explanation -->
+        </div>
+      </div>
+      <div class="shift-item">
+        <div class="shift-arrow">→</div>
+        <div class="shift-text">
+          <strong><!-- FILL: Before → After label --></strong>
+          <!-- FILL: 1–2 sentence explanation -->
+        </div>
+      </div>
+      <div class="shift-item">
+        <div class="shift-arrow">→</div>
+        <div class="shift-text">
+          <strong><!-- FILL: Before → After label --></strong>
+          <!-- FILL: 1–2 sentence explanation -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- ══ 05 MY ROLE ════════════════════════════════════════════════
+  FILL: 3 role cards — icon (emoji), title, body
+  Add a 4th by duplicating a .role-card and updating role-grid to repeat(4,1fr)
+═══════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">05 · Role</span>
+    <h2 class="section-title">My Specific Role</h2>
+  </div>
+
+  <div class="role-grid">
+    <div class="role-card">
+      <div class="role-icon"><!-- FILL: emoji --></div>
+      <div class="role-title"><!-- FILL: role title --></div>
+      <div class="role-body"><!-- FILL: 2–3 sentences on your specific contribution --></div>
+    </div>
+    <div class="role-card">
+      <div class="role-icon"><!-- FILL: emoji --></div>
+      <div class="role-title"><!-- FILL: role title --></div>
+      <div class="role-body"><!-- FILL: 2–3 sentences on your specific contribution --></div>
+    </div>
+    <div class="role-card">
+      <div class="role-icon"><!-- FILL: emoji --></div>
+      <div class="role-title"><!-- FILL: role title --></div>
+      <div class="role-body"><!-- FILL: 2–3 sentences on your specific contribution --></div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- ══ 06 REFLECTION ═════════════════════════════════════════════
+  FILL: aside heading + paragraph
+  FILL: 3 reflection items — each starts with a bolded lesson
+═══════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">06 · Reflection</span>
+    <h2 class="section-title">What I'd Do Differently</h2>
+  </div>
+
+  <div class="reflection-cols">
+    <div class="reflection-aside">
+      <h3><!-- FILL: reflective aside heading --></h3>
+      <p><!-- FILL: 1–2 sentences setting up the reflection --></p>
+    </div>
+
+    <div class="reflection-items">
+      <div class="reflection-item">
+        <p><strong><!-- FILL: lesson title. --></strong> <!-- FILL: 2–3 sentences elaborating --></p>
+      </div>
+      <div class="reflection-item">
+        <p><strong><!-- FILL: lesson title. --></strong> <!-- FILL: 2–3 sentences elaborating --></p>
+      </div>
+      <div class="reflection-item">
+        <p><strong><!-- FILL: lesson title. --></strong> <!-- FILL: 2–3 sentences elaborating --></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- ══ FOOTER NAV ════════════════════════════════════════════════
+  FILL: next case study title
+  FILL: href on "Next Case →" button
+═══════════════════════════════════════════════════════════════ -->
+<div class="case-footer">
+  <div class="footer-left">
+    <p>Next Case Study</p>
+    <h3><!-- FILL: title of the next case study --></h3>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <a href="index.html#portfolio" class="btn btn-outline">← All Work</a>
+    <a href="<!-- FILL: next-case-study.html -->" class="btn">Next Case →</a>
+  </div>
+</div>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.section, .stat-card, .artifact-section').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
