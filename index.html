@@ -521,6 +521,39 @@
         grid-template-columns: 1fr !important;
       }
     }
+
+    /* ===== RESPONSIVE ===== */
+
+    /* Tablet ≤900px */
+    @media (max-width: 900px) {
+      .sec-wrap { padding: 0 32px !important; }
+      #portfolio-section { padding: 48px 0 24px !important; }
+      #about-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
+      #about-text-grid { grid-template-columns: 1fr !important; }
+      .services-grid { grid-template-columns: 1fr !important; }
+      .blog-entry { flex-direction: column !important; gap: 24px !important; }
+      .blog-thumb { width: 100% !important; height: 200px !important; }
+      #contact { padding: 64px 32px !important; }
+      #contact h2 { font-size: clamp(28px, 5vw, 44px) !important; }
+      footer { padding: 40px 32px 32px !important; }
+    }
+
+    /* Mobile ≤600px */
+    @media (max-width: 600px) {
+      .sec-wrap { padding: 0 20px !important; }
+      #nav-links > a:not(:last-child) { display: none !important; }
+      .hero-icon { display: none !important; }
+      #sticky-cluster { width: 100vw !important; left: 0 !important; transform: scale(0.5) !important; transform-origin: top left !important; }
+      #portfolio-section { padding: 40px 0 16px !important; }
+      .services-grid { grid-template-columns: 1fr !important; }
+      .service-tile { flex-direction: column !important; }
+      .service-icon-panel { width: 100% !important; padding: 24px !important; }
+      .blog-thumb { height: 160px !important; }
+      #contact { padding: 56px 20px !important; }
+      #contact h2 { font-size: clamp(24px, 6vw, 36px) !important; }
+      footer { padding: 32px 20px 24px !important; overflow: hidden; }
+      footer > div { flex-wrap: wrap !important; justify-content: center !important; gap: 16px !important; }
+    }
   </style>
 </head>
 
@@ -531,7 +564,7 @@
     <a href="#" class="mono"
       style="font-size:11px; font-weight:700; letter-spacing:0.14em; color:#1a1a1a; text-decoration:none;">VIDITA
       BHAGAT</a>
-    <div style="display:flex; gap:24px; align-items:center;">
+    <div id="nav-links" style="display:flex; gap:24px; align-items:center;">
       <a href="#about" class="mono"
         style="font-size:11px; letter-spacing:0.12em; color:#333; text-decoration:none;">ABOUT</a>
       <a href="#services" class="mono"
@@ -585,7 +618,7 @@
     </svg>
 
     <!-- === Sticky notes cluster === -->
-    <div style="position:absolute; top:0; left:50%; transform:translateX(-50%); width:720px; height:100%;">
+    <div id="sticky-cluster" style="position:absolute; top:0; left:50%; transform:translateX(-50%); width:720px; height:100%;">
 
       <!-- Main note — soft coral/peach — rotate(-5deg) -->
       <div class="sticky-note"
@@ -649,18 +682,17 @@
 
   <!-- ===== ABOUT (CHANGE 2: photo + restructured layout) ===== -->
   <section id="about" style="background:#c4bff0; padding:72px 0;">
-    <div style="max-width:1200px; margin:0 auto; padding:0 64px;">
+    <div class="sec-wrap" style="max-width:1200px; margin:0 auto; padding:0 64px;">
       <p class="mono"
         style="font-size:10px; letter-spacing:0.16em; color:#5544aa; text-transform:uppercase; margin-bottom:12px;">
         ABOUT</p>
 
-      <div style="display:grid; grid-template-columns:220px 1fr; gap:72px; align-items:start;">
+      <div id="about-grid" style="display:grid; grid-template-columns:220px 1fr; gap:72px; align-items:start;">
 
         <!-- Photo (polaroid style) -->
         <div style="padding-top:4px;">
           <div class="polaroid-wrap">
-            <img src="https://viditabhagat.github.io/assets/imgs/vidita.JPG" alt="Vidita Bhagat"
-              onerror="this.style.background='#a8b8d0';this.style.aspectRatio='3/4';this.removeAttribute('src');" />
+            <img src="Assets/vidita.png" alt="Vidita Bhagat" />
             <p class="polaroid-label">Vidita Bhagat</p>
           </div>
         </div>
@@ -671,7 +703,7 @@
             style="font-style:italic; font-size:26px; font-weight:300; line-height:1.45; color:#111; margin-bottom:36px; max-width:680px;">
             "I understand problems through people — then make whatever needs to be made to solve them."
           </p>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px;">
+          <div id="about-text-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:40px;">
             <p style="font-size:14px; line-height:1.78; color:#333;">
               I've spent the last four years working across early-stage startups and large enterprises;
               designing products, rebuilding brands, and leading research that shaped what got built next.
@@ -692,14 +724,14 @@
 
   <!-- ===== SERVICES (CHANGE 3: horizontal tile redesign) ===== -->
   <section id="services" style="background:#eeece6; padding:72px 0 56px;">
-    <div style="max-width:1200px; margin:0 auto; padding:0 64px;">
+    <div class="sec-wrap" style="max-width:1200px; margin:0 auto; padding:0 64px;">
       <p class="mono"
         style="font-size:10px; letter-spacing:0.16em; color:#888; text-transform:uppercase; margin-bottom:12px;">WHAT I
         DO</p>
       <h2 style="font-size:36px; font-weight:300; color:#111; margin-bottom:48px; letter-spacing:-0.5px;">How I work
       </h2>
 
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div class="services-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
 
         <!-- Tile 1: Research & Strategy -->
         <div class="service-tile" style="background:#f5f4f0;">
@@ -768,8 +800,8 @@
   </section>
 
   <!-- ===== PORTFOLIO (CHANGE 4: section heading) ===== -->
-  <div id="portfolio-section" style="background:#eeece6; padding:56px 64px 32px;">
-    <div style="max-width:1200px; margin:0 auto;">
+  <div id="portfolio-section" style="background:#eeece6; padding:56px 0 32px;">
+    <div class="sec-wrap" style="max-width:1200px; margin:0 auto; padding:0 64px;">
       <p class="mono"
         style="font-size:10px; letter-spacing:0.16em; color:#888; text-transform:uppercase; margin-bottom:12px;">CASE
         STUDIES</p>
@@ -1101,7 +1133,7 @@
 
   <!-- ===== BLOG (CHANGE 5: separate section, horizontal list style) ===== -->
   <section id="blogs" style="background:#eeece6; padding:72px 0 80px;">
-    <div style="max-width:1200px; margin:0 auto; padding:0 64px;">
+    <div class="sec-wrap" style="max-width:1200px; margin:0 auto; padding:0 64px;">
       <p class="mono"
         style="font-size:10px; letter-spacing:0.16em; color:#888; text-transform:uppercase; margin-bottom:12px;">WRITING
       </p>
@@ -1109,9 +1141,9 @@
       </h2>
 
       <!-- Entry 1 -->
-      <div style="display:flex; gap:48px; align-items:center; padding:40px 0; border-top:1px solid rgba(0,0,0,0.1);">
+      <div class="blog-entry" style="display:flex; gap:48px; align-items:center; padding:40px 0; border-top:1px solid rgba(0,0,0,0.1);">
         <!-- Thumbnail -->
-        <div
+        <div class="blog-thumb"
           style="width:200px; height:144px; background:#b0cce8; border-radius:4px; flex-shrink:0; overflow:hidden; position:relative;">
           <svg width="200" height="144" viewBox="0 0 200 144" fill="none">
             <rect width="200" height="144" fill="#8ab8d8" />
@@ -1143,10 +1175,10 @@
       </div>
 
       <!-- Entry 2 -->
-      <div
+      <div class="blog-entry"
         style="display:flex; gap:48px; align-items:center; padding:40px 0; border-top:1px solid rgba(0,0,0,0.1); border-bottom:1px solid rgba(0,0,0,0.1);">
         <!-- Thumbnail -->
-        <div style="width:200px; height:144px; background:#f09090; border-radius:4px; flex-shrink:0; overflow:hidden;">
+        <div class="blog-thumb" style="width:200px; height:144px; background:#f09090; border-radius:4px; flex-shrink:0; overflow:hidden;">
           <svg width="200" height="144" viewBox="0 0 200 144" fill="none">
             <rect width="200" height="144" fill="#f09090" />
             <ellipse cx="100" cy="118" rx="54" ry="16" fill="#c86040" />
