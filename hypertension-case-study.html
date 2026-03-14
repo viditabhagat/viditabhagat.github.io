@@ -1,0 +1,1321 @@
+<!--
+  CASE STUDY TEMPLATE — USAGE GUIDE
+  ===================================
+  To create a new case study, duplicate this file and:
+
+  [HERO]
+  - Replace: project title, tagline, role tags, timeline tag
+  - Replace: 4 stat numbers and their labels
+
+  [PROBLEM]
+  - Replace: problem statement paragraphs
+  - Replace: dark insight box quote + cite
+
+  [APPROACH]
+  - Replace: 4 approach titles, body copy, and "→ Why" callouts
+
+  [FIELD RESEARCH]
+  - Replace: photo slot icons, labels, and captions
+  - Swap in: real field photos by uncommenting <img> tags
+
+  [FINDINGS]
+  - Replace: finding titles and "So what" descriptions
+  - Add or remove .finding-row items as needed
+
+  [PERSONAS]
+  - Replace: persona names, tags, descriptions
+  - Swap: emoji avatars with persona illustrations via <img> in .persona-avatar
+
+  [JOURNEY MAP]
+  - Swap: uncomment <img> tag with your actual journey map image
+
+  [WHAT CHANGED]
+  - Replace: outcome statement and 3 strategic shift items
+
+  [MY ROLE]
+  - Replace: 3 role card titles, icons, and descriptions
+
+  [REFLECTION]
+  - Replace: aside heading + paragraph
+  - Replace: 3 reflection items
+
+  [NEXT PROJECT]
+  - Replace: next case study title and href on "Next Case →" button
+  ===================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hypertension Case Study — Vidita Bhagat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  /* ===================================================================
+     DESIGN SYSTEM — mirrors index.html exactly
+     Colors: no CSS variables (portfolio uses none); all values are
+     the same hardcoded hex values used in index.html.
+     Fonts: DM Sans + Space Mono only (same Google Fonts import).
+     Nav: static, #eeece6 bg, Space Mono — identical to portfolio nav.
+  =================================================================== */
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    background: #eeece6;
+    color: #111;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── UTILITY ── */
+  .mono { font-family: 'Space Mono', monospace; }
+
+  /* ── NAV — exact portfolio match ──
+     portfolio: background:#eeece6; padding:16px 28px; static position */
+  nav {
+    background: #eeece6;
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+
+  /* Portfolio logo: Space Mono 11px weight 700 letter-spacing 0.14em color #1a1a1a */
+  .nav-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: #1a1a1a;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    list-style: none;
+  }
+
+  /* Portfolio nav links: Space Mono 11px letter-spacing 0.12em color #333 */
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: #111; }
+
+  /* Portfolio nav button: Space Mono 10px, bg #1a1a1a, color #eeece6,
+     padding 7px 14px, border-radius 2px */
+  .nav-back {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: #eeece6;
+    background: #1a1a1a;
+    padding: 7px 14px;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.15s;
+  }
+  .nav-back:hover { background: #e5431b; }
+
+  /* ── HERO ──
+     2-col grid: left = card surface (#f5f4f0), right = dark (#1c211c)
+     #1c211c is the portfolio footer color — used for all dark blocks */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 52px);
+  }
+
+  .hero-left {
+    background: #f5f4f0;
+    padding: 80px 64px 80px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid rgba(0,0,0,0.06);
+  }
+
+  /* Section label pattern from portfolio: Space Mono 10px uppercase
+     letter-spacing 0.16em color #888 — with accent line before */
+  .case-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #e5431b;
+    margin-bottom: 28px;
+  }
+  .case-label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: #e5431b;
+    flex-shrink: 0;
+  }
+
+  /* Portfolio heading pattern: DM Sans, 36px, weight 300, letter-spacing -0.5px
+     Hero is larger: clamp(32px, 3.8vw, 52px) same weight/tracking */
+  .hero-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(32px, 3.8vw, 52px);
+    font-weight: 300;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    color: #111;
+    margin-bottom: 24px;
+  }
+  .hero-title em { font-style: italic; color: #e5431b; }
+
+  /* Body text pattern: 14px weight 300 line-height 1.75 color #666 */
+  .hero-sub {
+    font-size: 14px;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.75;
+    max-width: 480px;
+    margin-bottom: 40px;
+  }
+
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  /* Tags: Space Mono 10px uppercase, border like portfolio project card tags
+     portfolio card tags: bg #d4d0c8, border-radius 3px, padding 4px 10px */
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #666;
+    background: #e8e6e0;
+    border-radius: 3px;
+    padding: 5px 12px;
+  }
+
+  /* Hero right: portfolio dark (#1c211c = footer bg), 2×2 grid */
+  .hero-right {
+    background: #1c211c;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  /* Stat cards: flat, dark bg, staggered scroll-reveal */
+  .stat-card {
+    padding: 48px 40px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .stat-card.visible { opacity: 1; transform: translateY(0); }
+  .stat-card:nth-child(1) { transition-delay: 0.1s; }
+  .stat-card:nth-child(2) { transition-delay: 0.2s; border-right: none; }
+  .stat-card:nth-child(3) { transition-delay: 0.3s; border-bottom: none; }
+  .stat-card:nth-child(4) { transition-delay: 0.4s; border-right: none; border-bottom: none; }
+
+  /* Stat number: DM Sans (matches portfolio heading font), weight 300, large */
+  .stat-num {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 64px;
+    font-weight: 300;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: -2px;
+    margin-bottom: 8px;
+  }
+  .stat-num span { color: #e5431b; }
+
+  /* Stat label: Space Mono 10px uppercase — portfolio label pattern on dark bg */
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 72px 64px;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .section.visible { opacity: 1; transform: translateY(0); }
+
+  .artifact-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 64px 64px;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .artifact-section.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── SECTION HEADER — portfolio pattern ──
+     Stack: Space Mono 10px uppercase label, then DM Sans 36px weight 300 title.
+     The section-header is a flex column; section-num acts as the label. */
+  .section-header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 48px;
+  }
+
+  /* section-num restyled as a Space Mono label (matching portfolio section labels) */
+  .section-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    color: #888;
+    text-transform: uppercase;
+  }
+
+  /* section-title: DM Sans 36px weight 300 — exact portfolio heading match */
+  .section-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: #111;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+
+  /* ── DIVIDER — portfolio border style ── */
+  .full-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(0,0,0,0.08);
+  }
+
+  /* ── ARTIFACT LABEL — portfolio section label pattern ── */
+  .artifact-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #888;
+    margin-bottom: 20px;
+  }
+  .artifact-label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: rgba(0,0,0,0.2);
+    flex-shrink: 0;
+  }
+
+  /* ── PROBLEM ── */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  /* Problem body text: DM Sans 15px weight 300 color #333 — portfolio body pattern */
+  .problem-text {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: #333;
+  }
+  .problem-text p + p { margin-top: 20px; }
+  .problem-text strong { font-weight: 500; color: #111; }
+
+  /* Insight box: #1c211c (portfolio dark/footer color) — consistent with dark blocks */
+  .insight-box {
+    background: #1c211c;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .insight-box::before {
+    content: '"';
+    font-family: 'DM Sans', sans-serif;
+    font-size: 160px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.05);
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  /* Insight quote: DM Sans italic — portfolio italic pattern from hero about quote */
+  .insight-box p {
+    font-style: italic;
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.88);
+    line-height: 1.75;
+    position: relative;
+  }
+  .insight-box cite {
+    display: block;
+    margin-top: 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-style: normal;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── APPROACH CARDS ──
+     Grid of 4 with 2px gaps, #eeece6 as the gap color.
+     Each card: #f5f4f0 surface, flat (no shadow), hover: translateY(-5px)
+     matching portfolio's service-tile hover pattern (transition 0.22s ease) */
+  .approach-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    background: rgba(0,0,0,0.08);
+  }
+
+  .approach-card {
+    background: #f5f4f0;
+    padding: 40px;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+  .approach-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Decorative number: DM Sans, large, very muted — present but unobtrusive */
+  .approach-num {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 40px;
+    font-weight: 300;
+    color: rgba(0,0,0,0.1);
+    line-height: 1;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+
+  .approach-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: #111;
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+
+  .approach-body {
+    font-size: 13px;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.7;
+  }
+
+  /* "Why" callout: Space Mono with accent color — same as portfolio's "Read →" links */
+  .approach-why {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: #e5431b;
+    line-height: 1.65;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── FIELD PHOTOS ── */
+  .photos-strip {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3px;
+    height: 380px;
+  }
+
+  /* Photo slots: #f5f4f0 surface with dashed border — same as approach cards */
+  .photo-slot {
+    background: #f5f4f0;
+    border: 1px dashed rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    transition: background 0.22s ease, border-color 0.22s ease;
+  }
+  .photo-slot:hover { background: #eceae4; border-color: rgba(0,0,0,0.25); }
+  .photo-slot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .photo-slot-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+  .photo-slot-icon { font-size: 28px; opacity: 0.3; }
+
+  /* Slot label: Space Mono 10px uppercase — portfolio label pattern */
+  .photo-slot-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.55;
+  }
+
+  /* Badge: matches portfolio's small label tag style */
+  .swap-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #1a1a1a;
+    color: #eeece6;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 2px;
+    opacity: 0.35;
+  }
+
+  /* Caption: 12px muted italic — portfolio blog excerpt/caption style */
+  .photo-caption {
+    font-size: 12px;
+    font-weight: 300;
+    color: #888;
+    margin-top: 12px;
+    font-style: italic;
+    text-align: center;
+  }
+
+  /* ── FINDINGS ── */
+  .findings-list { display: flex; flex-direction: column; }
+
+  /* Finding rows: clean table-like list with portfolio's border style */
+  .finding-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    padding: 32px 0;
+    align-items: start;
+    transition: background 0.2s, padding 0.2s;
+    cursor: default;
+  }
+  .finding-row:first-child { border-top: 1px solid rgba(0,0,0,0.08); }
+
+  /* Hover: background to #f5f4f0 + padding expand (like portfolio service tiles) */
+  .finding-row:hover {
+    background: #f5f4f0;
+    padding: 32px 64px;
+    margin: 0 -64px;
+  }
+
+  /* Index: DM Sans large weight 300, very muted — decorative only */
+  .finding-idx {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: rgba(0,0,0,0.12);
+    letter-spacing: -0.5px;
+    padding-top: 2px;
+  }
+
+  /* Finding title: DM Sans 15px weight 500 — matches portfolio card heading weight */
+  .finding-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: #111;
+    padding-right: 32px;
+    line-height: 1.45;
+  }
+
+  /* "So what" column: 13px muted, left border in accent-light (salmon) */
+  .finding-so-what {
+    font-size: 13px;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.65;
+    border-left: 2px solid #f5bfa5;
+    padding-left: 20px;
+  }
+  .finding-so-what strong {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    font-weight: 400;
+    color: #e5431b;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 6px;
+  }
+
+  /* ── PERSONAS ── */
+
+  /* Group label: Space Mono 10px uppercase — portfolio label pattern */
+  .persona-group-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #888;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .personas-row {
+    display: grid;
+    gap: 3px;
+    margin-bottom: 20px;
+  }
+  .personas-row.patients { grid-template-columns: repeat(5, 1fr); }
+  .personas-row.hcps    { grid-template-columns: repeat(2, 1fr) 3fr; }
+
+  /* Persona cards: #f5f4f0 surface, dashed border — same as photo slots */
+  .persona-card {
+    background: #f5f4f0;
+    border: 1px dashed rgba(0,0,0,0.12);
+    padding: 22px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: background 0.22s ease, border-color 0.22s ease;
+  }
+  .persona-card:hover {
+    background: #fce4de;
+    border-color: #e5431b;
+    border-style: solid;
+  }
+
+  /* HCP card hover: lavender (portfolio lavender #c4bff0) */
+  .persona-card.hcp:hover {
+    background: #eceaf8;
+    border-color: #8880c0;
+  }
+
+  .persona-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 3px;
+    background: #e8e6e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .persona-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+  .persona-name { font-size: 13px; font-weight: 500; color: #111; line-height: 1.3; }
+
+  /* Patient tag: accent red — portfolio accent pattern */
+  .persona-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #e5431b;
+    background: #fce4de;
+    border-radius: 3px;
+    padding: 3px 8px;
+    align-self: flex-start;
+  }
+  /* HCP tag: lavender — portfolio lavender pattern */
+  .persona-card.hcp .persona-tag {
+    color: #5544aa;
+    background: #eceaf8;
+  }
+
+  .persona-desc {
+    font-size: 12px;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.55;
+  }
+
+  .persona-swap-hint {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: rgba(0,0,0,0.2);
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  /* ── JOURNEY MAP SLOT ── */
+  .journey-map-slot {
+    background: #f5f4f0;
+    border: 1px dashed rgba(0,0,0,0.12);
+    height: 440px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.22s ease, border-color 0.22s ease;
+  }
+  .journey-map-slot:hover { background: #eceae4; border-color: rgba(0,0,0,0.25); }
+  .journey-map-slot img { width: 100%; height: 100%; object-fit: contain; padding: 20px; }
+
+  .journey-slot-inner { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .journey-slot-icon { font-size: 36px; opacity: 0.2; }
+
+  .journey-slot-label {
+    font-size: 13px;
+    font-weight: 300;
+    color: #888;
+    text-align: center;
+    line-height: 1.65;
+    max-width: 360px;
+  }
+  .journey-slot-label strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 6px;
+  }
+
+  /* ── OUTCOME BLOCK ──
+     Full-bleed dark: #1c211c (portfolio footer color — consistent dark palette).
+     margin: 0 -64px compensates for section padding to go edge-to-edge. */
+  .outcome-hero {
+    background: #1c211c;
+    padding: 72px 64px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 72px;
+    align-items: center;
+    margin: 0 -64px;
+  }
+
+  /* Outcome statement: DM Sans, large italic heading on dark — portfolio about-section style */
+  .outcome-statement {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(20px, 2.5vw, 32px);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.4;
+    letter-spacing: -0.3px;
+  }
+  .outcome-statement em { font-style: normal; color: #e5431b; }
+
+  .outcome-shifts { display: flex; flex-direction: column; gap: 22px; }
+
+  .shift-item { display: flex; gap: 16px; align-items: flex-start; }
+
+  /* Shift arrow: accent color #e5431b — same accent used throughout */
+  .shift-arrow {
+    color: #e5431b;
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .shift-text { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.65); line-height: 1.65; }
+  .shift-text strong { display: block; font-weight: 500; color: #fff; font-size: 14px; margin-bottom: 3px; }
+
+  /* ── MY ROLE — 3-col grid ── */
+  .role-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: rgba(0,0,0,0.08);
+  }
+
+  .role-card { background: #f5f4f0; padding: 32px; }
+
+  /* Role icon: square (not circle), salmon bg — consistent with portfolio icon panels */
+  .role-icon {
+    width: 40px;
+    height: 40px;
+    background: #fce4de;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    font-size: 18px;
+  }
+
+  /* Role title: DM Sans 14px weight 500 — same as service-title weight in portfolio */
+  .role-title { font-size: 14px; font-weight: 500; color: #111; margin-bottom: 8px; }
+
+  .role-body { font-size: 13px; font-weight: 300; color: #666; line-height: 1.65; }
+
+  /* ── REFLECTION ── */
+  .reflection-cols {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 72px;
+    align-items: start;
+  }
+
+  .reflection-aside { position: sticky; top: 80px; }
+
+  /* Aside heading: DM Sans 26px weight 300 — consistent with portfolio italic heading style */
+  .reflection-aside h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 26px;
+    font-weight: 300;
+    line-height: 1.35;
+    letter-spacing: -0.3px;
+    margin-bottom: 14px;
+  }
+  .reflection-aside p { font-size: 13px; font-weight: 300; color: #666; line-height: 1.75; }
+
+  .reflection-items { display: flex; flex-direction: column; gap: 20px; }
+
+  /* Reflection items: #f5f4f0 surface, left border in #cce044 (portfolio lime accent)
+     lime is the closest "warmth/insight" color in the portfolio palette */
+  .reflection-item {
+    padding: 28px 32px;
+    background: #f5f4f0;
+    border-left: 3px solid #cce044;
+  }
+
+  .reflection-item p { font-size: 14px; font-weight: 300; color: #333; line-height: 1.75; }
+  .reflection-item strong { font-weight: 500; color: #111; }
+
+  /* ── CASE FOOTER / NAV ── */
+  .case-footer {
+    border-top: 1px solid rgba(0,0,0,0.08);
+    padding: 56px 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  /* Footer label: Space Mono 10px uppercase — portfolio label pattern */
+  .footer-left p {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  /* Footer heading: DM Sans 22px weight 400 — matches portfolio card heading */
+  .footer-left h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: -0.2px;
+  }
+
+  /* Button: Space Mono 10px uppercase — matches portfolio nav CTA button exactly */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background: #1a1a1a;
+    color: #eeece6;
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .btn:hover { background: #e5431b; }
+
+  /* Outline button: same font/size, transparent bg with border */
+  .btn-outline {
+    background: transparent;
+    color: #1a1a1a;
+    border: 1px solid rgba(0,0,0,0.2);
+  }
+  .btn-outline:hover { background: #1a1a1a; color: #eeece6; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 48px 24px; border-right: none; border-bottom: 1px solid rgba(0,0,0,0.08); }
+    .hero-right { grid-template-columns: 1fr 1fr; }
+    .stat-num { font-size: 44px; }
+    .stat-card { padding: 28px 20px; }
+    .section { padding: 56px 24px; }
+    .artifact-section { padding: 0 24px 48px; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .approach-grid { grid-template-columns: 1fr; }
+    .finding-row { grid-template-columns: 56px 1fr; }
+    .finding-so-what { display: none; }
+    .finding-row:hover { margin: 0; padding: 32px 0; }
+    .outcome-hero { grid-template-columns: 1fr; padding: 48px 24px; margin: 0 -24px; }
+    .role-grid { grid-template-columns: 1fr; }
+    .reflection-cols { grid-template-columns: 1fr; }
+    .reflection-aside { position: static; }
+    .photos-strip { grid-template-columns: 1fr 1fr; height: auto; }
+    .photos-strip .photo-slot:first-child { grid-column: span 2; height: 200px; }
+    .photos-strip .photo-slot { height: 160px; }
+    .personas-row.patients { grid-template-columns: repeat(2, 1fr); }
+    .personas-row.hcps { grid-template-columns: 1fr 1fr; }
+    .journey-map-slot { height: 280px; }
+    .case-footer { padding: 40px 24px; }
+  }
+</style>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+
+<!-- ── NAV — matches portfolio nav exactly ── -->
+<nav>
+  <a href="index.html" class="nav-name">VIDITA BHAGAT</a>
+  <ul class="nav-links">
+    <li><a href="index.html#portfolio">Work</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#contact" style="font-size:10px; letter-spacing:0.1em; color:#eeece6; background:#1a1a1a; padding:7px 14px; text-decoration:none; border-radius:2px;">Contact</a></li>
+  </ul>
+  <a href="index.html#portfolio" class="nav-back">← All Work</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="case-label">Case Study · Healthcare Research</div>
+    <h1 class="hero-title">
+      Reshaping a <em>$10B Pharma</em> Company's India Strategy
+    </h1>
+    <p class="hero-sub">
+      How ethnographic research across 20+ Indian cities uncovered the real barriers to hypertension care — and directly informed a pharmaceutical company's product roadmap.
+    </p>
+    <div class="hero-tags">
+      <span class="tag">User Research Lead</span>
+      <span class="tag">Ethnographic Research</span>
+      <span class="tag">Product Strategy</span>
+      <span class="tag">Healthcare MNC</span>
+      <span class="tag">6 Months</span>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="stat-card">
+      <div class="stat-num">36<span>+</span></div>
+      <div class="stat-label">Participants across patients, caregivers &amp; HCPs</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">7</div>
+      <div class="stat-label">Strategic opportunity areas identified</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">20<span>+</span></div>
+      <div class="stat-label">Cities across Tier 1 &amp; Tier 2 India</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">1</div>
+      <div class="stat-label">Product roadmap directly reshaped</div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- ── 01 PROBLEM ── -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">01 · Problem</span>
+    <h2 class="section-title">The Problem Worth Solving</h2>
+  </div>
+
+  <div class="problem-grid">
+    <div class="problem-text">
+      <p>Hypertension affects 1 in 4 adults in India — yet 1 in 3 people with high blood pressure don't know they have it. Our client, a global pharmaceutical leader, knew their products worked clinically. What they didn't understand was why patients weren't staying on treatment.</p>
+      <p>The real question underneath the brief was harder: <strong>where in the patient journey could they intervene most effectively, and what would actually change behavior?</strong></p>
+      <p>This wasn't a standard usability study. We were mapping a 10+ year disease journey across patients with multiple comorbidities, varying health literacy levels, and wildly different access to healthcare — across both metros and Tier 2 cities.</p>
+    </div>
+
+    <div class="insight-box">
+      <p>The biggest barrier to hypertension management in India wasn't medication efficacy. It was a systemic breakdown in awareness, diagnosis, and behavioral adherence long before a patient ever saw a doctor.</p>
+      <cite>— Core finding, 6-month ethnographic study</cite>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- ── 02 APPROACH ── -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">02 · Approach</span>
+    <h2 class="section-title">My Approach — and Why</h2>
+  </div>
+
+  <div class="approach-grid">
+    <div class="approach-card">
+      <div class="approach-num">1</div>
+      <div class="approach-title">Chose ethnographic over survey methods</div>
+      <div class="approach-body">Home visits and hospital observations rather than questionnaires — because patients consistently underreport adherence issues in clinical settings.</div>
+      <div class="approach-why">→ Being in their homes showed us what actually happens at 8pm when they're tired and have 6 pills to take.</div>
+    </div>
+
+    <div class="approach-card">
+      <div class="approach-num">2</div>
+      <div class="approach-title">Recruited across comorbidity complexity</div>
+      <div class="approach-body">Included patients with hypertension alongside diabetes, heart failure, and stroke — because that's the actual patient reality, not a cleaned-up sample.</div>
+      <div class="approach-why">→ Surfaced pill burden insights that a standard sample would have missed entirely.</div>
+    </div>
+
+    <div class="approach-card">
+      <div class="approach-num">3</div>
+      <div class="approach-title">Ran HCPs as a parallel stream</div>
+      <div class="approach-body">Talked to GPs, cardiologists, neurologists, and nurses simultaneously with patients — not as an afterthought.</div>
+      <div class="approach-why">→ Mapped the critical tension between what doctors prescribe and what patients actually do.</div>
+    </div>
+
+    <div class="approach-card">
+      <div class="approach-num">4</div>
+      <div class="approach-title">Synthesized around behavior drivers</div>
+      <div class="approach-body">Structured synthesis around underlying behavioral and systemic drivers — not just pain points — because those are what product interventions can actually address.</div>
+      <div class="approach-why">→ Made the output directly actionable for the client's strategy team.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ARTIFACT: FIELD PHOTOS ── -->
+<div class="artifact-section">
+  <div class="artifact-label">Research in the Field</div>
+  <div class="photos-strip">
+
+    <div class="photo-slot">
+      <img src="assets/hypertension/home visit.webp" alt="Home visit with hypertension patient in Tier 2 city">
+    </div>
+
+    <div class="photo-slot">
+      <img src="assets/hypertension/hospital visit.webp" alt="Hospital observation during HCP consultation with hypertension patient">
+    </div>
+
+    <div class="photo-slot">
+      <img src="assets/hypertension/remote idi.webp" alt="Remote in-depth interview session with hypertension patient">
+    </div>
+
+  </div>
+  <p class="photo-caption">Field research across Tier 1 &amp; Tier 2 cities — home visits, hospital observations, and remote in-depth interviews with patients, caregivers, and HCPs.</p>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- ── 03 FINDINGS ── -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">03 · Findings</span>
+    <h2 class="section-title">Strategic Opportunities Found</h2>
+  </div>
+
+  <div class="findings-list">
+
+    <div class="finding-row">
+      <div class="finding-idx">01</div>
+      <div class="finding-title">The awareness gap is earlier than expected</div>
+      <div class="finding-so-what">
+        <strong>So what</strong>
+        Patients fail at recognition before they fail at adherence. Opportunity: upstream education interventions before diagnosis.
+      </div>
+    </div>
+
+    <div class="finding-row">
+      <div class="finding-idx">02</div>
+      <div class="finding-title">Young hypertension is a growing crisis being ignored</div>
+      <div class="finding-so-what">
+        <strong>So what</strong>
+        Current materials are built for older demographics. Under-35 patients experience intense denial post-diagnosis. Opportunity: age-segmented communication.
+      </div>
+    </div>
+
+    <div class="finding-row">
+      <div class="finding-idx">03</div>
+      <div class="finding-title">The kitchen is the real treatment center</div>
+      <div class="finding-so-what">
+        <strong>So what</strong>
+        Female caregivers are leading dietary management — often with beliefs that contradict medical advice. Opportunity: family-centered intervention design.
+      </div>
+    </div>
+
+    <div class="finding-row">
+      <div class="finding-idx">04</div>
+      <div class="finding-title">Pill burden is cognitively underestimated by HCPs</div>
+      <div class="finding-so-what">
+        <strong>So what</strong>
+        Patients quietly drop medications to simplify their regimen. Opportunity: simplified regimen solutions and caregiver support tools.
+      </div>
+    </div>
+
+    <div class="finding-row">
+      <div class="finding-idx">05</div>
+      <div class="finding-title">Monitoring gaps break the behavioral feedback loop</div>
+      <div class="finding-so-what">
+        <strong>So what</strong>
+        When patients feel fine, they stop medication. BP monitoring creates the reinforcement loop. Opportunity: accessible home monitoring + digital reminders.
+      </div>
+    </div>
+
+    <div class="finding-row">
+      <div class="finding-idx">06</div>
+      <div class="finding-title">Misinformation undermines trust in medication</div>
+      <div class="finding-so-what">
+        <strong>So what</strong>
+        Fear of side effects drives silent treatment abandonment. Opportunity: proactive, culturally-grounded safety communication.
+      </div>
+    </div>
+
+    <div class="finding-row">
+      <div class="finding-idx">07</div>
+      <div class="finding-title">HCP-patient communication breaks down at diagnosis</div>
+      <div class="finding-so-what">
+        <strong>So what</strong>
+        Patients leave diagnosis consultations confused and without behavioral guidance. Opportunity: tools to support better diagnostic conversations.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── ARTIFACT: PERSONAS ── -->
+<div class="artifact-section">
+  <div class="artifact-label">Research Artifacts — Personas</div>
+
+  <div>
+    <div class="persona-group-label">Patient Personas — 5 Profiles</div>
+    <div class="personas-row patients">
+
+      <div class="persona-card">
+        <div class="persona-avatar"><img src="assets/hypertension/adherent.webp" alt="The Adherent — disciplined, routine-driven hypertension patient persona"></div>
+        <div class="persona-name">The Adherent</div>
+        <span class="persona-tag">Controlled</span>
+        <div class="persona-desc">Disciplined, routine-driven. Takes medication consistently. Needs reinforcement and long-term engagement.</div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-avatar"><img src="assets/hypertension/anxious navigator.webp" alt="Anxious Navigator — over-researching patient prone to misinformation spirals"></div>
+        <div class="persona-name">Anxious Navigator</div>
+        <span class="persona-tag">Anxious</span>
+        <div class="persona-desc">Over-researches, fears side effects. High engagement but prone to misinformation spirals.</div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-avatar"><img src="assets/hypertension/denier.webp" alt="The Denier — asymptomatic patient who delays treatment and is hardest to reach"></div>
+        <div class="persona-name">The Denier</div>
+        <span class="persona-tag">Uncontrolled</span>
+        <div class="persona-desc">Asymptomatic nature fuels denial. Delays treatment. High risk. Hardest to reach.</div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-avatar"><img src="assets/hypertension/lost wanderer.webp" alt="Lost Wanderer — overwhelmed patient managing multiple conditions who falls off treatment"></div>
+        <div class="persona-name">Lost Wanderer</div>
+        <span class="persona-tag">Disengaged</span>
+        <div class="persona-desc">Overwhelmed by complexity of managing multiple conditions. Falls off treatment without active support.</div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-avatar"><img src="assets/hypertension/reckless rebel.webp" alt="Reckless Rebel — young dismissive patient who treats hypertension as inconvenient"></div>
+        <div class="persona-name">Reckless Rebel</div>
+        <span class="persona-tag">High Risk</span>
+        <div class="persona-desc">Young, dismissive. Lifestyle-first. Treats hypertension as inconvenient, not dangerous.</div>
+      </div>
+
+    </div>
+
+    <div class="persona-group-label">HCP Personas — 2 Profiles</div>
+    <div class="personas-row hcps">
+
+      <div class="persona-card hcp">
+        <div class="persona-avatar"><img src="assets/hypertension/compassionate educator.webp" alt="Compassionate Educator — HCP who builds patient trust through detailed diagnosis explanations"></div>
+        <div class="persona-name">Compassionate Educator</div>
+        <span class="persona-tag">HCP</span>
+        <div class="persona-desc">Spends time explaining diagnosis. Builds trust. Most effective at driving adherence in anxious and denier profiles.</div>
+      </div>
+
+      <div class="persona-card hcp">
+        <div class="persona-avatar"><img src="assets/hypertension/supportive caregiver.webp" alt="Supportive Caregiver — HCP focused on family involvement and lifestyle management"></div>
+        <div class="persona-name">Supportive Caregiver</div>
+        <span class="persona-tag">HCP</span>
+        <div class="persona-desc">Focuses on family involvement and lifestyle. Critical touchpoint for the "kitchen as treatment center" opportunity.</div>
+      </div>
+
+      <div class="persona-card" style="border-style:solid; padding:0; overflow:hidden;">
+        <img src="assets/hypertension/actual persona.webp" alt="Full persona deliverable card from the hypertension research project" style="width:100%; height:100%; object-fit:cover;">
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── ARTIFACT: JOURNEY MAP ── -->
+<div class="artifact-section">
+  <div class="artifact-label">Research Artifacts — Patient Journey Map</div>
+
+  <div class="journey-map-slot">
+    <img src="assets/hypertension/journey map.webp" alt="Full patient journey map from pre-diagnosis awareness through long-term management, with 7 key intervention windows">
+  </div>
+  <p class="photo-caption">Journey map built from synthesis of 36 participant sessions — used directly by client's product and marketing teams for intervention planning.</p>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- ── 04 WHAT CHANGED ── -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">04 · Outcome</span>
+    <h2 class="section-title">What Changed</h2>
+  </div>
+
+  <div class="outcome-hero">
+    <div class="outcome-statement">
+      Our findings shifted the client from a <em>treatment-focused</em> to a <em>journey-focused</em> product strategy — and reshaped their India roadmap.
+    </div>
+
+    <div class="outcome-shifts">
+      <div class="shift-item">
+        <div class="shift-arrow">→</div>
+        <div class="shift-text">
+          <strong>Treatment-focused → Journey-focused</strong>
+          Biggest value-creation opportunity moved upstream, before formal diagnosis.
+        </div>
+      </div>
+      <div class="shift-item">
+        <div class="shift-arrow">→</div>
+        <div class="shift-text">
+          <strong>Patient-only → Family-centered</strong>
+          Caregiver education incorporated into product and communication strategy.
+        </div>
+      </div>
+      <div class="shift-item">
+        <div class="shift-arrow">→</div>
+        <div class="shift-text">
+          <strong>Demographic-generic → Persona-specific</strong>
+          Behavioral personas used to segment and target interventions across the patient journey.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- ── 05 MY ROLE ── -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">05 · Role</span>
+    <h2 class="section-title">My Specific Role</h2>
+  </div>
+
+  <div class="role-grid">
+    <div class="role-card">
+      <div class="role-icon"><i data-lucide="microscope" style="width:20px;height:20px;stroke-width:1.5;"></i></div>
+      <div class="role-title">Research Design</div>
+      <div class="role-body">Designed the full methodology — made the call to go ethnographic, structured parallel HCP + patient streams, defined comorbidity recruitment criteria.</div>
+    </div>
+    <div class="role-card">
+      <div class="role-icon"><i data-lucide="mic" style="width:20px;height:20px;stroke-width:1.5;"></i></div>
+      <div class="role-title">Field Research</div>
+      <div class="role-body">Moderated 80%+ of qualitative sessions across home visits, hospital observations, and remote IDIs across Tier 1 and Tier 2 cities.</div>
+    </div>
+    <div class="role-card">
+      <div class="role-icon"><i data-lucide="route" style="width:20px;height:20px;stroke-width:1.5;"></i></div>
+      <div class="role-title">Synthesis &amp; Strategy</div>
+      <div class="role-body">Led synthesis, built 7 strategic opportunity areas from raw qualitative data, presented directly to C-level stakeholders.</div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- ── 06 REFLECTION ── -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">06 · Reflection</span>
+    <h2 class="section-title">What I'd Do Differently</h2>
+  </div>
+
+  <div class="reflection-cols">
+    <div class="reflection-aside">
+      <h3>Honest reflection builds better researchers.</h3>
+      <p>Every project leaves something on the table. Here's what I'd do differently if I ran this again.</p>
+    </div>
+
+    <div class="reflection-items">
+      <div class="reflection-item">
+        <p><strong>Share preliminary insights mid-study, not just at the end.</strong> A co-creation session with the client's product team halfway through fieldwork would have let us sharpen our focus in the second phase rather than waiting until synthesis to course-correct.</p>
+      </div>
+      <div class="reflection-item">
+        <p><strong>Build in a quantitative validation layer.</strong> The qualitative depth was strong, but a quick survey to test prevalence of key findings across a larger sample would have strengthened the business case for roadmap changes.</p>
+      </div>
+      <div class="reflection-item">
+        <p><strong>Document regional variations more systematically.</strong> The differences between cities were significant and influential — but somewhat underrepresented in the final synthesis given the volume of data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- ── FOOTER NAV ── -->
+<div class="case-footer">
+  <div class="footer-left">
+    <p>Next Case Study</p>
+    <h3>Unveiling Strategic Insights on Mobility Needs</h3>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <a href="index.html#portfolio" class="btn btn-outline">← All Work</a>
+    <a href="strategic-insights-case-study.html" class="btn">Next Case →</a>
+  </div>
+</div>
+
+<script>
+  // Scroll reveal — IntersectionObserver for sections + stat cards
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.section, .stat-card, .artifact-section').forEach(el => observer.observe(el));
+</script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

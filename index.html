@@ -1,423 +1,1558 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Vidita Bhagat">
-    <meta name="author" content="Devcrud">
-    <title> Vidita Bhagat </title>
-    <!-- font icons -->
-    <link rel="stylesheet" href="assets/vendors/themify-icons/css/themify-icons.css">
-    <!-- Bootstrap + Meyawo main styles -->
-	<link rel="stylesheet" href="assets/css/meyawo.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vidita Bhagat — User Researcher</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --sticky-red: #f7c5b8;
+      --sticky-green: #c8e6c0;
+      --sticky-blue: #b8d4f0;
+      --sticky-yellow: #fde9a2;
+      --sticky-pink: #f5c6d8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #eeece6;
+    }
+
+    .mono {
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* ====== CHANGE 1: HERO FLOATING ICONS ====== */
+    @keyframes hero-float-a {
+
+      0%,
+      100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-12px) rotate(8deg);
+      }
+    }
+
+    @keyframes hero-float-b {
+
+      0%,
+      100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-9px) rotate(-7deg);
+      }
+    }
+
+    @keyframes hero-float-c {
+
+      0%,
+      100% {
+        transform: translateY(0px) scale(1);
+      }
+
+      50% {
+        transform: translateY(-14px) scale(1.12);
+      }
+    }
+
+    @keyframes hero-float-d {
+
+      0%,
+      100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+
+      33% {
+        transform: translateY(-7px) rotate(12deg);
+      }
+
+      66% {
+        transform: translateY(-11px) rotate(-8deg);
+      }
+    }
+
+    @keyframes hero-float-e {
+
+      0%,
+      100% {
+        transform: translateY(0px) scale(1) rotate(0deg);
+      }
+
+      40% {
+        transform: translateY(-8px) scale(0.9) rotate(-15deg);
+      }
+
+      80% {
+        transform: translateY(-13px) scale(1.05) rotate(10deg);
+      }
+    }
+
+    @keyframes icon-bounce {
+      0% {
+        transform: scale(1) rotate(0deg);
+      }
+
+      25% {
+        transform: scale(1.5) rotate(-14deg);
+      }
+
+      55% {
+        transform: scale(1.25) rotate(10deg);
+      }
+
+      80% {
+        transform: scale(1.1) rotate(-4deg);
+      }
+
+      100% {
+        transform: scale(1) rotate(0deg);
+      }
+    }
+
+    @keyframes spark-fade {
+      0% {
+        opacity: 0.9;
+        transform: translate(-50%, -50%) scale(1.3);
+      }
+
+      60% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(0.8);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+      }
+    }
+
+    .hero-icon {
+      position: absolute;
+      cursor: pointer;
+      user-select: none;
+      pointer-events: auto;
+      line-height: 1;
+      transition: filter 0.15s;
+    }
+
+    .hero-icon:hover {
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.25));
+      animation: icon-bounce 0.55s ease forwards !important;
+    }
+
+    /* ====== STICKY NOTES ====== */
+    .sticky-note {
+      position: absolute;
+      border-radius: 2px;
+      box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.10), 0 1px 3px rgba(0, 0, 0, 0.06);
+      cursor: grab;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.0) 60%);
+    }
+
+    .sticky-note:hover {
+      box-shadow: 4px 10px 28px rgba(0, 0, 0, 0.16), 0 2px 6px rgba(0, 0, 0, 0.08);
+      transform-origin: center center;
+      cursor: grab;
+    }
+
+    /* Role label rotation */
+    #role-label-text {
+      display: inline-block;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    #role-label-text.fade-out {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+
+    #role-label-text.fade-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .spark-dot {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 50;
+      animation: spark-fade 0.65s ease-out forwards;
+    }
+
+    /* ====== CHANGE 2: PHOTO POLAROID ====== */
+    .polaroid-wrap {
+      background: #fff;
+      padding: 12px 12px 44px;
+      box-shadow: 0 6px 28px rgba(0, 0, 0, 0.18), 0 2px 6px rgba(0, 0, 0, 0.08);
+      transform: rotate(-2.5deg);
+      display: inline-block;
+      width: 100%;
+    }
+
+    .polaroid-wrap img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .polaroid-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.18em;
+      color: #aaa;
+      text-transform: uppercase;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    /* ====== CHANGE 3: SERVICE TILES ====== */
+    .service-tile {
+      display: flex;
+      overflow: hidden;
+      cursor: default;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .service-tile:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.14);
+      position: relative;
+      z-index: 2;
+    }
+
+    .service-icon-panel {
+      width: 140px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+    }
+
+    .service-text-panel {
+      flex: 1;
+      padding: 32px 36px;
+    }
+
+    .service-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+      line-height: 1.25;
+    }
+
+    .service-desc {
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    /* ====== DOG ANIMATIONS ====== */
+    @keyframes idle-bob {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+
+    @keyframes excited-jump {
+      0% {
+        transform: translateY(0px) rotate(0deg) scaleX(1);
+      }
+
+      12% {
+        transform: translateY(-24px) rotate(-5deg) scaleX(0.88);
+      }
+
+      28% {
+        transform: translateY(-4px) rotate(3deg) scaleX(1.04);
+      }
+
+      45% {
+        transform: translateY(-20px) rotate(-4deg) scaleX(0.9);
+      }
+
+      62% {
+        transform: translateY(-3px) rotate(2deg) scaleX(1.03);
+      }
+
+      78% {
+        transform: translateY(-13px) rotate(-2deg) scaleX(0.94);
+      }
+
+      100% {
+        transform: translateY(0px) rotate(0deg) scaleX(1);
+      }
+    }
+
+    @keyframes eating-nod {
+
+      0%,
+      100% {
+        transform: rotate(0deg);
+        transform-origin: 50% 85%;
+      }
+
+      25%,
+      75% {
+        transform: rotate(18deg);
+        transform-origin: 50% 85%;
+      }
+
+      50% {
+        transform: rotate(11deg);
+        transform-origin: 50% 85%;
+      }
+    }
+
+    @keyframes treat-drop {
+      0% {
+        transform: translateX(-50%) translateY(-90px);
+        opacity: 1;
+      }
+
+      55% {
+        transform: translateX(-50%) translateY(8px);
+        opacity: 1;
+      }
+
+      80% {
+        transform: translateX(-50%) translateY(8px);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateX(-50%) translateY(8px);
+        opacity: 0;
+      }
+    }
+
+    @keyframes yum-float {
+      0% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0px);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-48px);
+      }
+    }
+
+    .dog-idle {
+      animation: idle-bob 2.4s ease-in-out infinite;
+    }
+
+    .dog-excited {
+      animation: excited-jump 0.65s ease-in-out 3;
+    }
+
+    .dog-eating {
+      animation: eating-nod 0.72s ease-in-out 3;
+    }
+
+    .dog-wrap {
+      position: relative;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transition: filter 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .dog-wrap:hover {
+      filter: brightness(1.14) drop-shadow(0 3px 10px rgba(58, 90, 58, 0.4));
+    }
+
+    .treat-el {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      font-size: 20px;
+      pointer-events: none;
+      z-index: 20;
+      animation: treat-drop 1.5s ease-in forwards;
+    }
+
+    .yum-el {
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: #cce044;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+      pointer-events: none;
+      z-index: 20;
+      white-space: nowrap;
+      animation: yum-float 1s ease-out 0.6s both;
+    }
+
+    .dog-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      color: rgba(255,255,255,0.8);
+      text-transform: uppercase;
+      margin-top: 7px;
+      opacity: 0.65;
+    }
+
+    /* ====== PORTFOLIO FILTER SYSTEM ====== */
+    :root {
+      --accent: #e5431b;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .filter-tab {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      background: transparent;
+      cursor: pointer;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 2px;
+      color: #666;
+      transition: color 0.15s, border-color 0.15s;
+      outline: none;
+    }
+
+    .filter-tab:hover {
+      color: #111;
+      border-color: rgba(0, 0, 0, 0.35);
+    }
+
+    .filter-tab.active {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    #portfolio>a {
+      transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.25s ease;
+    }
+
+    #portfolio-see-more {
+      background: #eeece6;
+      display: flex;
+      justify-content: center;
+      padding: 24px 0 48px;
+    }
+
+    .see-more-btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 10px 32px;
+      background: transparent;
+      cursor: pointer;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 2px;
+      color: #666;
+      transition: color 0.15s, border-color 0.15s;
+      outline: none;
+    }
+
+    .see-more-btn:hover {
+      color: #111;
+      border-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .card-coming-soon {
+      cursor: default;
+      opacity: 0.88;
+    }
+
+    .card-coming-soon:hover .card-overlay {
+      opacity: 1 !important;
+    }
+
+    @media (max-width: 768px) {
+      .filter-tabs {
+        gap: 6px;
+      }
+
+      .filter-tab {
+        font-size: 9px;
+        padding: 7px 14px;
+      }
+
+      #portfolio {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
 </head>
-<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
 
-    <!-- Page Navbar -->
-    <nav class="custom-navbar" data-spy="affix" data-offset-top="20">
-        <div class="container">
-            <a class="logo" href="#">Vidita</a>         
-            <ul class="nav">
-                <li class="item">
-                    <a class="link" href="#home">Home</a>
-                </li>
-                <li class="item">
-                    <a class="link" href="#about">About</a>
-                </li>
-                <li class="item">
-                    <a class="link" href="#portfolio">Portfolio</a>
-                </li>
-                <li class="item">
-                    <a class="link" href="#blog">Blogs</a>
-                </li>
-                <!-- <li class="item">
-                    <a class="link" href="#blog">Blog</a>
-                </li> -->
-                <li class="item">
-                    <a class="link" href="#contact">Contact</a>
-                </li>
-                <!-- <li class="item ml-md-3">
-                    <a href="components.html" class="btn btn-primary">Components</a>
-                </li> -->
-            </ul>
-            <a href="javascript:void(0)" id="nav-toggle" class="hamburger hamburger--elastic">
-                <div class="hamburger-box">
-                  <div class="hamburger-inner"></div>
-                </div>
-            </a>
-        </div>          
-    </nav><!-- End of Page Navbar -->
+<body>
 
-    <!-- page header -->
-    <header id="home" class="header">
-        <div class="overlay"></div>
-        <div class="header-content container">
-            <h1 class="header-title">
-                <span class="up">HI!</span>
-                <span class="down">I am Vidita</span>
-            </h1>
-            <p class="header-subtitle">USER RESEARCHER</p>            
+  <!-- ===== NAV ===== -->
+  <nav style="background:#eeece6; padding:16px 28px; display:flex; align-items:center; justify-content:space-between;">
+    <a href="#" class="mono"
+      style="font-size:11px; font-weight:700; letter-spacing:0.14em; color:#1a1a1a; text-decoration:none;">VIDITA
+      BHAGAT</a>
+    <div style="display:flex; gap:24px; align-items:center;">
+      <a href="#about" class="mono"
+        style="font-size:11px; letter-spacing:0.12em; color:#333; text-decoration:none;">ABOUT</a>
+      <a href="#services" class="mono"
+        style="font-size:11px; letter-spacing:0.12em; color:#333; text-decoration:none;">SERVICES</a>
+      <a href="#portfolio" class="mono"
+        style="font-size:11px; letter-spacing:0.12em; color:#333; text-decoration:none;">PORTFOLIO</a>
+      <a href="#blogs" class="mono"
+        style="font-size:11px; letter-spacing:0.12em; color:#333; text-decoration:none;">BLOGS</a>
+      <a href="#contact" class="mono" style="font-size:10px; letter-spacing:0.1em; color:#eeece6; background:#1a1a1a; padding:7px 14px; text-decoration:none; border-radius:2px;">CONTACT</a>
+    </div>
+  </nav>
 
-            <button class="btn btn-primary" onclick="window.location.href='#portfolio'">Visit My Works</button>
-        </div>              
-    </header><!-- end of page header -->
+  <!-- ===== HERO (CHANGE 1: floating icons + sparkle trail) ===== -->
+  <section id="hero-section" style="background:#eeece6; position:relative; height:520px; overflow:hidden;">
 
-    <!-- about section -->
-    <section class="section pt-0" id="about">
-        <!-- container -->
-        <div class="container text-center">
-            <!-- about wrapper -->
-            <div class="about">
-                <div class="about-img-holder">
-                    <img src="assets/imgs/vidita.JPG" class="about-img" alt="About Me">
-                </div>
-                <div class="about-caption">
-                    <p class="section-subtitle">Who Am I ?</p>
-                    <h2 class="section-title mb-3">About Me</h2>
-                    <p>
-                        I am passionate about understanding the intricacies of human needs and behaviors that shape their existence. My academic background in psychology equips me with profound insights into human behavior, cognition, and emotions, making me a contributor to crafting strategies for user-centric designs and informing business decisions. 
-                        <br><br>I thrive in research, enjoying both solitary problem-solving and collaborative work with researchers, designers, and product teams. Finding fulfillment in connecting with users while providing valuable insights that are intuitive and data-informed makes me feel like a detective (mystery being my most favourite genre), uncovering hidden truths in a vast labyrinth where each project is an exciting investigation, challenging yet immensely rewarding :) 
-                        <br><br>When I'm not delving into research, you'll find me completely immersed in the vibrant world of art. Whether I'm drawing, painting, crafting, visiting art galleries, or simply appreciating the beauty around me, I find endless inspiration and joy because art truly fuels my creativity.
-                    </p>
-                    <a href="https://drive.google.com/file/d/1jnHAynBxNrcYZvjoLRW2Y54qnISgLrIB/view?usp=sharing" target="_blank">
-                        <button class="btn-rounded btn btn-outline-primary mt-4">Download CV</button>
-                    </a>
-                </div>              
-            </div><!-- end of about wrapper -->
-        </div><!-- end of container -->
-    </section> <!-- end of about section -->
+    <!-- === Floating ambient icons === -->
 
-    <!-- service section -->
-    <section class="section" id="service">
-        <div class="container text-center">
-            <p class="section-subtitle">What I Do ?</p>
-            <h6 class="section-title mb-6">Service</h6>
-            <!-- row -->
-            <div class="row">
-                <div class="col-md-6 col-lg-3">
-                    <div class="service-card">
-                        <div class="body">
-                            <img src="assets/imgs/pencil-case.svg" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page" class="icon">
-                            <h6 class="title">Qualitative Research</h6>
-                            <p class="subtitle">Delving deep into user behaviors and motivations through in-depth interviews and focus groups.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="service-card">
-                        <div class="body">
-                            <img src="assets/imgs/responsive.svg" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page" class="icon">
-                            <h6 class="title">UX Research</h6>
-                            <p class="subtitle">Analyzing user interactions to create intuitive and effective digital experiences.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="service-card">
-                        <div class="body">
-                            <img src="assets/imgs/toolbox.svg" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page" class="icon">
-                            <h6 class="title">Market Research</h6>
-                            <p class="subtitle">Gathering and analyzing data to understand market trends, customer needs, and competitive landscapes.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="service-card">
-                        <div class="body">
-                            <img src="assets/imgs/analytics.svg" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page" class="icon">
-                            <h6 class="title">Design Thinking</h6>
-                            <p class="subtitle">Applying a user-centered approach to solve complex problems creatively and innovatively.</p>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- end of row -->
+    <!-- ✦ top-right -->
+    <span class="hero-icon"
+      style="top:48px; left:78%; font-size:22px; color:#e5431b; opacity:0.65; animation:hero-float-a 3.1s ease-in-out infinite 0s;">✦</span>
+    <!-- ✦ small lower-left -->
+    <span class="hero-icon"
+      style="top:390px; left:9%; font-size:14px; color:#c4bff0; opacity:0.8; animation:hero-float-b 2.7s ease-in-out infinite 0.4s;">✦</span>
+    <!-- ✿ flower right-mid -->
+    <span class="hero-icon"
+      style="top:300px; left:82%; font-size:20px; color:#cce044; opacity:0.75; animation:hero-float-c 3.5s ease-in-out infinite 0.9s;">✿</span>
+    <!-- ↗ arrow top-left -->
+    <span class="hero-icon"
+      style="top:62px; left:7%; font-size:16px; color:#333; opacity:0.45; animation:hero-float-d 2.9s ease-in-out infinite 1.2s;">↗</span>
+    <!-- ⌘ command far-right -->
+    <span class="hero-icon"
+      style="top:170px; left:86%; font-size:18px; color:#b0cce8; opacity:0.7; animation:hero-float-a 3.8s ease-in-out infinite 0.3s;">⌘</span>
+    <!-- asterisk mid-right -->
+    <span class="hero-icon"
+      style="top:440px; left:71%; font-size:20px; color:#f5bfa5; opacity:0.7; animation:hero-float-e 3.3s ease-in-out infinite 0.8s;">✳</span>
+    <!-- small pen-nib SVG left-mid -->
+    <svg class="hero-icon"
+      style="top:230px; left:6%; width:22px; height:22px; opacity:0.5; animation:hero-float-b 4s ease-in-out infinite 1.5s;"
+      viewBox="0 0 24 24" fill="none">
+      <path d="M3 20 L8 15 L20 3 L21 8 L8 15 Z" stroke="#555" stroke-width="1.5" fill="none" stroke-linejoin="round" />
+      <path d="M8 15 L9 18 L12 16" stroke="#555" stroke-width="1.2" fill="none" stroke-linejoin="round" />
+    </svg>
+    <!-- small grid/dots icon bottom-right -->
+    <svg class="hero-icon"
+      style="top:460px; left:87%; width:20px; height:20px; opacity:0.45; animation:hero-float-c 2.6s ease-in-out infinite 0.6s;"
+      viewBox="0 0 16 16" fill="none">
+      <circle cx="4" cy="4" r="2" fill="#888" />
+      <circle cx="12" cy="4" r="2" fill="#888" />
+      <circle cx="4" cy="12" r="2" fill="#888" />
+      <circle cx="12" cy="12" r="2" fill="#888" />
+    </svg>
+
+    <!-- === Sticky notes cluster === -->
+    <div style="position:absolute; top:0; left:50%; transform:translateX(-50%); width:720px; height:100%;">
+
+      <!-- Main note — soft coral/peach — rotate(-5deg) -->
+      <div class="sticky-note"
+        style="background:var(--sticky-red); width:292px; top:88px; left:20px; padding:28px 24px; transform:rotate(-5deg);"
+        onmouseenter="this.style.transform='rotate(-2deg) translateY(-6px) scale(1.03)'"
+        onmouseleave="this.style.transform='rotate(-5deg)'">
+        <p style="font-style:italic; font-size:17px; line-height:1.5; color:#6b2a1a; font-weight:300;">
+          I try to understand problems through the lens of human behaviour — then build something that answers them.
+          Could be a product, a design, a story.
+        </p>
+      </div>
+
+      <!-- Role badge — soft butter — rotate(3deg) -->
+      <div class="sticky-note"
+        style="background:var(--sticky-yellow); padding:10px 18px; top:68px; left:356px; transform:rotate(3deg); white-space:nowrap; min-width:178px; text-align:center;"
+        onmouseenter="this.style.transform='rotate(1deg) translateY(-6px) scale(1.03)'"
+        onmouseleave="this.style.transform='rotate(3deg)'">
+        <span id="role-label-text" class="mono fade-in"
+          style="font-size:14px; font-weight:700; color:#5a4a00; letter-spacing:0.08em;">USER RESEARCHER</span>
+      </div>
+
+      <!-- Quote note — soft blush — rotate(4deg) -->
+      <div class="sticky-note"
+        style="background:var(--sticky-pink); width:228px; top:160px; left:320px; padding:18px 16px; transform:rotate(4deg);"
+        onmouseenter="this.style.transform='rotate(1.5deg) translateY(-6px) scale(1.03)'"
+        onmouseleave="this.style.transform='rotate(4deg)'">
+        <p style="font-style:italic; font-size:13px; line-height:1.5; color:#7a2a4a; font-weight:300;">
+          ...like a detective uncovering hidden truths — each project is an exciting investigation, challenging yet
+          immensely rewarding.
+        </p>
+      </div>
+
+      <!-- Magnifying glass note — soft sky blue — rotate(-6deg) -->
+      <div class="sticky-note"
+        style="background:var(--sticky-blue); width:72px; height:72px; top:315px; left:22px; transform:rotate(-6deg); display:flex; align-items:center; justify-content:center;"
+        onmouseenter="this.style.transform='rotate(-2deg) translateY(-6px) scale(1.03)'"
+        onmouseleave="this.style.transform='rotate(-6deg)'">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <circle cx="15" cy="15" r="9" stroke="#1e3a5a" stroke-width="2" fill="none" />
+          <line x1="22" y1="22" x2="32" y2="32" stroke="#1e3a5a" stroke-width="2" stroke-linecap="round" />
+          <line x1="11" y1="15" x2="19" y2="15" stroke="#1e3a5a" stroke-width="1.5" stroke-linecap="round" />
+          <line x1="15" y1="11" x2="15" y2="19" stroke="#1e3a5a" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+      </div>
+
+      <!-- NEW: Design icon note — soft sage green — rotate(6deg) -->
+      <div class="sticky-note"
+        style="background:var(--sticky-green); width:72px; height:72px; top:280px; left:380px; transform:rotate(6deg); display:flex; align-items:center; justify-content:center;"
+        onmouseenter="this.style.transform='rotate(2deg) translateY(-6px) scale(1.03)'"
+        onmouseleave="this.style.transform='rotate(6deg)'">
+        <i data-lucide="pen-tool" style="width:28px;height:28px;stroke-width:1.5;color:#1e4a2a;"></i>
+      </div>
+
+      <!-- Name tag -->
+      <div style="position:absolute; top:44px; left:108px;">
+        <span style="font-style:italic; font-size:13px; color:#888; letter-spacing:0.02em;">HI! I am Vidita</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== ABOUT (CHANGE 2: photo + restructured layout) ===== -->
+  <section id="about" style="background:#c4bff0; padding:72px 0;">
+    <div style="max-width:1200px; margin:0 auto; padding:0 64px;">
+      <p class="mono"
+        style="font-size:10px; letter-spacing:0.16em; color:#5544aa; text-transform:uppercase; margin-bottom:12px;">
+        ABOUT</p>
+
+      <div style="display:grid; grid-template-columns:220px 1fr; gap:72px; align-items:start;">
+
+        <!-- Photo (polaroid style) -->
+        <div style="padding-top:4px;">
+          <div class="polaroid-wrap">
+            <img src="https://viditabhagat.github.io/assets/imgs/vidita.JPG" alt="Vidita Bhagat"
+              onerror="this.style.background='#a8b8d0';this.style.aspectRatio='3/4';this.removeAttribute('src');" />
+            <p class="polaroid-label">Vidita Bhagat</p>
+          </div>
         </div>
-    </section><!-- end of service section -->
 
-    <!-- portfolio section -->
-    <section class="section" id="portfolio">
-        <div class="container text-center">
-            <p class="section-subtitle">What I Did ?</p>
-            <h6 class="section-title mb-6">Portfolio</h6>
-            <!-- row -->
-            <div class="row">
-                <div class="col-md-6">
-                    <a href="portfolio1.html" class="portfolio-card">
-                        <img src="assets/imgs/1st.jpg" class="portfolio-card-img" alt="">    
-                        <span class="portfolio-card-overlay">
-                            <span class="portfolio-card-caption">
-                                <h4>Revolutionizing Hypertension Care</h5>
-                                <p class="font-weight-normal">Leading >$10B Pharmaceutical Co.</p>
-                            </span>                         
-                        </span>                     
-                    </a>
-                </div>
-                <div class="col-md-6">
-                    <a href="portfolio2.html" class="portfolio-card">
-                        <img src="assets/imgs/2nd.jpg" class="portfolio-card-img" alt="">    
-                        <span class="portfolio-card-overlay">
-                            <span class="portfolio-card-caption">
-                                <h4>Unveiling Strategic Insights on Mobility Needs</h5>
-                                <p class="font-weight-normal">UK-based Innovation Accelerator</p>
-                            </span>                         
-                        </span>                     
-                    </a>
-                </div>                
-                <div class="col-md-6">
-                    <a href="portfolio3.html" class="portfolio-card">
-                        <img src="assets/imgs/3rd.jpg" class="portfolio-card-img" alt="">    
-                        <span class="portfolio-card-overlay">
-                            <span class="portfolio-card-caption">
-                                <h4>Unlocking Behavioral Paradigms of Ad Consumption</h5>
-                                <p class="font-weight-normal">Leading Indian Social Media Platform</p>
-                            </span>                         
-                        </span>                     
-                    </a>
-                </div>
-                <br>
-                <div class="col-md-6">
-                    <a href="portfolio4.html" class="portfolio-card">
-                        <img src="assets/imgs/4th.jpg" class="portfolio-card-img" alt="">    
-                        <span class="portfolio-card-overlay">
-                            <span class="portfolio-card-caption">
-                                <h4>Understanding Users and their Needs to Arrive at Product Strategy</h5>
-                                <p class="font-weight-normal">#1 Global Hiring Platform</p>
-                            </span>                         
-                        </span>                     
-                    </a>
-                </div>                
-            </div><!-- end of row -->
-        </div><!-- end of container -->
-    </section> <!-- end of portfolio section -->
-
-    <!-- pricing section -->
-	<!--<section class="section" id="pricing">
-        <div class="container text-center">
-            <p class="section-subtitle">How Much I Charge ?</p>
-            <h6 class="section-title mb-6">My Pricing</h6>
-            <div class="pricing-wrapper">
-                <div class="pricing-card">
-                    <div class="pricing-card-header">
-                        <img class="pricing-card-icon" src="assets/imgs/scooter.svg" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page">
-                    </div>
-                    <div class="pricing-card-body">
-                        <h6 class="pricing-card-title">Free</h6>
-                        <div class="pricing-card-list">
-                            <p>accusamus reprehenderit</p>
-                            <p>provident dolorem </p>
-                            <p>quos neque</p>
-                            <p>fugiat quibusdam</p>
-                            <p><i class="ti-close"></i></p>
-                            <p><i class="ti-close"></i></p>
-                        </div>
-                    </div>
-                    <div class="pricing-card-footer">
-                        <span>$</span>
-                        <span>0.00/Month</span>
-                    </div>
-                    <a href="#" class="btn btn-primary mt-3 pricing-card-btn">Subscribe</a>
-                </div>
-                <div class="pricing-card">
-                    <div class="pricing-card-header">
-                        <img class="pricing-card-icon" src="assets/imgs/shipped.svg" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page">
-                    </div>
-                    <div class="pricing-card-body">
-                        <h6 class="pricing-card-title">Basic</h6>
-                        <div class="pricing-card-list">
-                            <p>accusamus reprehenderit</p>
-                            <p>provident dolorem </p>
-                            <p>quos neque</p>
-                            <p>fugiat quibusdam</p>
-                            <p>accusamus laboriosam</p>
-                            <p><i class="ti-close"></i></p>
-                        </div>
-                    </div>
-                    <div class="pricing-card-footer">
-                        <span>$</span>
-                        <span>9.99/Month</span>
-                    </div>
-                    <a href="#" class="btn btn-primary mt-3 pricing-card-btn">Subscribe</a>
-                </div>
-                <div class="pricing-card">
-                    <div class="pricing-card-header">
-                        <img class="pricing-card-icon" src="assets/imgs/startup.svg" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page">
-                    </div>
-                    <div class="pricing-card-body">
-                        <h6 class="pricing-card-title">Premium</h6>
-                        <div class="pricing-card-list">
-                            <p>accusamus reprehenderit</p>
-                            <p>provident dolorem </p>
-                            <p>quos neque</p>
-                            <p>fugiat quibusdam</p>
-                            <p>accusamus laboriosam</p>
-                            <p>inventore omnis</p>
-                        </div>
-                    </div>
-                    <div class="pricing-card-footer">
-                        <span>$</span>
-                        <span>99.9/Month</span>
-                    </div>
-                    <a href="#" class="btn btn-primary mt-3 pricing-card-btn">Subscribe</a>
-                </div>
-
-            </div>
-        </div> 
-    </section> -->
-
-    <!-- section -->
-    <section class="section-sm bg-primary">
-        <!-- container -->
-        <div class="container text-center text-sm-left">
-            <!-- row -->
-            <div class="row align-items-center">
-                <div class="col-sm offset-md-1 mb-4 mb-md-0">
-                    <h6 class="title text-light">Want to work with me?</h6>
-                    <p class="m-0 text-light">Always feel free to contact me</p>
-                </div>
-                <div class="col-sm offset-sm-2 offset-md-3">
-                    <button class="btn btn-lg my-font btn-light rounded">Contact Me</button>
-                </div>
-            </div> <!-- end of row -->
-        </div> <!-- end of container -->
-    </section> <!-- end of section -->
-
-    <!-- testimonial section -->
-    <!-- <section class="section" id="testmonial">
-        <div class="container text-center">
-            <p class="section-subtitle">What my collegues and client think about me ?</p>
-            <h6 class="section-title mb-6">Testmonial</h6>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="testimonial-card">
-                        <div class="testimonial-card-img-holder">
-                            <img src="assets/imgs/avatar2.jpg" class="testimonial-card-img" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page">                           
-                        </div>
-                        <div class="testimonial-card-body">
-                            <p class="testimonial-card-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque doloribus autem aperiam earum nostrum omnis blanditiis corporis perspiciatis adipisci nihil.</p>
-                            <h6 class="testimonial-card-title">Emily Reb</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="testimonial-card">
-                        <div class="testimonial-card-img-holder">
-                            <img src="assets/imgs/avatar3.jpg" class="testimonial-card-img" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page">                        
-                        </div>
-                        <div class="testimonial-card-body">
-                            <p class="testimonial-card-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque doloribus autem aperiam earum nostrum omnis blanditiis corporis perspiciatis adipisci nihil.</p>
-                            <h6 class="testimonial-card-title">Emily Reb</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> 
-    </section>  -->
-    
-    <!-- blog section -->
-	<section class="section" id="blog">
-        <div class="container text-center">
-            <p class="section-subtitle">Recent Posts?</p>
-            <h6 class="section-title mb-6">Blog</h6>
-            <div class="blog-card">
-                <div class="blog-card-header">
-                    <img src="assets/imgs/blog1.webp" class="blog-card-img" alt="Blog 1">
-                </div>
-                <div class="blog-card-body">
-                    <h5 class="blog-card-title">How Do You Create a Dream Home? Inside the Indian Homeowner&#39;s Mind</h6>
-
-                    <!-- <p class="blog-card-caption">
-                        <a href="#">By: Admin</a>
-                        <a href="#"><i class="ti-heart text-danger"></i> 234</a>
-                        <a href="#"><i class="ti-comment"></i> 123</a>
-                    </p> -->
-                    <p>
-                        Scrolling through Pinterest for hours, visualizing the perfect home — has become a ritual for many Indian homeowners. 
-                        Creating that dream space isn&#39;t just about picking a color palette or choosing between a sliding door and a custom cabinet; it&#39;s about crafting an environment that reflects who we are and how we want to feel.
-                        <br><br>
-                        But behind these aesthetic decisions lies a deeper question: what do people really want when designing their homes?
-                    </p>
-
-                    <a href="https://medium.com/@viditabhagat/how-do-you-create-a-dream-home-inside-the-indian-homeowners-mind-76068f25cb45" class="blog-card-link">Read more <i class="ti-angle-double-right"></i></a>
-                </div>
-            </div>
-
-            <div class="blog-card">
-                <div class="blog-card-header">
-                    <img src="assets/imgs/blog2.webp" class="blog-card-img" alt="Blog 2">
-                </div>
-                <div class="blog-card-body">
-                    <h5 class="blog-card-title">The Enduring Tradition of Home Remedies in Indian Households</h6>
-
-                    <!-- <p class="blog-card-caption">
-                        <a href="#">By: Admin</a>
-                        <a href="#"><i class="ti-heart text-danger"></i> 456</a>
-                        <a href="#"><i class="ti-comment"></i> 264</a>
-                    </p> -->
-                    
-                    <p>
-                        Is it just me, or were you also handed honey and ginger for every cough, or a cup of cinnamon tea for that persistent sore throat?
-                        <br><br>
-                        For many of us, these familiar concoctions were our first line of defense against illness, passed down through generations. While it may seem like a walk down memory lane, the truth is that these <i>desi hacks</i> are still very much prominent in our households today.
-                    </p>
-
-                    <a href="https://medium.com/@viditabhagat/the-enduring-tradition-of-home-remedies-in-indian-households-b52fae7beee8" class="blog-card-link">Read more <i class="ti-angle-double-right"></i></a>
-                </div>
-            </div>
-
+        <!-- Text -->
+        <div>
+          <p
+            style="font-style:italic; font-size:26px; font-weight:300; line-height:1.45; color:#111; margin-bottom:36px; max-width:680px;">
+            "I understand problems through people — then make whatever needs to be made to solve them."
+          </p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px;">
+            <p style="font-size:14px; line-height:1.78; color:#333;">
+              I've spent the last four years working across early-stage startups and large enterprises;
+              designing products, rebuilding brands, and leading research that shaped what got built next.
+              I'm drawn to places where things move fast, the brief is still forming, and the decisions you
+              make in week one matter. That's where I do my best work.
+            </p>
+            <p style="font-size:14px; line-height:1.78; color:#333;">
+              When I'm not delving into , you'll find me completely immersed in the vibrant world of art.
+              Whether I'm drawing, painting, crafting, visiting art galleries, or simply appreciating the beauty around
+              me, I find endless inspiration and joy because art truly fuels my creativity.
+            </p>
+          </div>
         </div>
-    </section>
 
-    <!-- contact section -->
-    <section class="section" id="contact">
-        <div class="container text-center">
-            <p class="section-subtitle">If you are interested in collaborating with me, feel free to</p>
-            <h6 class="section-title mb-5">Contact Me</h6>
-            <!-- contact form -->
-            <form action="" class="contact-form col-md-10 col-lg-8 m-auto">
-                <div class="form-row">
-                    <div class="form-group col-sm-6">
-                        <input type="text" size="50" class="form-control" placeholder="Your Name" required>                 
-                    </div>
-                    <div class="form-group col-sm-6">
-                        <input type="email" class="form-control" placeholder="Enter Email"requried>                 
-                    </div>
-                    <div class="form-group col-sm-12">
-                        <textarea name="comment" id="comment" rows="6"   class="form-control" placeholder="Write Something"></textarea>
-                    </div>
-                    <div class="form-group col-sm-12 mt-3">
-                        <input type="submit" value="Send Message" class="btn btn-outline-primary rounded">                  
-                    </div>
-                </div>  
-            </form><!-- end of contact form -->
-        </div><!-- end of container -->
-    </section><!-- end of contact section -->
+      </div>
+    </div>
+  </section>
 
-    <!-- footer -->
-    <!-- <div class="container">
-        <footer class="footer">       
-            <p class="mb-0">Copyright <script>document.write(new Date().getFullYear())</script> &copy; <a href="http://www.devcrud.com">DevCRUD</a></p>
-            <div class="social-links text-right m-auto ml-sm-auto"> -->
-                <!-- <a href="javascript:void(0)" class="link"><i class="ti-facebook"></i></a> -->
-                <!-- <a href="javascript:void(0)" class="link"><i class="ti-twitter-alt"></i></a>
-                <a href="javascript:void(0)" class="link"><i class="ti-linkedin-alt"></i></a> -->
-                <!-- <a href="javascript:void(0)" class="link"><i class="ti-google"></i></a> -->
-                <!-- <a href="javascript:void(0)" class="link"><i class="ti-pinterest-alt"></i></a> -->
-                <!-- <a href="javascript:void(0)" class="link"><i class="ti-instagram"></i></a> -->
-                <!-- <a href="javascript:void(0)" class="link"><i class="ti-rss"></i></a> -->
-            <!-- </div>
-        </footer> -->
-    <!-- </div> 
-     -->
-	<!-- core  -->
-    <script src="assets/vendors/jquery/jquery-3.4.1.js"></script>
-    <script src="assets/vendors/bootstrap/bootstrap.bundle.js"></script>
+  <!-- ===== SERVICES (CHANGE 3: horizontal tile redesign) ===== -->
+  <section id="services" style="background:#eeece6; padding:72px 0 56px;">
+    <div style="max-width:1200px; margin:0 auto; padding:0 64px;">
+      <p class="mono"
+        style="font-size:10px; letter-spacing:0.16em; color:#888; text-transform:uppercase; margin-bottom:12px;">WHAT I
+        DO</p>
+      <h2 style="font-size:36px; font-weight:300; color:#111; margin-bottom:48px; letter-spacing:-0.5px;">How I work
+      </h2>
 
-    <!-- bootstrap 3 affix -->
-	<script src="assets/vendors/bootstrap/bootstrap.affix.js"></script>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
 
-    <!-- Meyawo js -->
-    <script src="assets/js/meyawo.js"></script>
+        <!-- Tile 1: Research & Strategy -->
+        <div class="service-tile" style="background:#f5f4f0;">
+          <div class="service-icon-panel" style="background:#e5431b;">
+            <i data-lucide="search" style="width:44px;height:44px;stroke-width:1.5;color:rgba(255,255,255,0.9);"></i>
+          </div>
+          <div class="service-text-panel" style="background:#f5f4f0;">
+            <p class="mono"
+              style="font-size:9px; letter-spacing:0.14em; color:#bbb; text-transform:uppercase; margin-bottom:10px;">01
+            </p>
+            <h3 class="service-title">Research & Strategy</h3>
+            <p class="service-desc" style="color:#666;">I get into the lives of the people you're building for
+              interviews, home visits, behavioural observation and turn what I find into decisions your product can act
+              on.</p>
+          </div>
+        </div>
+
+        <!-- Tile 2: Product & UX Design -->
+        <div class="service-tile" style="background:#f5f4f0;">
+          <div class="service-icon-panel" style="background:#b0cce8;">
+            <i data-lucide="layout-dashboard"
+              style="width:44px;height:44px;stroke-width:1.5;color:rgba(255,255,255,0.9);"></i>
+          </div>
+          <div class="service-text-panel" style="background:#f5f4f0;">
+            <p class="mono"
+              style="font-size:9px; letter-spacing:0.14em; color:#bbb; text-transform:uppercase; margin-bottom:10px;">02
+            </p>
+            <h3 class="service-title">Product & UX Design</h3>
+            <p class="service-desc" style="color:#666;">From rough brief to shipped interface. I design products that
+              make sense to the people using them.</p>
+          </div>
+        </div>
+
+        <!-- Tile 3: Brand Identity & Design Systems -->
+        <div class="service-tile" style="background:#f5f4f0;">
+          <div class="service-icon-panel" style="background:#c4bff0;">
+            <i data-lucide="pen-tool" style="width:44px;height:44px;stroke-width:1.5;color:rgba(255,255,255,0.9);"></i>
+          </div>
+          <div class="service-text-panel" style="background:#f5f4f0;">
+            <p class="mono"
+              style="font-size:9px; letter-spacing:0.14em; color:#bbb; text-transform:uppercase; margin-bottom:10px;">03
+            </p>
+            <h3 class="service-title">Brand Identity & Design Systems</h3>
+            <p class="service-desc" style="color:#666;">Visual identity, component libraries, design language:the
+              foundational work that makes everything you build look and feel like one coherent thing.</p>
+          </div>
+        </div>
+
+        <!-- Tile 4: Website Design & Build -->
+        <div class="service-tile" style="background:#f5f4f0;">
+          <div class="service-icon-panel" style="background:#f5bfa5;">
+            <i data-lucide="globe" style="width:44px;height:44px;stroke-width:1.5;color:rgba(255,255,255,0.9);"></i>
+          </div>
+          <div class="service-text-panel" style="background:#f5f4f0;">
+            <p class="mono"
+              style="font-size:9px; letter-spacing:0.14em; color:#bbb; text-transform:uppercase; margin-bottom:10px;">04
+            </p>
+            <h3 class="service-title">Website Design & Build</h3>
+            <p class="service-desc" style="color:#666;">End to end architecture, design, and build. For early-stage
+              companies that need a foundation that does the selling before a conversation happens.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PORTFOLIO (CHANGE 4: section heading) ===== -->
+  <div id="portfolio-section" style="background:#eeece6; padding:56px 64px 32px;">
+    <div style="max-width:1200px; margin:0 auto;">
+      <p class="mono"
+        style="font-size:10px; letter-spacing:0.16em; color:#888; text-transform:uppercase; margin-bottom:12px;">CASE
+        STUDIES</p>
+      <h2 style="font-size:36px; font-weight:300; color:#111; letter-spacing:-0.5px;">My Work</h2>
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">All</button>
+        <button class="filter-tab" data-filter="product-design">Product Design</button>
+        <button class="filter-tab" data-filter="research">Research</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="portfolio" style="display:grid; grid-template-columns:1fr 1fr;">
+
+    <!-- Project 1: Coming Soon — Humanoid Robotics Brand -->
+    <div data-category="product-design" class="card-coming-soon"
+      style="background:#111820; display:flex; flex-direction:column; padding:48px 44px 40px; position:relative; overflow:hidden; transition:box-shadow 0.25s;">
+      <!-- Coming Soon overlay -->
+      <div class="card-overlay"
+        style="position:absolute; inset:0; background:rgba(17,17,17,0.82); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.25s; z-index:2; pointer-events:none;">
+        <span
+          style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.5);">Coming
+          Soon</span>
+      </div>
+      <div style="flex:1; display:flex; align-items:center; justify-content:center; min-height:280px;">
+        <svg width="260" height="200" viewBox="0 0 260 200" fill="none">
+          <!-- Brand identity concept: logo construction grid + type specimen + swatches -->
+          <!-- Construction grid lines -->
+          <line x1="130" y1="20" x2="130" y2="180" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+          <line x1="20" y1="100" x2="240" y2="100" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+          <!-- Logo mark area -->
+          <rect x="88" y="58" width="84" height="84" rx="2" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"
+            stroke-dasharray="4,3" />
+          <!-- Humanoid form — abstract mark -->
+          <circle cx="130" cy="80" r="12" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.5" />
+          <line x1="130" y1="92" x2="130" y2="120" stroke="rgba(255,255,255,0.55)" stroke-width="1.5" />
+          <line x1="130" y1="100" x2="116" y2="112" stroke="rgba(255,255,255,0.55)" stroke-width="1.5" />
+          <line x1="130" y1="100" x2="144" y2="112" stroke="rgba(255,255,255,0.55)" stroke-width="1.5" />
+          <line x1="130" y1="120" x2="120" y2="136" stroke="rgba(255,255,255,0.55)" stroke-width="1.5" />
+          <line x1="130" y1="120" x2="140" y2="136" stroke="rgba(255,255,255,0.55)" stroke-width="1.5" />
+          <!-- Type specimen baseline -->
+          <rect x="20" y="158" width="60" height="2" rx="1" fill="rgba(255,255,255,0.15)" />
+          <rect x="20" y="163" width="40" height="2" rx="1" fill="rgba(255,255,255,0.08)" />
+          <!-- Color swatches -->
+          <rect x="180" y="155" width="14" height="14" rx="1" fill="rgba(255,255,255,0.7)" />
+          <rect x="197" y="155" width="14" height="14" rx="1" fill="rgba(255,255,255,0.35)" />
+          <rect x="214" y="155" width="14" height="14" rx="1" fill="rgba(255,255,255,0.12)" />
+          <!-- Corner registration marks -->
+          <path d="M20,32 L20,20 L32,20" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none" />
+          <path d="M228,32 L228,20 L216,20" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none" />
+          <path d="M20,168 L20,180 L32,180" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none" />
+          <path d="M228,168 L228,180 L216,180" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none" />
+        </svg>
+      </div>
+      <div>
+        <p class="mono"
+          style="font-size:10px; letter-spacing:0.14em; color:rgba(255,255,255,0.3); text-transform:uppercase; margin-bottom:10px;">
+          BRAND &amp; PRODUCT DESIGN &nbsp;·&nbsp; FREELANCE</p>
+        <h2 style="font-size:22px; font-weight:400; color:#fff; margin-bottom:8px; letter-spacing:-0.2px;">Building a
+          Humanoid Robotics Brand from Zero</h2>
+        <p style="font-size:13px; line-height:1.65; color:rgba(255,255,255,0.55);">Early-stage AI startup — defining the
+          complete visual identity, design system, pitch deck, and website as founding design partner.</p>
+      </div>
+    </div>
+
+    <!-- Project 2: General Robotics -->
+    <a href="general-robotics-case-study.html" data-category="product-design"
+      style="background:#1a1a2e; display:flex; flex-direction:column; padding:48px 44px 40px; text-decoration:none; position:relative; overflow:hidden; transition:box-shadow 0.25s;">
+      <!-- Hover overlay -->
+      <div class="card-overlay"
+        style="position:absolute; inset:0; background:rgba(229,67,27,0.88); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.25s; z-index:2; pointer-events:none;">
+        <span
+          style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#fff;">View
+          Case Study →</span>
+      </div>
+      <div style="flex:1; display:flex; align-items:center; justify-content:center; min-height:280px;">
+        <svg width="260" height="200" viewBox="0 0 260 200" fill="none">
+          <line x1="20" y1="100" x2="60" y2="100" stroke="#e92a2a" stroke-width="1.5" opacity="0.25" />
+          <line x1="200" y1="100" x2="240" y2="100" stroke="#e92a2a" stroke-width="1.5" opacity="0.25" />
+          <line x1="130" y1="22" x2="130" y2="44" stroke="#e92a2a" stroke-width="1.5" opacity="0.25" />
+          <rect x="80" y="44" width="100" height="72" rx="4" fill="#252545" stroke="rgba(233,42,42,0.3)"
+            stroke-width="1" />
+          <rect x="96" y="64" width="22" height="14" rx="2" fill="#1a1a35" />
+          <rect x="142" y="64" width="22" height="14" rx="2" fill="#1a1a35" />
+          <rect x="97" y="65" width="20" height="12" rx="2" fill="#e92a2a" opacity="0.7" />
+          <rect x="143" y="65" width="20" height="12" rx="2" fill="#e92a2a" opacity="0.7" />
+          <rect x="102" y="68" width="6" height="6" rx="1" fill="#fff" opacity="0.9" />
+          <rect x="148" y="68" width="6" height="6" rx="1" fill="#fff" opacity="0.9" />
+          <rect x="100" y="88" width="60" height="3" rx="1.5" fill="#333355" />
+          <rect x="100" y="88" width="28" height="3" rx="1.5" fill="#e92a2a" opacity="0.5" />
+          <rect x="112" y="116" width="36" height="12" rx="1" fill="#252545" />
+          <rect x="75" y="128" width="110" height="56" rx="3" fill="#252545" stroke="rgba(233,42,42,0.2)"
+            stroke-width="1" />
+          <rect x="88" y="138" width="84" height="16" rx="2" fill="#1a1a35" />
+          <text x="130" y="150" text-anchor="middle" font-family="monospace" font-size="9" fill="#e92a2a" opacity="0.9"
+            font-weight="700">GRID</text>
+          <circle cx="97" cy="165" r="4" fill="#e92a2a" opacity="0.6" />
+          <circle cx="113" cy="165" r="4" fill="#e92a2a" opacity="0.35" />
+          <circle cx="130" cy="165" r="4" fill="#e92a2a" opacity="0.2" />
+          <line x1="130" y1="44" x2="130" y2="26" stroke="#e92a2a" stroke-width="2" opacity="0.5" />
+          <circle cx="130" cy="22" r="4" fill="#e92a2a" opacity="0.8" />
+          <circle cx="58" cy="100" r="5" fill="#252545" stroke="#e92a2a" stroke-width="1" opacity="0.5" />
+          <circle cx="202" cy="100" r="5" fill="#252545" stroke="#e92a2a" stroke-width="1" opacity="0.5" />
+        </svg>
+      </div>
+      <div>
+        <p class="mono"
+          style="font-size:10px; letter-spacing:0.14em; color:rgba(233,42,42,0.65); text-transform:uppercase; margin-bottom:10px;">
+          AI ROBOTICS &nbsp;·&nbsp; BRAND DESIGN</p>
+        <h2 style="font-size:22px; font-weight:400; color:#fff; margin-bottom:8px; letter-spacing:-0.2px;">Rebuilding
+          a Robotics Startup's Entire Identity</h2>
+        <p style="font-size:13px; line-height:1.65; color:rgba(255,255,255,0.65);">0→1 brand identity, design system,
+          and
+          live site for an AI robotics startup end to end.</p>
+      </div>
+    </a>
+    <style>
+      #portfolio>a:hover .card-overlay {
+        opacity: 1 !important;
+      }
+    </style>
+
+    <!-- Project 3: Hypertension Care -->
+    <a href="hypertension-case-study.html" data-category="research"
+      style="background:#f5f4f0; display:flex; flex-direction:column; padding:48px 44px 40px; text-decoration:none; position:relative; overflow:hidden; transition:box-shadow 0.25s;">
+      <!-- Hover overlay -->
+      <div class="card-overlay"
+        style="position:absolute; inset:0; background:rgba(229,67,27,0.88); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.25s; z-index:2; pointer-events:none;">
+        <span
+          style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#fff;">View
+          Case Study →</span>
+      </div>
+      <div style="flex:1; display:flex; align-items:center; justify-content:center; min-height:280px;">
+        <div style="width:320px; background:#e8e6e0; border-radius:8px; padding:24px;">
+          <div style="background:#1a2a1a; border-radius:6px; padding:16px 20px; margin-bottom:14px;">
+            <svg width="100%" height="48" viewBox="0 0 280 48" preserveAspectRatio="none">
+              <polyline
+                points="0,24 40,24 52,8 60,40 68,24 80,24 90,24 100,24 112,6 120,42 128,24 140,24 160,24 170,10 178,38 186,24 200,24 220,24 232,8 240,40 248,24 280,24"
+                stroke="#00e080" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <div style="display:flex; justify-content:space-between; margin-top:8px;">
+              <span style="font-family:'Space Mono',monospace; font-size:10px; color:#00e080;">120/80 mmHg</span>
+              <span style="font-family:'Space Mono',monospace; font-size:10px; color:#00e080;">72 bpm ♥</span>
+            </div>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <span style="background:#d4d0c8; border-radius:3px; padding:4px 10px; font-size:11px; color:#666;">Stage
+              1</span>
+            <span
+              style="background:#c8e0c8; border-radius:3px; padding:4px 10px; font-size:11px; color:#447744;">Improving</span>
+            <span
+              style="background:#e0d4c8; border-radius:3px; padding:4px 10px; font-size:11px; color:#775544;">Monitor</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="mono"
+          style="font-size:10px; letter-spacing:0.14em; color:#aaa; text-transform:uppercase; margin-bottom:10px;">
+          PHARMA &nbsp;·&nbsp; HEALTHCARE</p>
+        <h2 style="font-size:22px; font-weight:400; color:#111; margin-bottom:8px; letter-spacing:-0.2px;">
+          Revolutionizing Hypertension Care</h2>
+        <p style="font-size:13px; line-height:1.65; color:#666; max-width:340px;">Leading >$10B Pharmaceutical Co. —
+          exploring new approaches to patient experience and care adherence.</p>
+      </div>
+    </a>
+
+    <!-- Project 4: Product Strategy -->
+    <a href="recruiter-platform-case-study.html" data-category="research"
+      style="background:#2244aa; display:flex; flex-direction:column; padding:48px 44px 40px; text-decoration:none; position:relative; overflow:hidden; transition:box-shadow 0.25s;">
+      <!-- Hover overlay -->
+      <div class="card-overlay"
+        style="position:absolute; inset:0; background:rgba(229,67,27,0.88); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.25s; z-index:2; pointer-events:none;">
+        <span
+          style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#fff;">View
+          Case Study →</span>
+      </div>
+      <div style="flex:1; display:flex; align-items:center; justify-content:center; min-height:280px;">
+        <svg width="280" height="220" viewBox="0 0 280 220" fill="none">
+          <circle cx="140" cy="110" r="28" fill="#3355cc" />
+          <circle cx="140" cy="100" r="10" fill="#aabcee" />
+          <path d="M118 128 C118 114 162 114 162 128" fill="#aabcee" />
+          <line x1="140" y1="82" x2="140" y2="40" stroke="#4466dd" stroke-width="2" stroke-dasharray="4,3" />
+          <line x1="168" y1="118" x2="220" y2="80" stroke="#4466dd" stroke-width="2" stroke-dasharray="4,3" />
+          <line x1="168" y1="118" x2="230" y2="150" stroke="#4466dd" stroke-width="2" stroke-dasharray="4,3" />
+          <line x1="112" y1="118" x2="60" y2="80" stroke="#4466dd" stroke-width="2" stroke-dasharray="4,3" />
+          <line x1="112" y1="118" x2="50" y2="150" stroke="#4466dd" stroke-width="2" stroke-dasharray="4,3" />
+          <line x1="140" y1="138" x2="140" y2="180" stroke="#4466dd" stroke-width="2" stroke-dasharray="4,3" />
+          <circle cx="140" cy="32" r="18" fill="#1a3388" /><text x="140" y="37" text-anchor="middle" font-size="10"
+            font-family="monospace" fill="#8899cc">UX</text>
+          <circle cx="228" cy="72" r="18" fill="#1a3388" /><text x="228" y="77" text-anchor="middle" font-size="10"
+            font-family="monospace" fill="#8899cc">PM</text>
+          <circle cx="238" cy="158" r="18" fill="#1a3388" /><text x="238" y="163" text-anchor="middle" font-size="8"
+            font-family="monospace" fill="#8899cc">DATA</text>
+          <circle cx="42" cy="72" r="18" fill="#1a3388" /><text x="42" y="77" text-anchor="middle" font-size="8"
+            font-family="monospace" fill="#8899cc">BIZ</text>
+          <circle cx="42" cy="158" r="18" fill="#1a3388" /><text x="42" y="163" text-anchor="middle" font-size="7"
+            font-family="monospace" fill="#8899cc">MKTG</text>
+          <circle cx="140" cy="188" r="18" fill="#1a3388" /><text x="140" y="193" text-anchor="middle" font-size="7"
+            font-family="monospace" fill="#cce044">USER</text>
+        </svg>
+      </div>
+      <div>
+        <p class="mono"
+          style="font-size:10px; letter-spacing:0.14em; color:rgba(255,255,255,0.5); text-transform:uppercase; margin-bottom:10px;">
+          PRODUCT &nbsp;·&nbsp; HIRING PLATFORM</p>
+        <h2 style="font-size:22px; font-weight:400; color:#fff; margin-bottom:8px; letter-spacing:-0.2px;">Understanding
+          Users and Product Strategy</h2>
+        <p style="font-size:13px; line-height:1.65; color:rgba(255,255,255,0.8);">#1 Global Hiring Platform — informing
+          product direction by bridging user needs, business goals, and data insights.</p>
+      </div>
+    </a>
+
+    <!-- Project 5: Ad Consumption -->
+    <a href="ad-consumption-case-study.html" data-category="research"
+      style="background:#ff2070; display:flex; flex-direction:column; padding:48px 44px 40px; text-decoration:none; position:relative; overflow:hidden; transition:box-shadow 0.25s;">
+      <!-- Hover overlay -->
+      <div class="card-overlay"
+        style="position:absolute; inset:0; background:rgba(229,67,27,0.88); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.25s; z-index:2; pointer-events:none;">
+        <span
+          style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#fff;">View
+          Case Study →</span>
+      </div>
+      <div style="flex:1; display:flex; align-items:center; justify-content:center; min-height:280px;">
+        <div
+          style="width:170px; height:320px; background:#111; border-radius:32px; border:6px solid #0a0a0a; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,0.4); position:relative;">
+          <div
+            style="position:absolute; top:0; left:50%; transform:translateX(-50%); width:60px; height:18px; background:#0a0a0a; border-radius:0 0 12px 12px; z-index:2;">
+          </div>
+          <div style="background:#f8f8f8; width:100%; height:100%; padding:24px 8px 8px; overflow:hidden;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px; padding:0 4px;">
+              <span style="font-size:8px; font-weight:700; color:#111; font-family:'DM Sans',sans-serif;">Feed</span>
+              <div style="display:flex; gap:4px;">
+                <div style="width:16px; height:16px; background:#ddd; border-radius:50%;"></div>
+                <div style="width:16px; height:16px; background:#ddd; border-radius:50%;"></div>
+              </div>
+            </div>
+            <div
+              style="background:#fff; border-radius:6px; margin-bottom:8px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+              <div style="background:#ffe8d0; height:56px; position:relative;">
+                <span
+                  style="position:absolute; top:4px; right:6px; font-size:7px; color:#aa6622; font-family:'Space Mono',monospace;">SPONSORED</span>
+              </div>
+              <div style="padding:5px 7px;">
+                <div style="height:5px; background:#eee; border-radius:2px; margin-bottom:3px; width:80%;"></div>
+                <div style="height:5px; background:#f0f0f0; border-radius:2px; width:55%;"></div>
+              </div>
+            </div>
+            <div
+              style="background:#fff; border-radius:6px; margin-bottom:8px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+              <div style="background:#d0e8f0; height:50px;"></div>
+              <div style="padding:5px 7px;">
+                <div style="height:5px; background:#eee; border-radius:2px; margin-bottom:3px; width:70%;"></div>
+                <div style="height:5px; background:#f0f0f0; border-radius:2px; width:45%;"></div>
+              </div>
+            </div>
+            <div style="background:#fff; border-radius:6px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+              <div style="background:#ffeaea; height:44px; position:relative;">
+                <span
+                  style="position:absolute; top:4px; right:6px; font-size:7px; color:#aa2222; font-family:'Space Mono',monospace;">SPONSORED</span>
+              </div>
+              <div style="padding:5px 7px;">
+                <div style="height:5px; background:#eee; border-radius:2px; width:60%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="mono"
+          style="font-size:10px; letter-spacing:0.14em; color:rgba(255,255,255,0.65); text-transform:uppercase; margin-bottom:10px;">
+          SOCIAL MEDIA &nbsp;·&nbsp; AD RESEARCH</p>
+        <h2 style="font-size:22px; font-weight:400; color:#fff; margin-bottom:8px; letter-spacing:-0.2px;">Unlocking
+          Behavioral Paradigms of Ad Consumption</h2>
+        <p style="font-size:13px; line-height:1.65; color:rgba(255,255,255,0.85);">Leading Indian Social Media Platform
+          — understanding how users perceive and engage with advertising content.</p>
+      </div>
+    </a>
+
+    <!-- Project 6: Mobility Needs -->
+    <a href="strategic-insights-case-study.html" data-category="research"
+      style="background:#c4bff0; display:flex; flex-direction:column; padding:48px 44px 40px; text-decoration:none; position:relative; overflow:hidden; transition:box-shadow 0.25s;">
+      <!-- Hover overlay -->
+      <div class="card-overlay"
+        style="position:absolute; inset:0; background:rgba(229,67,27,0.88); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.25s; z-index:2; pointer-events:none;">
+        <span
+          style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#fff;">View
+          Case Study →</span>
+      </div>
+      <div style="flex:1; display:flex; align-items:center; justify-content:center; min-height:280px;">
+        <svg width="300" height="220" viewBox="0 0 300 220" fill="none">
+          <path d="M40,180 C60,140 80,160 120,120 C160,80 140,60 180,50 C220,40 240,80 260,40" stroke="#8880d0"
+            stroke-width="3" stroke-dasharray="8,4" fill="none" stroke-linecap="round" />
+          <circle cx="40" cy="180" r="12" fill="#7770c0" />
+          <circle cx="40" cy="180" r="6" fill="#fff" />
+          <circle cx="120" cy="120" r="10" fill="#8880d0" />
+          <circle cx="120" cy="120" r="5" fill="#fff" />
+          <circle cx="180" cy="50" r="10" fill="#8880d0" />
+          <circle cx="180" cy="50" r="5" fill="#fff" />
+          <circle cx="260" cy="40" r="14" fill="#5550a0" />
+          <circle cx="260" cy="40" r="7" fill="#cce044" />
+          <circle cx="80" cy="80" r="3" fill="#a8a0e0" opacity="0.4" />
+          <circle cx="160" cy="160" r="3" fill="#a8a0e0" opacity="0.4" />
+          <circle cx="220" cy="100" r="3" fill="#a8a0e0" opacity="0.4" />
+          <circle cx="100" cy="180" r="3" fill="#a8a0e0" opacity="0.4" />
+          <circle cx="240" cy="160" r="3" fill="#a8a0e0" opacity="0.4" />
+          <rect x="28" y="196" width="48" height="14" rx="2" fill="#7770c0" />
+          <text x="52" y="207" font-family="monospace" font-size="8" fill="#fff" text-anchor="middle">Origin</text>
+          <rect x="238" y="22" width="50" height="14" rx="2" fill="#5550a0" />
+          <text x="263" y="33" font-family="monospace" font-size="8" fill="#cce044" text-anchor="middle">Insight</text>
+        </svg>
+      </div>
+      <div>
+        <p class="mono"
+          style="font-size:10px; letter-spacing:0.14em; color:#5544aa; text-transform:uppercase; margin-bottom:10px;">
+          INNOVATION &nbsp;·&nbsp; UK ACCELERATOR</p>
+        <h2 style="font-size:22px; font-weight:400; color:#111; margin-bottom:8px; letter-spacing:-0.2px;">Unveiling
+          Strategic Insights on Mobility Needs</h2>
+        <p style="font-size:13px; line-height:1.65; color:#444;">UK-based Innovation Accelerator — uncovering behavioral
+          patterns in how people move and plan journeys.</p>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- See More -->
+  <div id="portfolio-see-more">
+    <button class="see-more-btn" id="see-more-btn">See more ↓</button>
+  </div>
+
+  <!-- ===== BLOG (CHANGE 5: separate section, horizontal list style) ===== -->
+  <section id="blogs" style="background:#eeece6; padding:72px 0 80px;">
+    <div style="max-width:1200px; margin:0 auto; padding:0 64px;">
+      <p class="mono"
+        style="font-size:10px; letter-spacing:0.16em; color:#888; text-transform:uppercase; margin-bottom:12px;">WRITING
+      </p>
+      <h2 style="font-size:36px; font-weight:300; color:#111; margin-bottom:48px; letter-spacing:-0.5px;">From the blog
+      </h2>
+
+      <!-- Entry 1 -->
+      <div style="display:flex; gap:48px; align-items:center; padding:40px 0; border-top:1px solid rgba(0,0,0,0.1);">
+        <!-- Thumbnail -->
+        <div
+          style="width:200px; height:144px; background:#b0cce8; border-radius:4px; flex-shrink:0; overflow:hidden; position:relative;">
+          <svg width="200" height="144" viewBox="0 0 200 144" fill="none">
+            <rect width="200" height="144" fill="#8ab8d8" />
+            <circle cx="162" cy="24" r="16" fill="#f0d860" />
+            <rect x="36" y="72" width="128" height="72" fill="#e8e0d0" />
+            <polygon points="22,72 100,24 178,72" fill="#c87040" />
+            <rect x="82" y="102" width="36" height="42" rx="2" fill="#8b5030" />
+            <rect x="44" y="84" width="30" height="24" rx="2" fill="#a8d0e8" />
+            <rect x="126" y="84" width="30" height="24" rx="2" fill="#a8d0e8" />
+          </svg>
+        </div>
+        <!-- Text -->
+        <div style="flex:1;">
+          <p class="mono"
+            style="font-size:10px; letter-spacing:0.14em; color:#aaa; text-transform:uppercase; margin-bottom:10px;">
+            BLOG &nbsp;·&nbsp; ARTICLE 01</p>
+          <h3
+            style="font-size:22px; font-weight:400; color:#111; margin-bottom:10px; letter-spacing:-0.2px; line-height:1.3;">
+            How Do You Create a Dream Home?<br><span style="font-style:italic; color:#666; font-size:18px;">Inside the
+              Indian Homeowner's Mind</span></h3>
+          <p style="font-size:13px; line-height:1.65; color:#555; max-width:540px; margin-bottom:18px;">Exploring the
+            psychology, aspirations, and decision-making behind how Indian homeowners imagine and create their ideal
+            living spaces.</p>
+          <a href="https://medium.com/@viditabhagat/how-do-you-create-a-dream-home-inside-the-indian-homeowners-mind-76068f25cb45"
+            class="mono"
+            style="font-size:11px; letter-spacing:0.1em; color:#e5431b; text-decoration:none; font-weight:700;">Read
+            &nbsp;→</a>
+        </div>
+      </div>
+
+      <!-- Entry 2 -->
+      <div
+        style="display:flex; gap:48px; align-items:center; padding:40px 0; border-top:1px solid rgba(0,0,0,0.1); border-bottom:1px solid rgba(0,0,0,0.1);">
+        <!-- Thumbnail -->
+        <div style="width:200px; height:144px; background:#f09090; border-radius:4px; flex-shrink:0; overflow:hidden;">
+          <svg width="200" height="144" viewBox="0 0 200 144" fill="none">
+            <rect width="200" height="144" fill="#f09090" />
+            <ellipse cx="100" cy="118" rx="54" ry="16" fill="#c86040" />
+            <ellipse cx="100" cy="96" rx="54" ry="14" fill="#e09070" />
+            <ellipse cx="100" cy="96" rx="40" ry="10" fill="#88a840" />
+            <path d="M64,88 C62,76 70,66 66,54" stroke="rgba(255,255,255,0.6)" stroke-width="2" fill="none"
+              stroke-linecap="round" />
+            <path d="M100,84 C98,70 108,62 104,48" stroke="rgba(255,255,255,0.6)" stroke-width="2" fill="none"
+              stroke-linecap="round" />
+            <path d="M136,88 C134,76 142,66 138,54" stroke="rgba(255,255,255,0.6)" stroke-width="2" fill="none"
+              stroke-linecap="round" />
+            <line x1="36" y1="94" x2="36" y2="40" stroke="#447730" stroke-width="2" stroke-linecap="round" />
+            <ellipse cx="36" cy="54" rx="12" ry="16" fill="#66aa44" transform="rotate(-20 36 54)" />
+          </svg>
+        </div>
+        <!-- Text -->
+        <div style="flex:1;">
+          <p class="mono"
+            style="font-size:10px; letter-spacing:0.14em; color:#aaa; text-transform:uppercase; margin-bottom:10px;">
+            BLOG &nbsp;·&nbsp; ARTICLE 02</p>
+          <h3
+            style="font-size:22px; font-weight:400; color:#111; margin-bottom:10px; letter-spacing:-0.2px; line-height:1.3;">
+            The Enduring Tradition of<br><span style="font-style:italic; color:#666; font-size:18px;">Home Remedies in
+              Indian Households</span></h3>
+          <p style="font-size:13px; line-height:1.65; color:#555; max-width:540px; margin-bottom:18px;">Exploring why
+            generations of Indian families continue to trust ancestral remedies alongside modern medicine — a behavioral
+            and cultural lens.</p>
+          <a href="https://medium.com/@viditabhagat/the-enduring-tradition-of-home-remedies-in-indian-households-b52fae7beee8"
+            class="mono"
+            style="font-size:11px; letter-spacing:0.1em; color:#e5431b; text-decoration:none; font-weight:700;">Read
+            &nbsp;→</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" style="background:#e5431b; padding:88px 64px; text-align:center;">
+    <p class="mono"
+      style="font-size:10px; letter-spacing:0.16em; color:rgba(255,255,255,0.6); text-transform:uppercase; margin-bottom:12px;">
+      CONTACT</p>
+    <h2 style="font-style:italic; font-size:44px; font-weight:300; color:#fff; margin-bottom:16px; line-height:1.2;">
+      Always feel free to contact me</h2>
+    <p
+      style="font-size:16px; color:rgba(255,255,255,0.8); margin-bottom:40px; max-width:520px; margin-left:auto; margin-right:auto; line-height:1.6;">
+      If you are interested in collaborating with me, feel free to reach out — I'd love to connect.
+    </p>
+    <a href="mailto:viditab.work@gmail.com" class="mono"
+      style="display:inline-block; background:#fff; color:#e5431b; padding:14px 36px; font-size:12px; letter-spacing:0.14em; text-decoration:none; border-radius:2px; font-weight:700;">GET
+      IN TOUCH →</a>
+  </section>
+
+  <!-- ===== FOOTER — Interactive Pixel Dogs (CHANGE 6: NOODLE → OREO) ===== -->
+  <footer style="background:#1c211c; padding:52px 48px 40px;">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between;">
+
+      <!-- Left: LUNA (Shiba, tan) -->
+      <div class="dog-wrap" onclick="feedDog(this)" style="align-self:flex-end;">
+        <svg class="dog-idle" width="80" height="96" viewBox="0 0 80 96" fill="none"
+          style="display:block; animation-delay:0.0s;">
+          <rect x="11" y="2" width="15" height="22" fill="#c47855" />
+          <rect x="54" y="2" width="15" height="22" fill="#c47855" />
+          <rect x="14" y="6" width="8" height="14" fill="#e8b898" />
+          <rect x="57" y="6" width="8" height="14" fill="#e8b898" />
+          <rect x="10" y="18" width="60" height="36" fill="#d4956a" />
+          <rect x="20" y="28" width="10" height="10" fill="#1a1a1a" />
+          <rect x="22" y="30" width="4" height="4" fill="rgba(255,255,255,0.4)" />
+          <rect x="50" y="28" width="10" height="10" fill="#1a1a1a" />
+          <rect x="52" y="30" width="4" height="4" fill="rgba(255,255,255,0.4)" />
+          <rect x="22" y="40" width="36" height="14" fill="#f0c898" />
+          <rect x="30" y="40" width="20" height="10" fill="#5a3020" />
+          <rect x="32" y="42" width="6" height="6" fill="#3a1a0a" />
+          <rect x="42" y="42" width="6" height="6" fill="#3a1a0a" />
+          <rect x="36" y="53" width="8" height="3" fill="#5a3020" />
+          <rect x="10" y="52" width="56" height="28" fill="#d4956a" />
+          <rect x="22" y="52" width="32" height="16" fill="#e8c8a8" />
+          <rect x="64" y="36" width="10" height="8" fill="#c47855" />
+          <rect x="66" y="28" width="10" height="12" fill="#c47855" />
+          <rect x="62" y="22" width="10" height="10" fill="#c47855" />
+          <rect x="16" y="78" width="16" height="14" fill="#c47855" />
+          <rect x="48" y="78" width="16" height="14" fill="#c47855" />
+          <rect x="14" y="88" width="20" height="8" fill="#8b5030" />
+          <rect x="46" y="88" width="20" height="8" fill="#8b5030" />
+        </svg>
+        <span class="dog-name">LUNA</span>
+      </div>
+
+      <!-- Center: OREO (Golden Lab) + branding -->
+      <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+        <div class="dog-wrap" onclick="feedDog(this)">
+          <svg class="dog-idle" width="80" height="88" viewBox="0 0 80 88" fill="none"
+            style="display:block; animation-delay:0.4s;">
+            <rect x="4" y="20" width="14" height="30" fill="#c89830" />
+            <rect x="62" y="20" width="14" height="30" fill="#c89830" />
+            <rect x="7" y="23" width="8" height="22" fill="#e8b840" />
+            <rect x="65" y="23" width="8" height="22" fill="#e8b840" />
+            <rect x="14" y="16" width="52" height="36" fill="#e8c870" />
+            <rect x="22" y="26" width="10" height="10" fill="#1a1a1a" />
+            <rect x="24" y="28" width="4" height="4" fill="rgba(255,255,255,0.4)" />
+            <rect x="48" y="26" width="10" height="10" fill="#1a1a1a" />
+            <rect x="50" y="28" width="4" height="4" fill="rgba(255,255,255,0.4)" />
+            <rect x="22" y="36" width="36" height="16" fill="#f0e0a0" />
+            <rect x="30" y="36" width="20" height="10" fill="#2a2010" />
+            <rect x="32" y="38" width="6" height="6" fill="#100e04" />
+            <rect x="42" y="38" width="6" height="6" fill="#100e04" />
+            <rect x="33" y="50" width="14" height="10" rx="4" fill="#e87888" />
+            <rect x="12" y="50" width="56" height="24" fill="#e8c870" />
+            <rect x="62" y="40" width="14" height="8" fill="#c89830" />
+            <rect x="68" y="30" width="12" height="14" fill="#c89830" />
+            <rect x="18" y="72" width="14" height="12" fill="#c89830" />
+            <rect x="48" y="72" width="14" height="12" fill="#c89830" />
+            <rect x="16" y="80" width="18" height="8" fill="#a07020" />
+            <rect x="46" y="80" width="18" height="8" fill="#a07020" />
+          </svg>
+          <span class="dog-name">OREO</span>
+        </div>
+        <div style="text-align:center; margin-top:4px;">
+          <p class="mono"
+            style="font-size:10px; letter-spacing:0.18em; color:rgba(255,255,255,0.8); text-transform:uppercase; line-height:1.8;">
+            VIDITA<br>BHAGAT</p>
+        </div>
+        <div style="display:flex; gap:12px; margin-top:4px;">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <ellipse cx="7" cy="10" rx="4" ry="3" fill="rgba(255,255,255,0.4)" />
+            <ellipse cx="3" cy="6" rx="2" ry="2.5" fill="rgba(255,255,255,0.4)" />
+            <ellipse cx="11" cy="6" rx="2" ry="2.5" fill="rgba(255,255,255,0.4)" />
+            <ellipse cx="5.5" cy="4" rx="2" ry="2.5" fill="rgba(255,255,255,0.4)" />
+            <ellipse cx="8.5" cy="4" rx="2" ry="2.5" fill="rgba(255,255,255,0.4)" />
+          </svg>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <ellipse cx="6" cy="9" rx="3.5" ry="2.5" fill="rgba(255,255,255,0.4)" />
+            <ellipse cx="2.5" cy="5" rx="1.8" ry="2.2" fill="rgba(255,255,255,0.4)" />
+            <ellipse cx="9.5" cy="5" rx="1.8" ry="2.2" fill="rgba(255,255,255,0.4)" />
+            <ellipse cx="4.5" cy="3.5" rx="1.8" ry="2" fill="rgba(255,255,255,0.4)" />
+            <ellipse cx="7.5" cy="3.5" rx="1.8" ry="2" fill="rgba(255,255,255,0.4)" />
+          </svg>
+        </div>
+        <p class="mono" style="font-size:8px; color:rgba(255,255,255,0.5); margin-top:2px; letter-spacing:0.06em;">click for treats ↑</p>
+      </div>
+
+      <!-- Right: BISCUIT (Dachshund) + MOCHI (Corgi) — CHANGE 6: renamed NOODLE → OREO -->
+      <div style="display:flex; align-items:flex-end; gap:14px;">
+
+        <!-- BISCUIT (Dachshund, dark brown/black) — was NOODLE -->
+        <div class="dog-wrap" onclick="feedDog(this)" style="align-self:flex-end;">
+          <svg class="dog-idle" width="72" height="80" viewBox="0 0 72 80" fill="none"
+            style="display:block; animation-delay:0.7s;">
+            <rect x="4" y="14" width="12" height="34" fill="#2a2a2a" />
+            <rect x="56" y="14" width="12" height="34" fill="#2a2a2a" />
+            <rect x="7" y="17" width="6" height="26" fill="#4a3a3a" />
+            <rect x="59" y="17" width="6" height="26" fill="#4a3a3a" />
+            <rect x="14" y="10" width="44" height="34" fill="#3a2a2a" />
+            <rect x="20" y="28" width="32" height="16" fill="#e0c8b0" />
+            <rect x="19" y="20" width="9" height="9" fill="#1a1a1a" />
+            <rect x="21" y="22" width="4" height="4" fill="rgba(255,255,255,0.45)" />
+            <rect x="44" y="20" width="9" height="9" fill="#1a1a1a" />
+            <rect x="46" y="22" width="4" height="4" fill="rgba(255,255,255,0.45)" />
+            <rect x="28" y="28" width="16" height="8" fill="#1a1010" />
+            <!-- Oreo-like spots -->
+            <rect x="8" y="42" width="62" height="22" fill="#3a2a2a" />
+            <rect x="14" y="42" width="48" height="14" fill="#4a3838" />
+            <!-- White chest patch -->
+            <rect x="24" y="43" width="24" height="10" fill="#e0d8d0" />
+            <rect x="12" y="62" width="12" height="12" fill="#2a1a1a" />
+            <rect x="50" y="62" width="12" height="12" fill="#2a1a1a" />
+            <rect x="10" y="70" width="16" height="6" fill="#1a1010" />
+            <rect x="48" y="70" width="16" height="6" fill="#1a1010" />
+            <rect x="66" y="46" width="6" height="14" fill="#2a1a1a" />
+            <rect x="64" y="42" width="8" height="8" fill="#2a1a1a" />
+          </svg>
+          <span class="dog-name">BISCUIT</span>
+        </div>
+
+        <!-- MOCHI (Corgi, orange) -->
+        <div class="dog-wrap" onclick="feedDog(this)" style="align-self:flex-end;">
+          <svg class="dog-idle" width="86" height="92" viewBox="0 0 86 92" fill="none"
+            style="display:block; animation-delay:1.1s;">
+            <rect x="8" y="0" width="20" height="28" fill="#c86820" />
+            <rect x="58" y="0" width="20" height="28" fill="#c86820" />
+            <rect x="12" y="4" width="12" height="20" fill="#e88840" />
+            <rect x="62" y="4" width="12" height="20" fill="#e88840" />
+            <rect x="8" y="18" width="70" height="36" fill="#e88840" />
+            <rect x="16" y="32" width="54" height="22" fill="#f0e8e0" />
+            <rect x="20" y="24" width="11" height="11" fill="#1a1a1a" />
+            <rect x="22" y="26" width="5" height="5" fill="rgba(255,255,255,0.4)" />
+            <rect x="55" y="24" width="11" height="11" fill="#1a1a1a" />
+            <rect x="57" y="26" width="5" height="5" fill="rgba(255,255,255,0.4)" />
+            <rect x="32" y="32" width="22" height="11" fill="#3a2010" />
+            <rect x="34" y="34" width="7" height="7" fill="#1a0808" />
+            <rect x="45" y="34" width="7" height="7" fill="#1a0808" />
+            <rect x="38" y="53" width="10" height="4" fill="#c87040" />
+            <rect x="6" y="52" width="74" height="26" fill="#e88840" />
+            <rect x="18" y="52" width="50" height="16" fill="#f0e8e0" />
+            <rect x="66" y="40" width="20" height="20" fill="#e88840" />
+            <rect x="70" y="36" width="16" height="12" fill="#e88840" />
+            <rect x="70" y="36" width="12" height="8" fill="#f0e8e0" />
+            <rect x="14" y="76" width="16" height="12" fill="#c86820" />
+            <rect x="56" y="76" width="16" height="12" fill="#c86820" />
+            <rect x="12" y="84" width="20" height="8" fill="#8b4810" />
+            <rect x="54" y="84" width="20" height="8" fill="#8b4810" />
+          </svg>
+          <span class="dog-name">MOCHI</span>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ===== CHANGE 1: Hero sparkle cursor trail ===== */
+    (function () {
+      const hero = document.getElementById('hero-section');
+      const colors = ['#e5431b', '#cce044', '#f5bfa5', '#c4bff0', '#b0cce8', '#a8d4e8'];
+      let lastSpark = 0;
+
+      hero.addEventListener('mousemove', function (e) {
+        const now = Date.now();
+        if (now - lastSpark < 40) return; // throttle
+        lastSpark = now;
+
+        const rect = hero.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const dot = document.createElement('div');
+        dot.className = 'spark-dot';
+        const size = 5 + Math.random() * 5;
+        dot.style.cssText = `
+      left:${x}px; top:${y}px;
+      width:${size}px; height:${size}px;
+      background:${colors[Math.floor(Math.random() * colors.length)]};
+    `;
+        hero.appendChild(dot);
+        setTimeout(() => dot.remove(), 700);
+      });
+
+      // Click anywhere in hero drops a small illustrated card
+      hero.addEventListener('click', function (e) {
+        const rect = hero.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const glyphs = ['✦', '✿', '✳', '★', '◆', '⬟'];
+        const cols = ['#e5431b', '#cce044', '#c4bff0', '#f5bfa5'];
+
+        const drop = document.createElement('div');
+        drop.style.cssText = `
+      position:absolute; left:${x}px; top:${y}px;
+      font-size:${16 + Math.random() * 14}px;
+      color:${cols[Math.floor(Math.random() * cols.length)]};
+      pointer-events:none; z-index:60;
+      transform:translate(-50%,-50%);
+      animation:hero-float-c 2s ease-in-out infinite;
+      opacity:0.8;
+      transition:opacity 2.5s;
+    `;
+        drop.textContent = glyphs[Math.floor(Math.random() * glyphs.length)];
+        hero.appendChild(drop);
+        setTimeout(() => { drop.style.opacity = '0'; }, 2200);
+        setTimeout(() => drop.remove(), 2800);
+      });
+    })();
+
+    /* ===== Dog interaction ===== */
+    function feedDog(wrapper) {
+      const svg = wrapper.querySelector('svg');
+      if (svg.dataset.busy === 'true') return;
+      svg.dataset.busy = 'true';
+
+      svg.classList.remove('dog-idle', 'dog-eating');
+      svg.classList.add('dog-excited');
+
+      const treat = document.createElement('div');
+      treat.className = 'treat-el';
+      treat.textContent = ['🦴', '🥩', '🍖', '🍪'][Math.floor(Math.random() * 4)];
+      wrapper.appendChild(treat);
+
+      setTimeout(() => {
+        svg.classList.remove('dog-excited');
+        svg.classList.add('dog-eating');
+        const phrases = ['yum!', 'nom nom!', 'woof!', 'delish!', 'more?', '♥'];
+        const yum = document.createElement('div');
+        yum.className = 'yum-el';
+        yum.textContent = phrases[Math.floor(Math.random() * phrases.length)];
+        wrapper.appendChild(yum);
+        setTimeout(() => yum.remove(), 1600);
+      }, 1200);
+
+      setTimeout(() => {
+        svg.classList.remove('dog-excited', 'dog-eating');
+        svg.classList.add('dog-idle');
+        treat.remove();
+        svg.dataset.busy = 'false';
+      }, 2800);
+    }
+
+    /* ===== Portfolio filter ===== */
+    (function () {
+      const SHOW = 4;
+      const portfolio = document.getElementById('portfolio');
+      const seeMoreWrapper = document.getElementById('portfolio-see-more');
+      const seeMoreBtn = document.getElementById('see-more-btn');
+      const tabs = document.querySelectorAll('.filter-tab');
+      let currentFilter = 'all';
+      let expanded = false;
+
+      function getCards(filter) {
+        return Array.from(portfolio.querySelectorAll('[data-category]')).filter(
+          c => filter === 'all' || c.dataset.category === filter
+        );
+      }
+
+      function applyFilter(filter) {
+        currentFilter = filter;
+        expanded = false;
+        const all = Array.from(portfolio.querySelectorAll('[data-category]'));
+        const matched = getCards(filter);
+
+        // Fade out all first
+        all.forEach(c => { c.style.opacity = '0'; c.style.pointerEvents = 'none'; });
+
+        setTimeout(() => {
+          all.forEach(c => { c.style.display = 'none'; });
+          matched.forEach((c, i) => {
+            if (i < SHOW) {
+              c.style.display = 'flex';
+              c.style.pointerEvents = '';
+              setTimeout(() => { c.style.opacity = '1'; }, 30 + i * 60);
+            }
+          });
+          // See more visibility
+          if (matched.length > SHOW) {
+            seeMoreWrapper.style.display = 'flex';
+            seeMoreBtn.textContent = 'See more ↓';
+          } else {
+            seeMoreWrapper.style.display = 'none';
+          }
+        }, 200);
+      }
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          applyFilter(tab.dataset.filter);
+        });
+      });
+
+      seeMoreBtn.addEventListener('click', () => {
+        const matched = getCards(currentFilter);
+        if (!expanded) {
+          matched.forEach((c, i) => {
+            if (i >= SHOW) {
+              c.style.display = 'flex';
+              c.style.pointerEvents = '';
+              setTimeout(() => { c.style.opacity = '1'; }, (i - SHOW) * 70);
+            }
+          });
+          seeMoreBtn.textContent = 'See less ↑';
+          expanded = true;
+        } else {
+          matched.forEach((c, i) => {
+            if (i >= SHOW) {
+              c.style.opacity = '0';
+              c.style.pointerEvents = 'none';
+              setTimeout(() => { c.style.display = 'none'; }, 300);
+            }
+          });
+          seeMoreBtn.textContent = 'See more ↓';
+          expanded = false;
+          const section = document.getElementById('portfolio-section');
+          if (section) setTimeout(() => section.scrollIntoView({ behavior: 'smooth' }), 320);
+        }
+      });
+
+      // Init: show first SHOW cards, hide the rest
+      applyFilter('all');
+    })();
+  </script>
+
+  <script>
+    /* ===== Lucide icons ===== */
+    lucide.createIcons();
+
+    /* ===== Role label rotation ===== */
+    (function () {
+      const labels = ['0 → 1 Builder', 'User Researcher', 'Product Designer'];
+      let idx = 1; // start at "User Researcher" (already shown)
+      const el = document.getElementById('role-label-text');
+      if (!el) return;
+
+      setInterval(function () {
+        idx = (idx + 1) % labels.length;
+        // fade out
+        el.classList.remove('fade-in');
+        el.classList.add('fade-out');
+        setTimeout(function () {
+          el.textContent = labels[idx];
+          // fade in
+          el.classList.remove('fade-out');
+          el.classList.add('fade-in');
+        }, 320);
+      }, 2300);
+    })();
+  </script>
 
 </body>
+
 </html>

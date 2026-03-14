@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>General Robotics Case Study — Vidita Bhagat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+     DESIGN SYSTEM — mirrors index.html
+     Accent: #e92a2a (red) / tint: #fde8e8
+     ═══════════════════════════════════════════════════════════════ */
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      background: #eeece6;
+      color: #111;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    .mono {
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* NAV */
+    nav {
+      background: #eeece6;
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: #333;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover {
+      color: #111;
+    }
+
+    .nav-back {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: #eeece6;
+      background: #1a1a1a;
+      padding: 7px 14px;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.15s;
+    }
+
+    .nav-back:hover {
+      background: #e92a2a;
+    }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 52px);
+    }
+
+    .hero-left {
+      background: #f5f4f0;
+      padding: 80px 64px 80px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-right: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .case-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #e92a2a;
+      margin-bottom: 28px;
+    }
+
+    .case-label::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: #e92a2a;
+      flex-shrink: 0;
+    }
+
+    .hero-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(32px, 3.8vw, 52px);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin-bottom: 24px;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: #e92a2a;
+    }
+
+    .hero-sub {
+      font-size: 14px;
+      font-weight: 300;
+      color: #666;
+      line-height: 1.75;
+      max-width: 480px;
+      margin-bottom: 40px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #666;
+      background: #e8e6e0;
+      border-radius: 3px;
+      padding: 5px 12px;
+    }
+
+    .hero-right {
+      background: #1c211c;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+    }
+
+    .stat-card {
+      padding: 48px 40px;
+      border-right: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .stat-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .stat-card:nth-child(1) {
+      transition-delay: 0.1s;
+    }
+
+    .stat-card:nth-child(2) {
+      transition-delay: 0.2s;
+      border-right: none;
+    }
+
+    .stat-card:nth-child(3) {
+      transition-delay: 0.3s;
+      border-bottom: none;
+    }
+
+    .stat-card:nth-child(4) {
+      transition-delay: 0.4s;
+      border-right: none;
+      border-bottom: none;
+    }
+
+    .stat-num {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 64px;
+      font-weight: 300;
+      color: #fff;
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 8px;
+    }
+
+    .stat-num span {
+      color: #e92a2a;
+    }
+
+    .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.35);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      line-height: 1.5;
+    }
+
+    /* SECTIONS */
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 72px 64px;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .artifact-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 64px 64px;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .artifact-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* SECTION HEADER */
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 48px;
+    }
+
+    .section-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      color: #888;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 36px;
+      font-weight: 300;
+      color: #111;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+    }
+
+    /* DIVIDER */
+    .full-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.08);
+    }
+
+    /* ARTIFACT LABEL */
+    .artifact-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    .artifact-label::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.2);
+      flex-shrink: 0;
+    }
+
+    /* PROBLEM */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .problem-text {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: #333;
+    }
+
+    .problem-text p+p {
+      margin-top: 20px;
+    }
+
+    .problem-text strong {
+      font-weight: 500;
+      color: #111;
+    }
+
+    .insight-box {
+      background: #1c211c;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .insight-box::before {
+      content: '"';
+      font-family: 'DM Sans', sans-serif;
+      font-size: 160px;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.05);
+      position: absolute;
+      top: -20px;
+      left: 20px;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .insight-box p {
+      font-style: italic;
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.88);
+      line-height: 1.75;
+      position: relative;
+    }
+
+    .insight-box cite {
+      display: block;
+      margin-top: 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-style: normal;
+      color: rgba(255, 255, 255, 0.35);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* TWIST BANNER */
+    .twist-banner {
+      background: #e92a2a;
+      padding: 48px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .twist-icon {
+      font-size: 48px;
+      flex-shrink: 0;
+    }
+
+    .twist-text h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .twist-text p {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    /* USER VOICES */
+    .voices-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      background: rgba(0, 0, 0, 0.08);
+    }
+
+    .voice-card {
+      background: #f5f4f0;
+      padding: 32px 36px;
+    }
+
+    .voice-quote {
+      font-style: italic;
+      font-size: 14px;
+      color: #333;
+      line-height: 1.75;
+      margin-bottom: 16px;
+      font-weight: 300;
+    }
+
+    .voice-quote::before {
+      content: '"';
+      color: #e92a2a;
+      font-size: 22px;
+    }
+
+    .voice-who {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* DILO STRIP */
+    .dilo-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3px;
+    }
+
+    .dilo-card {
+      background: #f5f4f0;
+      border: 1px dashed rgba(0, 0, 0, 0.12);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 200px;
+      transition: border-color 0.22s ease;
+    }
+
+    .dilo-card:hover {
+      border-color: #e92a2a;
+      border-style: solid;
+    }
+
+    .dilo-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 140px;
+      background: rgba(0, 0, 0, 0.04);
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      color: #888;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .dilo-user {
+      font-size: 13px;
+      font-weight: 500;
+      color: #111;
+    }
+
+    .dilo-desc {
+      font-size: 12px;
+      font-weight: 300;
+      color: #666;
+      line-height: 1.55;
+    }
+
+    /* APPROACH */
+    .approach-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      background: rgba(0, 0, 0, 0.08);
+    }
+
+    .approach-card {
+      background: #f5f4f0;
+      padding: 40px;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .approach-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 2;
+    }
+
+    .approach-num {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 40px;
+      font-weight: 300;
+      color: rgba(0, 0, 0, 0.1);
+      line-height: 1;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+
+    .approach-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: #111;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .approach-body {
+      font-size: 13px;
+      font-weight: 300;
+      color: #666;
+      line-height: 1.7;
+    }
+
+    .approach-why {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: #e92a2a;
+      line-height: 1.65;
+    }
+
+    /* FIELD PHOTOS */
+    .photos-strip {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3px;
+      height: 380px;
+    }
+
+    .photo-slot {
+      background: #f5f4f0;
+      border: 1px dashed rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      transition: background 0.22s ease, border-color 0.22s ease;
+    }
+
+    .photo-slot:hover {
+      background: #eceae4;
+      border-color: rgba(0, 0, 0, 0.25);
+    }
+
+    .photo-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-slot-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .photo-slot-icon {
+      font-size: 28px;
+      opacity: 0.3;
+    }
+
+    .photo-slot-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      line-height: 1.55;
+    }
+
+    .swap-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #1a1a1a;
+      color: #eeece6;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border-radius: 2px;
+      opacity: 0.35;
+    }
+
+    .photo-caption {
+      font-size: 12px;
+      font-weight: 300;
+      color: #888;
+      margin-top: 12px;
+      font-style: italic;
+      text-align: center;
+    }
+
+    /* FINDINGS */
+    .findings-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .finding-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 1fr;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 32px 0;
+      align-items: start;
+      transition: background 0.2s, padding 0.2s;
+      cursor: default;
+    }
+
+    .finding-row:first-child {
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .finding-row:hover {
+      background: #f5f4f0;
+      padding: 32px 64px;
+      margin: 0 -64px;
+    }
+
+    .finding-idx {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 28px;
+      font-weight: 300;
+      color: rgba(0, 0, 0, 0.12);
+      letter-spacing: -0.5px;
+      padding-top: 2px;
+    }
+
+    .finding-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: #111;
+      padding-right: 32px;
+      line-height: 1.45;
+    }
+
+    .finding-so-what {
+      font-size: 13px;
+      font-weight: 300;
+      color: #666;
+      line-height: 1.65;
+      border-left: 2px solid #fde8e8;
+      padding-left: 20px;
+    }
+
+    .finding-so-what strong {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      font-weight: 400;
+      color: #e92a2a;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 6px;
+    }
+
+    /* PERSONAS */
+    .persona-group-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #888;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .personas-row {
+      display: grid;
+      gap: 3px;
+      margin-bottom: 20px;
+    }
+
+    .personas-row.patients {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .personas-row.four {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .personas-row.hcps {
+      grid-template-columns: repeat(2, 1fr) 3fr;
+    }
+
+    .persona-card {
+      background: #f5f4f0;
+      border: 1px dashed rgba(0, 0, 0, 0.12);
+      padding: 22px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: background 0.22s ease, border-color 0.22s ease;
+    }
+
+    .persona-card:hover {
+      background: #fde8e8;
+      border-color: #e92a2a;
+      border-style: solid;
+    }
+
+    .persona-card.hcp:hover {
+      background: #eceaf8;
+      border-color: #8880c0;
+    }
+
+    .persona-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 3px;
+      background: #e8e6e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .persona-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .persona-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: #111;
+      line-height: 1.3;
+    }
+
+    .persona-tag {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #e92a2a;
+      background: #fde8e8;
+      border-radius: 3px;
+      padding: 3px 8px;
+      align-self: flex-start;
+    }
+
+    .persona-card.hcp .persona-tag {
+      color: #5544aa;
+      background: #eceaf8;
+    }
+
+    .persona-desc {
+      font-size: 12px;
+      font-weight: 300;
+      color: #666;
+      line-height: 1.55;
+    }
+
+    .persona-swap-hint {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      color: rgba(0, 0, 0, 0.2);
+      font-style: italic;
+      line-height: 1.4;
+    }
+
+    /* JOURNEY MAP */
+    .journey-map-slot {
+      background: #f5f4f0;
+      border: 1px dashed rgba(0, 0, 0, 0.12);
+      height: 440px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.22s ease, border-color 0.22s ease;
+    }
+
+    .journey-map-slot:hover {
+      background: #eceae4;
+      border-color: rgba(0, 0, 0, 0.25);
+    }
+
+    .journey-map-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 20px;
+    }
+
+    .journey-slot-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .journey-slot-icon {
+      font-size: 36px;
+      opacity: 0.2;
+    }
+
+    .journey-slot-label {
+      font-size: 13px;
+      font-weight: 300;
+      color: #888;
+      text-align: center;
+      line-height: 1.65;
+      max-width: 360px;
+    }
+
+    .journey-slot-label strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 6px;
+    }
+
+    /* OUTCOME */
+    .outcome-hero {
+      background: #1c211c;
+      padding: 72px 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+      margin: 0 -64px;
+    }
+
+    .outcome-statement {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(20px, 2.5vw, 32px);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.4;
+      letter-spacing: -0.3px;
+    }
+
+    .outcome-statement em {
+      font-style: normal;
+      color: #e92a2a;
+    }
+
+    .outcome-shifts {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .shift-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .shift-arrow {
+      color: #e92a2a;
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .shift-text {
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.65);
+      line-height: 1.65;
+    }
+
+    .shift-text strong {
+      display: block;
+      font-weight: 500;
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+
+    /* ROLE */
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: rgba(0, 0, 0, 0.08);
+    }
+
+    .role-card {
+      background: #f5f4f0;
+      padding: 32px;
+    }
+
+    .role-icon {
+      width: 40px;
+      height: 40px;
+      background: #fde8e8;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 18px;
+    }
+
+    .role-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #111;
+      margin-bottom: 8px;
+    }
+
+    .role-body {
+      font-size: 13px;
+      font-weight: 300;
+      color: #666;
+      line-height: 1.65;
+    }
+
+    /* REFLECTION */
+    .reflection-cols {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 72px;
+      align-items: start;
+    }
+
+    .reflection-aside {
+      position: sticky;
+      top: 80px;
+    }
+
+    .reflection-aside h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 26px;
+      font-weight: 300;
+      line-height: 1.35;
+      letter-spacing: -0.3px;
+      margin-bottom: 14px;
+    }
+
+    .reflection-aside p {
+      font-size: 13px;
+      font-weight: 300;
+      color: #666;
+      line-height: 1.75;
+    }
+
+    .reflection-items {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .reflection-item {
+      padding: 28px 32px;
+      background: #f5f4f0;
+      border-left: 3px solid #cce044;
+    }
+
+    .reflection-item p {
+      font-size: 14px;
+      font-weight: 300;
+      color: #333;
+      line-height: 1.75;
+    }
+
+    .reflection-item strong {
+      font-weight: 500;
+      color: #111;
+    }
+
+    /* FOOTER NAV */
+    .case-footer {
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 56px 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-left p {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    .footer-left h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: -0.2px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 24px;
+      background: #1a1a1a;
+      color: #eeece6;
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background: #e92a2a;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #1a1a1a;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-outline:hover {
+      background: #1a1a1a;
+      color: #eeece6;
+    }
+
+    /* MOBILE */
+    @media (max-width: 900px) {
+      nav {
+        padding: 14px 20px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .hero-left {
+        padding: 48px 24px;
+        border-right: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      .hero-right {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .stat-num {
+        font-size: 44px;
+      }
+
+      .stat-card {
+        padding: 28px 20px;
+      }
+
+      .section {
+        padding: 56px 24px;
+      }
+
+      .artifact-section {
+        padding: 0 24px 48px;
+      }
+
+      .problem-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .approach-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .finding-row {
+        grid-template-columns: 56px 1fr;
+      }
+
+      .finding-so-what {
+        display: none;
+      }
+
+      .finding-row:hover {
+        margin: 0;
+        padding: 32px 0;
+      }
+
+      .outcome-hero {
+        grid-template-columns: 1fr;
+        padding: 48px 24px;
+        margin: 0 -24px;
+      }
+
+      .role-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .reflection-cols {
+        grid-template-columns: 1fr;
+      }
+
+      .reflection-aside {
+        position: static;
+      }
+
+      .photos-strip {
+        grid-template-columns: 1fr 1fr;
+        height: auto;
+      }
+
+      .photos-strip .photo-slot:first-child {
+        grid-column: span 2;
+        height: 200px;
+      }
+
+      .photos-strip .photo-slot {
+        height: 160px;
+      }
+
+      .personas-row.patients {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .personas-row.four {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .personas-row.hcps {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .voices-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .dilo-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .twist-banner {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 32px 24px;
+      }
+
+      .journey-map-slot {
+        height: 280px;
+      }
+
+      .case-footer {
+        padding: 40px 24px;
+      }
+    }
+  </style>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+
+<body>
+
+  <!-- ══ NAV ══════════════════════════════════════════════════════ -->
+  <nav>
+    <a href="index.html" class="nav-name">VIDITA BHAGAT</a>
+    <ul class="nav-links">
+      <li><a href="index.html#portfolio">Work</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#contact" style="font-size:10px; letter-spacing:0.1em; color:#eeece6; background:#1a1a1a; padding:7px 14px; text-decoration:none; border-radius:2px;">Contact</a></li>
+    </ul>
+    <a href="index.html#portfolio" class="nav-back">← All Work</a>
+  </nav>
+
+  <!-- ══ HERO ══════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="case-label">Case Study · Brand Identity + Product Design</div>
+      <h1 class="hero-title">Rebuilding an AI Robotics Company's Entire Identity — <em>From the Ground Up</em></h1>
+      <p class="hero-sub">When General Robotics pivoted its mission, the old brand couldn't carry the new vision. The
+        goal was to rebuilt everything: identity, design system, architecture, and the live website.</p>
+      <div class="hero-tags">
+        <span class="tag">Brand Identity</span>
+        <span class="tag">Product Design</span>
+        <span class="tag">Design System</span>
+        <span class="tag">Webflow</span>
+        <span class="tag">0 → 1</span>
+        <span class="tag">AI Startup</span>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="stat-card">
+        <div class="stat-num">35<span>%</span></div>
+        <div class="stat-label">Increase in GRID platform activation after launch</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">28<span>%</span></div>
+        <div class="stat-label">Reduction in user drop-off through the site</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">23<span>K</span></div>
+        <div class="stat-label">Users on the GRID platform post-launch</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Designer — end to end, from identity to live site</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="full-divider"></div>
+
+  <!-- ══ 01 PROBLEM ════════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">01 · Problem</span>
+      <h2 class="section-title">The Problem Worth Solving</h2>
+    </div>
+
+    <div class="problem-grid">
+      <div class="problem-text">
+        <p>General Robotics — formerly Scaled Foundation — had fundamentally changed what it was building. The new
+          mission: <strong>general-purpose intelligence for every robot, across any form, task, or environment.</strong>
+          But the name, brand, and website still reflected the old company.</p>
+        <p>For a deep-tech AI startup pitching investors and enterprise clients, brand credibility is product
+          credibility. If the website can't communicate the vision clearly in 10 seconds, the meeting doesn't happen.
+          The document doesn't get read. The deal doesn't close.</p>
+        <p>The brief was to rebuild everything and to do it in a way that made a genuinely complex technical concept
+          feel immediately legible to a non-technical decision-maker.</p>
+      </div>
+
+      <div class="insight-box">
+        <p>Investors and enterprise clients don't read websites, they judge them. The design challenge wasn't explaining
+          modular robot AI. It was making people feel the company's credibility before they understood the technology.
+        </p>
+        <cite>— The core design challenge</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PASSWORD GATE ══════════════════════════════════════════ -->
+  <div id="pw-gate" style="background:#f5f4f0; border-top:1px solid rgba(0,0,0,0.08); padding:88px 64px; text-align:center;">
+    <p class="mono" style="font-size:10px; letter-spacing:0.16em; color:#888; text-transform:uppercase; margin-bottom:16px;">Protected</p>
+    <h2 style="font-family:'DM Sans',sans-serif; font-size:28px; font-weight:300; color:#111; margin-bottom:12px; letter-spacing:-0.3px;">The rest of this case study is protected.</h2>
+    <p style="font-size:14px; color:#666; margin-bottom:36px; line-height:1.65;">Some work is shared selectively. If you'd like access, reach out.</p>
+    <div style="display:inline-flex; flex-direction:column; align-items:center; gap:12px;">
+      <div style="display:flex; gap:0; border:1px solid rgba(0,0,0,0.15); border-radius:2px; overflow:hidden;">
+        <input id="pw-input" type="password" placeholder="Enter password"
+          style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.06em; padding:10px 18px; border:none; outline:none; background:#fff; color:#111; width:220px;" />
+        <button onclick="checkPassword()"
+          style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; background:#1a1a1a; color:#eeece6; border:none; padding:10px 20px; cursor:pointer; transition:background 0.15s;">Unlock →</button>
+      </div>
+      <span id="pw-error" style="font-family:'Space Mono',monospace; font-size:11px; color:#e92a2a; letter-spacing:0.06em; opacity:0; transition:opacity 0.2s;">Incorrect password</span>
+    </div>
+  </div>
+
+  <!-- ══ PROTECTED CONTENT ═══════════════════════════════════════ -->
+  <div id="pw-content" style="display:none; opacity:0; transition:opacity 0.5s ease;">
+
+  <!-- ══ TWIST BANNER ══════════════════════════════════════════════ -->
+  <div class="twist-banner">
+    <div class="twist-icon"><i data-lucide="lightbulb"
+        style="width:48px;height:48px;stroke-width:1.5;color:rgba(255,255,255,0.9);"></i></div>
+    <div class="twist-text">
+      <h3>"There shouldn't be many pages. That's it."</h3>
+      <p>One constraint from the founder. Everything else like architecture, hierarchy, visual identity, brand voice,
+        design system was my call. This is what it means to design at a 0→1 startup.</p>
+    </div>
+  </div>
+
+  <div class="full-divider"></div>
+
+  <!-- ══ 02 APPROACH ═══════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">02 · Approach</span>
+      <h2 class="section-title">What I Built — End to End</h2>
+    </div>
+
+    <div class="approach-grid">
+
+      <div class="approach-card">
+        <div class="approach-num">1</div>
+        <div class="approach-title">Brand Archetype &amp; Personality — The Sage</div>
+        <div class="approach-body">Defined General Robotics as The Sage — authoritative, research-led, intelligent. A
+          brand that leads with expertise rather than hype. Not a startup trying to look big. A serious technical
+          company whose credibility is earned through knowledge, rigour, and safety-first thinking.</div>
+        <div class="approach-why">→ Established the tonal foundation everything else was built on — from copy to visual
+          hierarchy.</div>
+      </div>
+
+      <div class="approach-card">
+        <div class="approach-num">2</div>
+        <div class="approach-title">Design System — Built on the New Identity</div>
+        <div class="approach-body">The visual identity (logo, colour palette, typography) was developed by an external
+          agency. My job was to take that identity and build a complete, functional design system from it, translating
+          brand decisions into reusable components, spacing rules, and layout patterns that could actually ship.</div>
+        <div class="approach-why">→ Closed the gap between a beautiful brand document and a working, buildable product.
+        </div>
+      </div>
+
+      <div class="approach-card">
+        <div class="approach-num">3</div>
+        <div class="approach-title">Brand Communication Identity</div>
+        <div class="approach-body">Defined how the brand speaks — tone, vocabulary, and messaging hierarchy. Technical
+          enough to be credible to engineers, clear enough for a VP of Operations to understand immediately. The Sage
+          doesn't hype, doesn't hedge, and doesn't explain what doesn't need explaining.</div>
+        <div class="approach-why">→ Gave the whole team a shared vocabulary for writing consistently across all
+          touchpoints.</div>
+      </div>
+
+      <div class="approach-card">
+        <div class="approach-num">4</div>
+        <div class="approach-title">Component Library</div>
+        <div class="approach-body">Built a reusable UI component library — buttons, cards, sections, layout primitives
+          so the design could scale consistently as the company added new pages and content without starting from
+          scratch each time.</div>
+        <div class="approach-why">→ Made future design additions faster and more consistent without a design brief for
+          every new page.</div>
+      </div>
+
+      <div class="approach-card">
+        <div class="approach-num">5</div>
+        <div class="approach-title">Site Architecture</div>
+        <div class="approach-body">Designed the information architecture from the ground up. Made structural decisions
+          about what deserved a page, what belonged on the homepage, and how to guide two very different audiences —
+          developers and enterprise buyers — through the same site without losing either.</div>
+        <div class="approach-why">→ The radical restraint (very few pages) became a feature, not a limitation.</div>
+      </div>
+
+      <div class="approach-card">
+        <div class="approach-num">6</div>
+        <div class="approach-title">Built &amp; Published in Webflow</div>
+        <div class="approach-body">Took the designs from concept to live site. Implemented every page in Webflow,
+          refined in-browser, and published — meaning I was responsible for design fidelity, performance, and the final
+          shipped product. No handoff. The designer is the developer.</div>
+        <div class="approach-why">→ Compressed the design-to-launch cycle and eliminated translation errors between
+          design and engineering.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ ARTIFACT: BEFORE/AFTER + BRAND ═══════════════════════════ -->
+  <div class="artifact-section">
+    <div class="artifact-label">Before &amp; After — Brand Transformation</div>
+    <div class="photos-strip">
+
+      <div class="photo-slot">
+        <!-- <img src="assets/imgs/scaled-foundation-old.jpg" alt="Old Scaled Foundation website"> -->
+        <div class="photo-slot-inner">
+          <div class="photo-slot-icon"><i data-lucide="file-text" style="width:28px;height:28px;stroke-width:1.5;"></i>
+          </div>
+          <div class="photo-slot-label">Before — Scaled Foundation<br>Old website &amp; brand<br><span
+              style="opacity:0.55;font-style:italic">Replace with screenshot</span></div>
+        </div>
+        <div class="swap-badge">Before</div>
+      </div>
+
+      <div class="photo-slot">
+        <!-- <img src="assets/imgs/general-robotics-new.jpg" alt="New General Robotics website"> -->
+        <div class="photo-slot-inner">
+          <div class="photo-slot-icon"><i data-lucide="sparkles" style="width:28px;height:28px;stroke-width:1.5;"></i>
+          </div>
+          <div class="photo-slot-label">After — General Robotics<br>Live site homepage<br><span
+              style="opacity:0.55;font-style:italic">Replace with screenshot</span></div>
+        </div>
+        <div class="swap-badge">After</div>
+      </div>
+
+      <div class="photo-slot">
+        <!-- <img src="assets/imgs/brand-colours-typography.jpg" alt="Brand colour and type system"> -->
+        <div class="photo-slot-inner">
+          <div class="photo-slot-icon"><i data-lucide="palette" style="width:28px;height:28px;stroke-width:1.5;"></i>
+          </div>
+          <div class="photo-slot-label">Design system<br>Colour &amp; type scale<br><span
+              style="opacity:0.55;font-style:italic">Replace with screenshot</span></div>
+        </div>
+        <div class="swap-badge">Add photo</div>
+      </div>
+
+    </div>
+    <p class="photo-caption">Full brand transformation — from Scaled Foundation to General Robotics, including the new
+      design system built from the external agency's visual identity</p>
+  </div>
+
+  <!-- ══ ARTIFACT: LIVE SITE ════════════════════════════════════════ -->
+  <div class="artifact-section">
+    <div class="artifact-label">Live Website — generalrobotics.company</div>
+
+    <div class="journey-map-slot">
+      <!-- <img src="assets/imgs/site-full-homepage.jpg" alt="General Robotics homepage"> -->
+      <div class="journey-slot-inner">
+        <div class="journey-slot-icon"><i data-lucide="globe" style="width:36px;height:36px;stroke-width:1.5;"></i></div>
+        <div class="journey-slot-label">
+          <strong>Full Homepage — generalrobotics.company</strong>
+          Hero · GRID product section · Team credentials · Research · News. Designed, built, and published in Webflow —
+          every pixel from concept to live site by one designer.
+          <br><br>
+          <span
+            style="font-family:'Space Mono',monospace;font-size:9px;color:rgba(0,0,0,0.2);font-style:normal;letter-spacing:0.06em;text-transform:uppercase;">Take
+            a full-page screenshot and replace this placeholder</span>
+        </div>
+      </div>
+      <div class="swap-badge">Add screenshot</div>
+    </div>
+    <p class="photo-caption">Live at generalrobotics.company — designed, built, and published entirely in Webflow</p>
+  </div>
+
+  <div class="full-divider"></div>
+
+  <!-- ══ 03 FINDINGS ═══════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">03 · Findings</span>
+      <h2 class="section-title">The Design Decisions That Mattered</h2>
+    </div>
+
+    <div class="findings-list">
+
+      <div class="finding-row">
+        <div class="finding-idx">01</div>
+        <div class="finding-title">Dark, minimal aesthetic — not the typical AI startup look</div>
+        <div class="finding-so-what"><strong>Why this was the right call</strong>The robotics and defence-adjacent AI
+          space skews dark, technical, precise. A clean dark palette with restrained typography communicated seriousness
+          and credibility — matching the expectations of enterprise procurement teams and institutional investors, not
+          consumer app users.</div>
+      </div>
+
+      <div class="finding-row">
+        <div class="finding-idx">02</div>
+        <div class="finding-title">Two explicit CTAs for two distinct audiences</div>
+        <div class="finding-so-what"><strong>Why this was the right call</strong>Developers access GRID directly
+          (Login). Enterprise clients need a conversation (Contact Sales). Forcing both audiences through the same CTA
+          would have confused intent and diluted conversion. Splitting them clarified the product structure and reduced
+          friction for both.</div>
+      </div>
+
+      <div class="finding-row">
+        <div class="finding-idx">03</div>
+        <div class="finding-title">Team credibility surfaced above the fold</div>
+        <div class="finding-so-what"><strong>Why this was the right call</strong>For an early-stage deep-tech startup,
+          the team IS the product. The founders built AirSim, contributed to VideoPoet and TensorFlow Object Detection —
+          Microsoft and Google Research pedigrees. Surfacing this early converts investor scepticism before it forms.
+        </div>
+      </div>
+
+      <div class="finding-row">
+        <div class="finding-idx">04</div>
+        <div class="finding-title">Very few pages — radical restraint on content</div>
+        <div class="finding-so-what"><strong>Why this was the right call</strong>Investors and enterprise clients don't
+          browse. They scan the homepage and decide. More pages create more chances to lose someone. The constraint
+          became a strategic advantage — forcing every word to earn its place and making the site feel confident rather
+          than defensive.</div>
+      </div>
+
+      <div class="finding-row">
+        <div class="finding-idx">05</div>
+        <div class="finding-title">GRID explained as two tiers, not one product</div>
+        <div class="finding-so-what"><strong>Why this was the right call</strong>Open GRID (free, for developers) and
+          GRID Enterprise (paid, for large organisations) serve different needs and budgets. Presenting them as one
+          product would have confused pricing signals. Separating them clearly reduced support friction and improved
+          conversion for both tiers.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="full-divider"></div>
+
+  <!-- ══ 04 WHAT CHANGED ═══════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">04 · Outcome</span>
+      <h2 class="section-title">What Changed</h2>
+    </div>
+
+    <div class="approach-grid" style="margin-bottom: 3px;">
+      <div class="approach-card">
+        <div class="approach-num">35%</div>
+        <div class="approach-title">Increase in GRID platform activation</div>
+        <div class="approach-body">Over 12 months following launch — the redesigned site drove measurably more
+          developers and enterprise clients to activate on GRID.</div>
+      </div>
+      <div class="approach-card">
+        <div class="approach-num">28%</div>
+        <div class="approach-title">Reduction in site drop-off</div>
+        <div class="approach-body">Clearer architecture and audience-specific CTAs kept visitors moving through the site
+          rather than leaving at the homepage.</div>
+      </div>
+      <div class="approach-card">
+        <div class="approach-num">23K</div>
+        <div class="approach-title">Users on GRID platform post-launch</div>
+        <div class="approach-body">The combined developer and enterprise audience reached 23,000 platform users —
+          supported by a site that could clearly explain the product to both groups.</div>
+      </div>
+      <div class="approach-card">
+        <div class="approach-num">40+</div>
+        <div class="approach-title">Pre-trained AI skills &amp; robot OEMs on platform</div>
+        <div class="approach-body">The platform's growing ecosystem required clear tiered communication — the
+          architecture I designed for GRID Open vs Enterprise supported this expansion.</div>
+      </div>
+    </div>
+
+    <div class="outcome-hero">
+      <div class="outcome-statement">
+        The website became the company's <em>primary sales tool</em> — investors and enterprise clients could arrive and
+        leave with a complete understanding of General Robotics, without the team sending a single additional document.
+      </div>
+
+      <div class="outcome-shifts">
+        <div class="shift-item">
+          <div class="shift-arrow">→</div>
+          <div class="shift-text">
+            <strong>Vague identity → Clear mission</strong>
+            "Scaled Foundation" communicated nothing. "General Robotics — general-purpose intelligence for every robot"
+            communicates everything. The rebrand gave the company a name that matched its ambition.
+          </div>
+        </div>
+        <div class="shift-item">
+          <div class="shift-arrow">→</div>
+          <div class="shift-text">
+            <strong>Supplementary material → Self-sufficient website</strong>
+            The founding team no longer needed to send decks or explainer docs after every intro call. The site does
+            that work — reducing friction in the sales cycle at its earliest and most critical stage.
+          </div>
+        </div>
+        <div class="shift-item">
+          <div class="shift-arrow">→</div>
+          <div class="shift-text">
+            <strong>Generic startup look → Technical credibility</strong>
+            The brand now reads as a serious deep-tech company — matching the pedigree of the team (Microsoft Research,
+            Google Research) with a visual identity that earns trust before a word is read.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ LIVE LINK BANNER ══════════════════════════════════════════ -->
+  <div class="twist-banner">
+    <div class="twist-icon"><i data-lucide="globe" style="width:48px;height:48px;stroke-width:1.5;color:rgba(255,255,255,0.9);"></i></div>
+    <div class="twist-text">
+      <h3>This is a live, shipped product — you can visit it right now</h3>
+      <p>See the design in context at <strong style="color:#fff;">generalrobotics.company</strong> — every pixel
+        designed, every component built, every page published by one designer.</p>
+    </div>
+  </div>
+
+  <div class="full-divider"></div>
+
+  <!-- ══ 05 MY ROLE ════════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">05 · Role</span>
+      <h2 class="section-title">My Specific Role</h2>
+    </div>
+
+    <div class="role-grid">
+      <div class="role-card">
+        <div class="role-icon"><i data-lucide="target" style="width:20px;height:20px;stroke-width:1.5;"></i></div>
+        <div class="role-title">Brand Strategy &amp; Archetype</div>
+        <div class="role-body">Defined the brand personality (The Sage), communication identity, and tonal vocabulary —
+          establishing the strategic foundation that every visual and written decision was built on.</div>
+      </div>
+      <div class="role-card">
+        <div class="role-icon"><i data-lucide="settings" style="width:20px;height:20px;stroke-width:1.5;"></i></div>
+        <div class="role-title">Design System Architecture</div>
+        <div class="role-body">Translated the external agency's visual identity into a complete, functional design
+          system — component library, spacing rules, layout patterns, and reusable UI primitives ready to ship.</div>
+      </div>
+      <div class="role-card">
+        <div class="role-icon"><i data-lucide="monitor" style="width:20px;height:20px;stroke-width:1.5;"></i></div>
+        <div class="role-title">Site Architecture &amp; Webflow Build</div>
+        <div class="role-body">Designed the full information architecture, then built and published the live site in
+          Webflow — owning design fidelity, performance, and final delivery without a separate engineering handoff.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="full-divider"></div>
+
+  <!-- ══ 06 REFLECTION ═════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">06 · Reflection</span>
+      <h2 class="section-title">What I'd Do Differently</h2>
+    </div>
+
+    <div class="reflection-cols">
+      <div class="reflection-aside">
+        <h3>Designing alone moves fast. It also has blind spots.</h3>
+        <p>Working solo with one feedback loop — the founder and manager — gave me speed and creative ownership. It also
+          meant some things only became visible after launch.</p>
+      </div>
+
+      <div class="reflection-items">
+        <div class="reflection-item">
+          <p><strong>Test the site with real investors and enterprise clients before launch.</strong> I designed based
+            on my understanding of the audience — but I didn't test with actual VCs or enterprise procurement teams. A
+            single round of moderated testing with 3–4 people from each audience would have surfaced misalignments I
+            couldn't see from the inside.</p>
+        </div>
+        <div class="reflection-item">
+          <p><strong>Build the design system with handoff in mind from day one.</strong> The design system I built
+            worked well for me. But as the company grows and brings on engineers or other designers, the component
+            documentation needs to be more explicit. I'd invest more in annotation and usage guidelines upfront.</p>
+        </div>
+        <div class="reflection-item">
+          <p><strong>Establish baseline metrics before launch, not after.</strong> We captured post-launch numbers, but
+            I didn't set up proper pre-launch benchmarks from the old site. Having a clean before/after comparison would
+            have made the impact story considerably stronger for stakeholders — and for me as a designer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="full-divider"></div>
+
+  <!-- ══ FOOTER NAV ════════════════════════════════════════════════ -->
+  <div class="case-footer">
+    <div class="footer-left">
+      <p>Next Case Study</p>
+      <h3>Revolutionizing Hypertension Care</h3>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <a href="index.html#portfolio" class="btn btn-outline">← All Work</a>
+      <a href="hypertension-case-study.html" class="btn">Next Case →</a>
+    </div>
+  </div>
+
+  </div><!-- end pw-content -->
+
+  <script>
+    function checkPassword() {
+      var input = document.getElementById('pw-input');
+      var error = document.getElementById('pw-error');
+      if (input.value === 'enjoyreading') {
+        document.getElementById('pw-gate').style.display = 'none';
+        var content = document.getElementById('pw-content');
+        content.style.display = 'block';
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            content.style.opacity = '1';
+          });
+        });
+      } else {
+        error.style.opacity = '1';
+        input.style.animation = 'none';
+        requestAnimationFrame(function() {
+          input.style.animation = 'pw-shake 0.4s ease';
+        });
+        setTimeout(function() { error.style.opacity = '0'; }, 2500);
+      }
+    }
+    document.getElementById('pw-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') checkPassword();
+    });
+  </script>
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.section, .stat-card, .artifact-section').forEach(el => observer.observe(el));
+  </script>
+  <script>lucide.createIcons();</script>
+</body>
+
+</html>

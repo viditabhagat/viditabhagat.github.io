@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recruiter Platform Strategy — Vidita Bhagat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════════════════════════════════════════════════════════
+     DESIGN SYSTEM — mirrors index.html exactly
+     DM Sans + Space Mono · hardcoded hex palette · static nav
+     ═══════════════════════════════════════════════════════════════ */
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    background: #eeece6;
+    color: #111;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  .mono { font-family: 'Space Mono', monospace; }
+
+  /* NAV */
+  nav {
+    background: #eeece6;
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .nav-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em; color: #1a1a1a;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 24px; align-items: center; list-style: none; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 0.12em;
+    color: #333; text-decoration: none;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: #111; }
+  .nav-back {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 0.1em;
+    color: #eeece6; background: #1a1a1a;
+    padding: 7px 14px; text-decoration: none;
+    border-radius: 2px; transition: background 0.15s;
+  }
+  .nav-back:hover { background: #1a3388; }
+
+  /* HERO */
+  .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 52px); }
+  .hero-left {
+    background: #f5f4f0;
+    padding: 80px 64px 80px 48px;
+    display: flex; flex-direction: column; justify-content: center;
+    border-right: 1px solid rgba(0,0,0,0.06);
+  }
+  .case-label {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.16em; color: #1a3388;
+    margin-bottom: 28px;
+  }
+  .case-label::before { content: ''; width: 24px; height: 1px; background: #1a3388; flex-shrink: 0; }
+  .hero-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(32px, 3.8vw, 52px);
+    font-weight: 300; line-height: 1.15;
+    letter-spacing: -0.5px; color: #111;
+    margin-bottom: 24px;
+  }
+  .hero-title em { font-style: italic; color: #1a3388; }
+  .hero-sub {
+    font-size: 14px; font-weight: 300;
+    color: #666; line-height: 1.75;
+    max-width: 480px; margin-bottom: 40px;
+  }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #666;
+    background: #e8e6e0; border-radius: 3px;
+    padding: 5px 12px;
+  }
+  .hero-right { background: #1c211c; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+  .stat-card {
+    padding: 48px 40px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .stat-card.visible { opacity: 1; transform: translateY(0); }
+  .stat-card:nth-child(1) { transition-delay: 0.1s; }
+  .stat-card:nth-child(2) { transition-delay: 0.2s; border-right: none; }
+  .stat-card:nth-child(3) { transition-delay: 0.3s; border-bottom: none; }
+  .stat-card:nth-child(4) { transition-delay: 0.4s; border-right: none; border-bottom: none; }
+  .stat-num {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 64px; font-weight: 300;
+    color: #fff; line-height: 1;
+    letter-spacing: -2px; margin-bottom: 8px;
+  }
+  .stat-num span { color: #1a3388; }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; color: rgba(255,255,255,0.35);
+    text-transform: uppercase; letter-spacing: 0.1em; line-height: 1.5;
+  }
+
+  /* SECTIONS */
+  .section {
+    max-width: 1200px; margin: 0 auto; padding: 72px 64px;
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .section.visible { opacity: 1; transform: translateY(0); }
+  .artifact-section {
+    max-width: 1200px; margin: 0 auto; padding: 0 64px 64px;
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .artifact-section.visible { opacity: 1; transform: translateY(0); }
+
+  /* SECTION HEADER */
+  .section-header { display: flex; flex-direction: column; gap: 10px; margin-bottom: 48px; }
+  .section-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; font-weight: 400;
+    letter-spacing: 0.16em; color: #888; text-transform: uppercase;
+  }
+  .section-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 36px; font-weight: 300;
+    color: #111; line-height: 1.2; letter-spacing: -0.5px;
+  }
+
+  /* DIVIDER */
+  .full-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.08); }
+
+  /* ARTIFACT LABEL */
+  .artifact-label {
+    display: flex; align-items: center; gap: 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.16em; color: #888; margin-bottom: 20px;
+  }
+  .artifact-label::before { content: ''; width: 24px; height: 1px; background: rgba(0,0,0,0.2); flex-shrink: 0; }
+
+  /* PROBLEM */
+  .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .problem-text { font-size: 15px; font-weight: 300; line-height: 1.8; color: #333; }
+  .problem-text p + p { margin-top: 20px; }
+  .problem-text strong { font-weight: 500; color: #111; }
+  .insight-box { background: #1c211c; padding: 40px; position: relative; overflow: hidden; }
+  .insight-box::before {
+    content: '"'; font-family: 'DM Sans', sans-serif;
+    font-size: 160px; font-weight: 300;
+    color: rgba(255,255,255,0.05);
+    position: absolute; top: -20px; left: 20px;
+    line-height: 1; pointer-events: none;
+  }
+  .insight-box p {
+    font-style: italic; font-size: 16px; font-weight: 300;
+    color: rgba(255,255,255,0.88); line-height: 1.75; position: relative;
+  }
+  .insight-box cite {
+    display: block; margin-top: 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; font-style: normal;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
+  /* TWIST BANNER */
+  .twist-banner {
+    background: #1a3388;
+    padding: 48px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 32px;
+    align-items: center;
+  }
+  .twist-icon { font-size: 48px; flex-shrink: 0; }
+  .twist-text h3 { font-family: 'DM Sans', sans-serif; font-size: 22px; font-weight: 500; color: #fff; margin-bottom: 8px; }
+  .twist-text p { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.65; font-weight: 300; }
+
+  /* APPROACH */
+  .approach-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; background: rgba(0,0,0,0.08); }
+  .approach-card {
+    background: #f5f4f0; padding: 40px;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+  .approach-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.1); position: relative; z-index: 2; }
+  .approach-num {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 40px; font-weight: 300;
+    color: rgba(0,0,0,0.1); line-height: 1;
+    letter-spacing: -1px; margin-bottom: 16px;
+  }
+  .approach-title { font-size: 15px; font-weight: 500; color: #111; margin-bottom: 10px; line-height: 1.4; }
+  .approach-body { font-size: 13px; font-weight: 300; color: #666; line-height: 1.7; }
+  .approach-why {
+    margin-top: 16px; padding-top: 14px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; color: #1a3388; line-height: 1.65;
+  }
+
+  /* FIELD PHOTOS */
+  .photos-strip { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3px; height: 380px; }
+  .photo-slot {
+    background: #f5f4f0;
+    border: 1px dashed rgba(0,0,0,0.15);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
+    transition: background 0.22s ease, border-color 0.22s ease;
+  }
+  .photo-slot:hover { background: #eceae4; border-color: rgba(0,0,0,0.25); }
+  .photo-slot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-slot-inner { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 20px; text-align: center; }
+  .photo-slot-icon { font-size: 28px; opacity: 0.3; }
+  .photo-slot-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; color: #888;
+    text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.55;
+  }
+  .swap-badge {
+    position: absolute; top: 12px; right: 12px;
+    background: #1a1a1a; color: #eeece6;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px; text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 4px 10px;
+    border-radius: 2px; opacity: 0.35;
+  }
+  .photo-caption { font-size: 12px; font-weight: 300; color: #888; margin-top: 12px; font-style: italic; text-align: center; }
+
+  /* FINDINGS */
+  .findings-list { display: flex; flex-direction: column; }
+  .finding-row {
+    display: grid; grid-template-columns: 80px 1fr 1fr;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    padding: 32px 0; align-items: start;
+    transition: background 0.2s, padding 0.2s; cursor: default;
+  }
+  .finding-row:first-child { border-top: 1px solid rgba(0,0,0,0.08); }
+  .finding-row:hover { background: #f5f4f0; padding: 32px 64px; margin: 0 -64px; }
+  .finding-idx { font-family: 'DM Sans', sans-serif; font-size: 28px; font-weight: 300; color: rgba(0,0,0,0.12); letter-spacing: -0.5px; padding-top: 2px; }
+  .finding-title { font-size: 15px; font-weight: 500; color: #111; padding-right: 32px; line-height: 1.45; }
+  .finding-so-what { font-size: 13px; font-weight: 300; color: #666; line-height: 1.65; border-left: 2px solid #f5bfa5; padding-left: 20px; }
+  .finding-so-what strong {
+    display: block; font-family: 'Space Mono', monospace;
+    font-size: 9px; font-weight: 400; color: #1a3388;
+    text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 6px;
+  }
+
+  /* PERSONAS */
+  .persona-group-label {
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    text-transform: uppercase; letter-spacing: 0.12em; color: #888;
+    margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .personas-row { display: grid; gap: 3px; margin-bottom: 20px; }
+  .personas-row.four { grid-template-columns: repeat(4, 1fr); }
+  .persona-card {
+    background: #f5f4f0; border: 1px dashed rgba(0,0,0,0.12);
+    padding: 22px 18px; display: flex; flex-direction: column; gap: 10px;
+    transition: background 0.22s ease, border-color 0.22s ease;
+  }
+  .persona-card:hover { background: #dce1f5; border-color: #1a3388; border-style: solid; }
+  .persona-avatar {
+    width: 44px; height: 44px; border-radius: 3px;
+    background: #e8e6e0; display: flex; align-items: center;
+    justify-content: center; font-size: 20px; flex-shrink: 0; overflow: hidden;
+  }
+  .persona-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .persona-name { font-size: 13px; font-weight: 500; color: #111; line-height: 1.3; }
+  .persona-tag {
+    display: inline-block; font-family: 'Space Mono', monospace;
+    font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: #1a3388; background: #dce1f5; border-radius: 3px;
+    padding: 3px 8px; align-self: flex-start;
+  }
+  .persona-desc { font-size: 12px; font-weight: 300; color: #666; line-height: 1.55; }
+  .persona-swap-hint { font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(0,0,0,0.2); font-style: italic; line-height: 1.4; }
+
+  /* JOURNEY MAP */
+  .journey-map-slot {
+    background: #f5f4f0; border: 1px dashed rgba(0,0,0,0.12);
+    height: 440px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 16px;
+    position: relative; overflow: hidden;
+    transition: background 0.22s ease, border-color 0.22s ease;
+  }
+  .journey-map-slot:hover { background: #eceae4; border-color: rgba(0,0,0,0.25); }
+  .journey-map-slot img { width: 100%; height: 100%; object-fit: contain; padding: 20px; }
+  .journey-slot-inner { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .journey-slot-icon { font-size: 36px; opacity: 0.2; }
+  .journey-slot-label { font-size: 13px; font-weight: 300; color: #888; text-align: center; line-height: 1.65; max-width: 360px; }
+  .journey-slot-label strong { display: block; font-size: 15px; font-weight: 500; color: #333; margin-bottom: 6px; }
+
+  /* OUTCOME */
+  .outcome-hero {
+    background: #1c211c; padding: 72px 64px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 72px; align-items: center; margin: 0 -64px;
+  }
+  .outcome-statement {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(20px, 2.5vw, 32px);
+    font-weight: 300; font-style: italic;
+    color: rgba(255,255,255,0.9); line-height: 1.4; letter-spacing: -0.3px;
+  }
+  .outcome-statement em { font-style: normal; color: #1a3388; }
+  .outcome-shifts { display: flex; flex-direction: column; gap: 22px; }
+  .shift-item { display: flex; gap: 16px; align-items: flex-start; }
+  .shift-arrow { color: #1a3388; font-size: 16px; flex-shrink: 0; margin-top: 4px; }
+  .shift-text { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.65); line-height: 1.65; }
+  .shift-text strong { display: block; font-weight: 500; color: #fff; font-size: 14px; margin-bottom: 3px; }
+
+  /* ROLE */
+  .role-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: rgba(0,0,0,0.08); }
+  .role-card { background: #f5f4f0; padding: 32px; }
+  .role-icon {
+    width: 40px; height: 40px; background: #dce1f5;
+    border-radius: 3px; display: flex; align-items: center;
+    justify-content: center; margin-bottom: 16px; font-size: 18px;
+  }
+  .role-title { font-size: 14px; font-weight: 500; color: #111; margin-bottom: 8px; }
+  .role-body { font-size: 13px; font-weight: 300; color: #666; line-height: 1.65; }
+
+  /* REFLECTION */
+  .reflection-cols { display: grid; grid-template-columns: 260px 1fr; gap: 72px; align-items: start; }
+  .reflection-aside { position: sticky; top: 80px; }
+  .reflection-aside h3 { font-family: 'DM Sans', sans-serif; font-size: 26px; font-weight: 300; line-height: 1.35; letter-spacing: -0.3px; margin-bottom: 14px; }
+  .reflection-aside p { font-size: 13px; font-weight: 300; color: #666; line-height: 1.75; }
+  .reflection-items { display: flex; flex-direction: column; gap: 20px; }
+  .reflection-item { padding: 28px 32px; background: #f5f4f0; border-left: 3px solid #cce044; }
+  .reflection-item p { font-size: 14px; font-weight: 300; color: #333; line-height: 1.75; }
+  .reflection-item strong { font-weight: 500; color: #111; }
+
+  /* FOOTER NAV */
+  .case-footer {
+    border-top: 1px solid rgba(0,0,0,0.08);
+    padding: 56px 64px; display: flex;
+    align-items: center; justify-content: space-between;
+    max-width: 1200px; margin: 0 auto;
+    flex-wrap: wrap; gap: 24px;
+  }
+  .footer-left p { font-family: 'Space Mono', monospace; font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .footer-left h3 { font-family: 'DM Sans', sans-serif; font-size: 22px; font-weight: 400; letter-spacing: -0.2px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 24px; background: #1a1a1a; color: #eeece6;
+    text-decoration: none; font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    border-radius: 2px; transition: background 0.2s;
+  }
+  .btn:hover { background: #1a3388; }
+  .btn-outline { background: transparent; color: #1a1a1a; border: 1px solid rgba(0,0,0,0.2); }
+  .btn-outline:hover { background: #1a1a1a; color: #eeece6; }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 48px 24px; border-right: none; border-bottom: 1px solid rgba(0,0,0,0.08); }
+    .hero-right { grid-template-columns: 1fr 1fr; }
+    .stat-num { font-size: 44px; }
+    .stat-card { padding: 28px 20px; }
+    .section { padding: 56px 24px; }
+    .artifact-section { padding: 0 24px 48px; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .approach-grid { grid-template-columns: 1fr; }
+    .finding-row { grid-template-columns: 56px 1fr; }
+    .finding-so-what { display: none; }
+    .finding-row:hover { margin: 0; padding: 32px 0; }
+    .outcome-hero { grid-template-columns: 1fr; padding: 48px 24px; margin: 0 -24px; }
+    .role-grid { grid-template-columns: 1fr; }
+    .reflection-cols { grid-template-columns: 1fr; }
+    .reflection-aside { position: static; }
+    .photos-strip { grid-template-columns: 1fr 1fr; height: auto; }
+    .photos-strip .photo-slot:first-child { grid-column: span 2; height: 200px; }
+    .photos-strip .photo-slot { height: 160px; }
+    .personas-row.four { grid-template-columns: repeat(2, 1fr); }
+    .journey-map-slot { height: 280px; }
+    .twist-banner { grid-template-columns: 1fr; gap: 16px; padding: 32px 24px; }
+    .case-footer { padding: 40px 24px; }
+  }
+</style>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+
+<!-- ══ NAV ══════════════════════════════════════════════════════ -->
+<nav>
+  <a href="index.html" class="nav-name">VIDITA BHAGAT</a>
+  <ul class="nav-links">
+    <li><a href="index.html#portfolio">Work</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#contact" style="font-size:10px; letter-spacing:0.1em; color:#eeece6; background:#1a1a1a; padding:7px 14px; text-decoration:none; border-radius:2px;">Contact</a></li>
+  </ul>
+  <a href="index.html#portfolio" class="nav-back">← All Work</a>
+</nav>
+
+<!-- ══ HERO ══════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="case-label">Case Study · Product Strategy + Research</div>
+    <h1 class="hero-title">Turning Recruiter Frustration Into <em>Product Direction</em> for a #1 Global Hiring Platform</h1>
+    <p class="hero-sub">How research and prototype evaluation helped a global job platform understand why their product wasn't working for recruiters — and what to build next.</p>
+    <div class="hero-tags">
+      <span class="tag">Research Lead</span>
+      <span class="tag">Prototype Testing</span>
+      <span class="tag">Product Strategy</span>
+      <span class="tag">Global Hiring Platform</span>
+      <span class="tag">6 Weeks</span>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="stat-card">
+      <div class="stat-num">12</div>
+      <div class="stat-label">Recruiters across business owners,<br>HR agencies &amp; SMBs</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Distinct recruiter segments with<br>different product needs</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">13<span>h</span></div>
+      <div class="stat-label">Average time recruiters spent<br>manually sourcing per role</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">1</div>
+      <div class="stat-label">Platform product roadmap<br>directly shaped by findings</div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- ══ 01 PROBLEM ════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">01 · Problem</span>
+    <h2 class="section-title">The Problem Worth Solving</h2>
+  </div>
+
+  <div class="problem-grid">
+    <div class="problem-text">
+      <p>A leading global job platform was losing recruiter trust. Despite strong market position, the platform wasn't working well for a critical user segment — recruiters hiring lightly-skilled workers like telecallers, sales reps, and admin assistants.</p>
+      <p>The hiring cycle was too long. Matches were poor. Recruiters were abandoning the platform mid-process. But <strong>the client didn't know if it was a product problem, a behavior problem, or a workflow mismatch.</strong></p>
+      <p>Our brief: get inside the minds of recruiters. Understand their mental models, decision-making, and daily frustrations — then evaluate whether a new product feature actually solved the right problem.</p>
+    </div>
+
+    <div class="insight-box">
+      <p>On average, a recruiter spends 13 hours manually sourcing candidates for a single role. The platform wasn't reducing that burden — it was adding to it.</p>
+      <cite>— Research finding, 6-week recruiter study</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TWIST BANNER ══════════════════════════════════════════════ -->
+<div class="twist-banner">
+  <div class="twist-icon">13h</div>
+  <div class="twist-text">
+    <h3>Lost to Manual Sourcing Per Role</h3>
+    <p>Recruiters were spending 13 hours per role on manual efforts — calls, WhatsApp messages, and follow-ups — because the platform couldn't support their actual workflow. This wasn't a user education problem. It was a product gap.</p>
+  </div>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- ══ 02 APPROACH ═══════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">02 · Approach</span>
+    <h2 class="section-title">My Approach — and Why</h2>
+  </div>
+
+  <div class="approach-grid">
+
+    <div class="approach-card">
+      <div class="approach-num">1</div>
+      <div class="approach-title">Ran Deep IDIs Before Touching the Prototype</div>
+      <div class="approach-body">Before testing the product solution, I needed to understand the problem space deeply. I ran in-depth remote interviews to map mental models, hiring workflows, and communication patterns across all three recruiter types.</div>
+      <div class="approach-why">→ Revealed that three recruiter segments had fundamentally different workflows — meaning one product solution couldn't serve them all equally.</div>
+    </div>
+
+    <div class="approach-card">
+      <div class="approach-num">2</div>
+      <div class="approach-title">Used Prototype Testing to Validate, Not Just Explore</div>
+      <div class="approach-body">Once we understood the problem space, I ran prototype evaluation using the Think Aloud technique. Recruiters interacted with a new candidate management feature in real time, surfacing usability gaps and workflow mismatches live.</div>
+      <div class="approach-why">→ Uncovered that the prototype didn't match recruiter working styles — despite solving the right problem in theory.</div>
+    </div>
+
+    <div class="approach-card">
+      <div class="approach-num">3</div>
+      <div class="approach-title">Built Recruiter Personas, Not Just User Feedback</div>
+      <div class="approach-body">Rather than synthesizing generic pain points, I structured findings into 3 distinct recruiter profiles — each with different workflows, communication preferences, and platform needs. This made recommendations directly actionable for the product team.</div>
+      <div class="approach-why">→ Gave the PM team a framework to prioritize features by segment rather than building for an average user that doesn't exist.</div>
+    </div>
+
+    <div class="approach-card">
+      <div class="approach-num">4</div>
+      <div class="approach-title">Created a DILO to Show the Full Hiring Context</div>
+      <div class="approach-body">A Day-in-the-Life-Of map captured the full recruiter journey — from initial sourcing through to post-joining follow-up — including the devices, communication tools, and workarounds they used outside the platform.</div>
+      <div class="approach-why">→ Showed the client where the platform fit (and didn't fit) into real recruiter workflows — critical for product prioritization.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ ARTIFACT: FIELD RESEARCH ══════════════════════════════════ -->
+<div class="artifact-section">
+  <div class="artifact-label">Research Artifacts — Prototype Screens Evaluated</div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:3px;">
+    <div>
+      <div class="photo-slot" style="height:380px;">
+        <img src="assets/Recruiter%20Platform/list%20view.webp" alt="Candidate list view prototype — flat combined view of all applications and calls tested with recruiters in Think Aloud sessions" style="object-fit:contain;">
+      </div>
+      <p class="photo-caption">Candidate list view — all applications and calls in a single flat list. Recruiters found it hard to prioritise and scan at a glance.</p>
+    </div>
+    <div>
+      <div class="photo-slot" style="height:380px;">
+        <img src="assets/Recruiter%20Platform/segregated%20tab%20view.webp" alt="Segregated tabs prototype — separating calls and applications into distinct tabs to reduce cognitive load" style="object-fit:contain;">
+      </div>
+      <p class="photo-caption">Segregated tabs view — calls and applications split into separate tabs. Recruiters preferred this design for faster scanning and reduced cognitive load.</p>
+    </div>
+  </div>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- ══ 03 FINDINGS ═══════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">03 · Findings</span>
+    <h2 class="section-title">What the Research Revealed</h2>
+  </div>
+
+  <div class="findings-list">
+
+    <div class="finding-row">
+      <div class="finding-idx">01</div>
+      <div class="finding-title">The platform wasn't reducing manual effort — it was adding to it</div>
+      <div class="finding-so-what"><strong>Product implication</strong>13 hours per role on manual sourcing means the platform's core value proposition wasn't landing. Features need to reduce clicks and communication steps, not add them.</div>
+    </div>
+
+    <div class="finding-row">
+      <div class="finding-idx">02</div>
+      <div class="finding-title">Three recruiter types have fundamentally incompatible workflow needs</div>
+      <div class="finding-so-what"><strong>Product implication</strong>Segment-specific feature prioritization is required. A single interface optimized for "all recruiters" will fail all three. Business owners need fewer steps; HR agencies need pipeline depth.</div>
+    </div>
+
+    <div class="finding-row">
+      <div class="finding-idx">03</div>
+      <div class="finding-title">WhatsApp and phone calls do the work the platform should be doing</div>
+      <div class="finding-so-what"><strong>Product implication</strong>Recruiters defaulted to external tools because in-app communication was inadequate. Opportunity: bring candidate communication into the platform with WhatsApp-like simplicity.</div>
+    </div>
+
+    <div class="finding-row">
+      <div class="finding-idx">04</div>
+      <div class="finding-title">Cognitive load from cluttered UI was causing drop-off mid-process</div>
+      <div class="finding-so-what"><strong>Product implication</strong>Making important information more visible and reducing interface complexity could directly improve hiring completion rates. Information hierarchy is the primary UX fix needed.</div>
+    </div>
+
+    <div class="finding-row">
+      <div class="finding-idx">05</div>
+      <div class="finding-title">Recruiters liked the prototype concept — but not the execution</div>
+      <div class="finding-so-what"><strong>Product implication</strong>Segregated tabs and the calling feature were directionally right. But the flow didn't match how recruiters actually worked. Needs fewer clicks and better alignment to existing mental models.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ ARTIFACT: RECRUITER PERSONAS ══════════════════════════════ -->
+<div class="artifact-section">
+  <div class="artifact-label">Research Artifacts — Recruiter Personas</div>
+
+  <div>
+    <div class="persona-group-label">Recruiter Segments — 3 Profiles Identified</div>
+    <div class="personas-row four">
+
+      <div class="persona-card">
+        <div class="persona-avatar"><img src="assets/Recruiter%20Platform/business%20owner.png" alt="Business Owner recruiter persona — speed-focused, minimal-click hiring workflow"></div>
+        <div class="persona-name">Business Owner</div>
+        <span class="persona-tag">Speed over depth</span>
+        <div class="persona-desc">Wears multiple hats. Hiring is one of many responsibilities. Needs a streamlined, minimal-click process — doesn't have time for complex workflows or multi-step candidate management.</div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-avatar"><img src="assets/Recruiter%20Platform/HR%20agency%20owner.png" alt="HR Agency Owner persona — pipeline-visibility-first recruiter managing multiple clients and candidates"></div>
+        <div class="persona-name">HR Agency Owner</div>
+        <span class="persona-tag">Pipeline visibility first</span>
+        <div class="persona-desc">Manages multiple clients and candidates simultaneously. Monitors pipeline progress and follows up post-joining for up to 2 months. Revenue depends on successful placements.</div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-avatar"><img src="assets/Recruiter%20Platform/hr%20at%20smb.png" alt="HR Professional at SMB persona — process-driven recruiter needing robust communication and candidate tracking tools"></div>
+        <div class="persona-name">HR Professional at SMB</div>
+        <span class="persona-tag">Process &amp; communication</span>
+        <div class="persona-desc">Follows a rigorous, multi-step hiring process. Keeps candidates engaged throughout. Needs robust communication tools, progress tracking, and clear candidate status visibility across the funnel.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══ ARTIFACT: JOURNEY MAP ═════════════════════════════════════ -->
+<div class="artifact-section">
+  <div class="artifact-label">Research Artifacts — Recruiter Hiring Journey Map</div>
+
+  <div class="journey-map-slot">
+    <img src="assets/Recruiter%20Platform/Recruiters%20Hiring%20Journey%20Map%20for%20LSW.png" alt="Full recruiter hiring journey map — sourcing through joining day and 2-month post-joining follow-up, covering all 3 recruiter types with communication modes and platform touchpoints">
+  </div>
+  <p class="photo-caption">Journey map covering all 3 recruiter types — initial contact through to post-joining follow-up for HR agencies, with communication modes and platform touchpoints at each stage.</p>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- ══ 04 PROTOTYPE TESTING ═══════════════════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">04 · Prototype Testing</span>
+    <h2 class="section-title">What the Prototype Testing Told Us</h2>
+  </div>
+
+  <div class="problem-grid">
+    <div class="problem-text">
+      <p>We tested a new candidate management feature designed to streamline how recruiters handled lightly-skilled job seekers. Using the Think Aloud technique, recruiters interacted with the prototype in real time — narrating their reactions, expectations, and frustrations as they went.</p>
+      <p>The goal wasn't just usability feedback. It was to understand whether the feature concept matched recruiter mental models — and if not, <strong>what it would take to get there.</strong></p>
+      <p>The test surfaced a critical gap: the prototype <strong>solved the right problem, but the execution didn't fit</strong> how recruiters actually work. They liked the direction. They couldn't use it efficiently.</p>
+    </div>
+
+    <div class="approach-grid">
+
+      <div class="approach-card">
+        <div class="approach-num"><i data-lucide="check" style="width:18px;height:18px;stroke-width:1.5;"></i></div>
+        <div class="approach-title">Segregated tabs were the right call</div>
+        <div class="approach-body">Recruiters responded positively to separated views for calls vs. applications — it matched their mental model of managing two distinct candidate pools.</div>
+      </div>
+
+      <div class="approach-card">
+        <div class="approach-num"><i data-lucide="check" style="width:18px;height:18px;stroke-width:1.5;"></i></div>
+        <div class="approach-title">In-app calling feature was directionally right</div>
+        <div class="approach-body">Recruiters welcomed the idea of calling from within the platform — reducing the context-switching they currently do between the app and their phone.</div>
+      </div>
+
+      <div class="approach-card">
+        <div class="approach-num"><i data-lucide="x" style="width:18px;height:18px;stroke-width:1.5;"></i></div>
+        <div class="approach-title">Flow didn't match working styles</div>
+        <div class="approach-body">Too many clicks to complete common tasks. Recruiters — especially business owners — abandoned mid-flow. The prototype needed a tighter action hierarchy.</div>
+      </div>
+
+      <div class="approach-card">
+        <div class="approach-num"><i data-lucide="x" style="width:18px;height:18px;stroke-width:1.5;"></i></div>
+        <div class="approach-title">Candidate information wasn't visible enough</div>
+        <div class="approach-body">Key details needed to make a call decision were buried. Recruiters wanted candidate essentials surfaced immediately — not after tapping through multiple screens.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- ══ 05 OUTCOME ════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">05 · Outcome</span>
+    <h2 class="section-title">What Changed</h2>
+  </div>
+
+  <div class="outcome-hero">
+    <div class="outcome-statement">
+      The client used our findings to <em>close the loop</em> between what employers needed and what the platform was actually offering — and to prioritize their product roadmap accordingly.
+    </div>
+
+    <div class="outcome-shifts">
+      <div class="shift-item">
+        <div class="shift-arrow">→</div>
+        <div class="shift-text">
+          <strong>Generic users → 3 distinct segments</strong>
+          The product team moved from building for "all recruiters" to segment-specific feature prioritization across business owners, agencies, and SMB HR teams.
+        </div>
+      </div>
+      <div class="shift-item">
+        <div class="shift-arrow">→</div>
+        <div class="shift-text">
+          <strong>Feature request backlog → Research-backed roadmap</strong>
+          Findings gave the PM team a clear framework: reduce cognitive load first, improve communication tools second, add advanced features third.
+        </div>
+      </div>
+      <div class="shift-item">
+        <div class="shift-arrow">→</div>
+        <div class="shift-text">
+          <strong>Prototype concept → Actionable redesign brief</strong>
+          Prototype testing turned abstract feedback into specific UI fixes — fewer clicks, surfaced candidate info, better flow alignment with recruiter working styles.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- ══ 06 ROLE ════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">06 · Role</span>
+    <h2 class="section-title">My Specific Role</h2>
+  </div>
+
+  <div class="role-grid">
+    <div class="role-card">
+      <div class="role-icon"><i data-lucide="microscope" style="width:20px;height:20px;stroke-width:1.5;"></i></div>
+      <div class="role-title">Research Design</div>
+      <div class="role-body">Designed the dual-method approach — combining deep IDIs to map the problem space with prototype testing to evaluate the proposed solution. Structured recruitment criteria across all 3 recruiter types to ensure segment coverage.</div>
+    </div>
+    <div class="role-card">
+      <div class="role-icon"><i data-lucide="flask-conical" style="width:20px;height:20px;stroke-width:1.5;"></i></div>
+      <div class="role-title">Prototype Evaluation</div>
+      <div class="role-body">Led all prototype testing sessions using the Think Aloud technique. Moderated real-time interactions with the new candidate management feature and synthesized usability patterns across recruiter segments.</div>
+    </div>
+    <div class="role-card">
+      <div class="role-icon"><i data-lucide="pen-tool" style="width:20px;height:20px;stroke-width:1.5;"></i></div>
+      <div class="role-title">Product Strategy Translation</div>
+      <div class="role-body">Synthesized qualitative findings into segment-specific product recommendations — directly aligned to the client's platform strategy and the PM team's roadmap priorities and decision points.</div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- ══ 07 REFLECTION ═════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">07 · Reflection</span>
+    <h2 class="section-title">What I'd Do Differently</h2>
+  </div>
+
+  <div class="reflection-cols">
+    <div class="reflection-aside">
+      <h3>Research and product work best when they talk to each other earlier.</h3>
+      <p>The main lesson from this project: the gap between research insight and product decision is where value gets lost. I'd close that gap faster next time.</p>
+    </div>
+
+    <div class="reflection-items">
+      <div class="reflection-item">
+        <p><strong>Involve the PM team in synthesis, not just the final output.</strong> The product team received insights at the end. Had they been in the room during synthesis, they would have asked sharper questions and the recommendations would have been more precisely targeted to their actual roadmap decisions.</p>
+      </div>
+      <div class="reflection-item">
+        <p><strong>Run prototype testing iteratively, not as a single round.</strong> One round of testing caught important issues, but a second iteration with revised designs would have validated whether our recommendations actually improved the experience — closing the loop between research and product.</p>
+      </div>
+      <div class="reflection-item">
+        <p><strong>Quantify the cost of recruiter drop-off more sharply.</strong> We surfaced the 13-hour manual sourcing finding qualitatively. A quick analysis of platform completion rates by recruiter segment would have made the business case for prioritizing UX simplification much harder to ignore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- ══ FOOTER NAV ════════════════════════════════════════════════ -->
+<div class="case-footer">
+  <div class="footer-left">
+    <p>Next Case Study</p>
+    <h3>Rebuilding General Robotics' Entire Identity</h3>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <a href="index.html#portfolio" class="btn btn-outline">← All Work</a>
+    <a href="general-robotics-case-study.html" class="btn">Next Case →</a>
+  </div>
+</div>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.section, .stat-card, .artifact-section').forEach(el => observer.observe(el));
+</script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
