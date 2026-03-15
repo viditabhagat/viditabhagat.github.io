@@ -542,8 +542,6 @@
     @media (max-width: 600px) {
       .sec-wrap { padding: 0 20px !important; }
       #nav-links > a:not(:last-child) { display: none !important; }
-      .hero-icon { display: none !important; }
-      #sticky-cluster { width: 100vw !important; left: 0 !important; transform: scale(0.5) !important; transform-origin: top left !important; }
       #portfolio-section { padding: 40px 0 16px !important; }
       .services-grid { grid-template-columns: 1fr !important; }
       .service-tile { flex-direction: column !important; }
@@ -553,6 +551,73 @@
       #contact h2 { font-size: clamp(24px, 6vw, 36px) !important; }
       footer { padding: 32px 20px 24px !important; overflow: hidden; }
       footer > div { flex-wrap: wrap !important; justify-content: center !important; gap: 16px !important; }
+    }
+
+    /* Mobile hero ≤480px — switch to flow layout */
+    @media (max-width: 480px) {
+      /* Hide floating background icons — they cause overflow */
+      .hero-icon { display: none !important; }
+
+      /* Hero section: auto height, no overflow clip */
+      #hero-section {
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+        padding: 56px 0 40px !important;
+      }
+
+      /* Sticky cluster: full-width flex column, centered */
+      #sticky-cluster {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        width: 100% !important;
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 16px !important;
+        padding: 0 20px !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Name tag: pull out of absolute, center above notes */
+      #sticky-cluster > div[style*="position:absolute"] {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        text-align: center !important;
+        width: 100% !important;
+        margin-bottom: 4px !important;
+        order: -1 !important;
+      }
+
+      /* All sticky notes: reset absolute positioning, stack in flow */
+      #sticky-cluster .sticky-note {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        width: 85vw !important;
+        max-width: 340px !important;
+        margin: 0 auto !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Role badge: don't force nowrap on narrow screens */
+      #sticky-cluster .sticky-note[style*="white-space:nowrap"] {
+        white-space: normal !important;
+        width: auto !important;
+        min-width: 0 !important;
+        padding: 10px 20px !important;
+      }
+
+      /* Small icon notes: keep them small, centered */
+      #sticky-cluster .sticky-note[style*="width:72px"] {
+        width: 72px !important;
+        height: 72px !important;
+        flex-shrink: 0 !important;
+      }
     }
   </style>
 </head>
